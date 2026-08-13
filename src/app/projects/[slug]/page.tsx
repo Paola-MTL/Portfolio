@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { projectDetails, projects } from "@/data/projects";
+import { projectDetails } from "@/data/projects";
 import AnimatedSection from "@/components/AnimatedSection";
 import ContactCTA from "@/components/ContactCTA";
 
 export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+  return Object.keys(projectDetails).map((slug) => ({ slug }));
 }
 
 export function generateMetadata({

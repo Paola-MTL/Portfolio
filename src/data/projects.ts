@@ -36,6 +36,15 @@ export const projects: ProjectSummary[] = [
     color: "#D6021E",
     image: "/images/home/vfimmigration.jpg",
   },
+  {
+    slug: "elia",
+    name: "Elia",
+    tagline: "Digitizing visitor check-in for modern workplaces",
+    role: "Product Designer",
+    year: "2026",
+    color: "#6C65FF",
+    image: "/images/home/elia.jpg",
+  },
 ];
 
 export type ProcessStep = {
