@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import ScrollDownHint from "./ScrollDownHint";
 
 export const metadata: Metadata = {
@@ -221,13 +220,6 @@ export default function EliaProjectPage() {
               />
             </div>
           </div>
-
-          <Link
-            href="/#projects"
-            className="absolute left-[104px] top-[32px] inline-flex items-center gap-2 rounded-full border border-white/40 px-5 py-2 text-sm font-body text-white transition-colors duration-300 hover:bg-white hover:text-[#6c65ff]"
-          >
-            ← Back to projects
-          </Link>
 
           <ScrollDownHint arrowSrc={imgArrowDown} />
 
