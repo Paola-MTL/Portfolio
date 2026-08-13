@@ -10,18 +10,18 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <section className="px-6 pb-16 pt-32 md:px-12 md:pt-40">
-        <AnimatedSection>
-          <p className="mb-4 text-sm uppercase tracking-[0.2em] text-muted">
+      <section className="flex min-h-[70vh] flex-col items-center justify-center gap-4 bg-teal px-6 text-center text-white md:px-12">
+        <AnimatedSection className="flex flex-col items-center gap-4">
+          <p className="text-sm uppercase tracking-[0.2em] text-white/70">
             About me
           </p>
-          <h1 className="font-display text-4xl font-medium tracking-tightest text-balance sm:text-6xl">
+          <h1 className="font-display text-5xl font-normal italic tracking-tightest text-balance sm:text-6xl md:text-7xl">
             Hello, I&apos;m Paola
           </h1>
         </AnimatedSection>
       </section>
 
-      <section className="px-6 pb-24 md:px-12">
+      <section className="px-6 pb-24 pt-20 md:px-12">
         <Timeline />
       </section>
 

@@ -11,15 +11,12 @@ export default function Nav() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-5 md:px-12 mix-blend-difference"
     >
-      <Link
-        href="/"
-        className="font-display text-lg font-semibold tracking-tightest text-paper"
-      >
+      <Link href="/" className="font-display text-2xl italic text-paper">
         PC
       </Link>
-      <nav className="flex items-center gap-6 text-sm font-medium text-paper">
+      <nav className="flex items-center gap-6 text-sm font-medium uppercase tracking-[0.1em] text-paper">
         <Link href="/#projects" className="hover:opacity-60 transition-opacity">
-          Projects
+          My Projects
         </Link>
         <Link href="/about" className="hover:opacity-60 transition-opacity">
           About

@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Montserrat, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-body" });
+const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-body" });
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-display",
+});
 
 export const metadata: Metadata = {
   title: "Paola Cejoco — UI/UX Designer",
@@ -25,7 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-body antialiased`}>
+      <body
+        className={`${montserrat.variable} ${playfair.variable} font-body antialiased`}
+      >
         <Nav />
         <main>{children}</main>
         <Footer />

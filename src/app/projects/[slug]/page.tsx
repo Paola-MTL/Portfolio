@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { projectDetails, projects } from "@/data/projects";
 import AnimatedSection from "@/components/AnimatedSection";
@@ -46,7 +47,7 @@ export default function ProjectPage({
           <p className="mb-3 text-sm uppercase tracking-[0.2em] text-paper/70">
             {project.name}
           </p>
-          <h1 className="font-display text-4xl font-medium tracking-tightest text-balance sm:text-6xl">
+          <h1 className="font-display text-4xl font-normal italic tracking-tightest text-balance sm:text-6xl">
             {project.tagline}
           </h1>
 
@@ -75,6 +76,21 @@ export default function ProjectPage({
         </AnimatedSection>
       </section>
 
+      <section className="px-6 md:px-12">
+        <AnimatedSection>
+          <div className="relative mx-auto -mt-8 aspect-[16/10] w-full max-w-4xl overflow-hidden rounded-2xl shadow-xl sm:-mt-16">
+            <Image
+              src={project.image}
+              alt={project.name}
+              fill
+              sizes="(min-width: 1024px) 896px, 100vw"
+              className="object-cover"
+              priority
+            />
+          </div>
+        </AnimatedSection>
+      </section>
+
       <section className="px-6 py-16 md:px-12">
         <AnimatedSection className="max-w-3xl">
           <p className="text-lg leading-relaxed text-ink/80">
@@ -90,15 +106,96 @@ export default function ProjectPage({
               className="grid grid-cols-1 gap-4 border-t border-ink/10 pt-10 md:grid-cols-[80px_1fr]"
             >
               <span className="text-sm text-muted">{section.heading}</span>
-              <div className="max-w-3xl">
-                <h2 className="font-display text-2xl font-medium tracking-tightest sm:text-3xl">
+              <div>
+                <h2 className="font-display text-2xl font-normal italic tracking-tightest sm:text-3xl">
                   {section.title}
                 </h2>
-                <div className="mt-4 flex flex-col gap-4 text-base leading-relaxed text-ink/80">
+                <div className="mt-4 flex max-w-3xl flex-col gap-4 text-base leading-relaxed text-ink/80">
                   {section.body.map((p, idx) => (
                     <p key={idx}>{p}</p>
                   ))}
                 </div>
+
+                {section.screenshots && (
+                  <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
+                    {section.screenshots.map((shot) => (
+                      <div key={shot.label}>
+                        <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-ink/10 shadow-sm">
+                          <Image
+                            src={shot.image}
+                            alt={shot.label}
+                            fill
+                            sizes="(min-width: 640px) 33vw, 100vw"
+                            className="object-cover object-top"
+                          />
+                        </div>
+                        <p className="mt-2 text-center text-sm italic text-muted">
+                          {shot.label}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {section.features && (
+                  <div className="mt-12 flex flex-col gap-16">
+                    {section.features.map((feature) => (
+                      <div key={feature.title}>
+                        <h3 className="text-lg font-semibold">
+                          {feature.title}
+                        </h3>
+                        <p className="mt-2 max-w-3xl text-base leading-relaxed text-ink/70">
+                          {feature.body}
+                        </p>
+
+                        {feature.comparison && (
+                          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <div>
+                              <div className="relative aspect-[8/5] overflow-hidden rounded-xl border border-ink/10">
+                                <Image
+                                  src={feature.comparison.before}
+                                  alt={`${feature.title} — before`}
+                                  fill
+                                  sizes="(min-width: 640px) 50vw, 100vw"
+                                  className="object-cover object-top"
+                                />
+                              </div>
+                              <p className="mt-2 text-center text-sm italic text-muted">
+                                Before
+                              </p>
+                            </div>
+                            <div>
+                              <div className="relative aspect-[8/5] overflow-hidden rounded-xl border border-ink/10">
+                                <Image
+                                  src={feature.comparison.after}
+                                  alt={`${feature.title} — after`}
+                                  fill
+                                  sizes="(min-width: 640px) 50vw, 100vw"
+                                  className="object-cover object-top"
+                                />
+                              </div>
+                              <p className="mt-2 text-center text-sm italic text-muted">
+                                After
+                              </p>
+                            </div>
+                          </div>
+                        )}
+
+                        {feature.image && (
+                          <div className="relative mt-6 aspect-[16/10] w-full max-w-2xl overflow-hidden rounded-xl border border-ink/10">
+                            <Image
+                              src={feature.image}
+                              alt={feature.title}
+                              fill
+                              sizes="(min-width: 1024px) 672px, 100vw"
+                              className="object-cover object-top"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </AnimatedSection>
           ))}
@@ -106,7 +203,7 @@ export default function ProjectPage({
 
         {project.process && (
           <AnimatedSection className="mt-16 border-t border-ink/10 pt-10">
-            <h2 className="font-display text-2xl font-medium tracking-tightest sm:text-3xl">
+            <h2 className="font-display text-2xl font-normal italic tracking-tightest sm:text-3xl">
               The process
             </h2>
             <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -127,7 +224,7 @@ export default function ProjectPage({
 
         {project.learnings.length > 0 && (
           <AnimatedSection className="mt-16 border-t border-ink/10 pt-10">
-            <h2 className="font-display text-2xl font-medium tracking-tightest sm:text-3xl">
+            <h2 className="font-display text-2xl font-normal italic tracking-tightest sm:text-3xl">
               My learnings
             </h2>
             <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">

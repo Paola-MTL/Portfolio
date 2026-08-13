@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { projects } from "@/data/projects";
@@ -12,7 +13,7 @@ export default function ProjectsGrid() {
         <p className="mb-2 text-sm uppercase tracking-[0.2em] text-muted">
           Selected work
         </p>
-        <h2 className="font-display text-3xl font-medium tracking-tightest sm:text-4xl">
+        <h2 className="font-display text-3xl font-normal italic tracking-tightest sm:text-4xl">
           My projects
         </h2>
       </AnimatedSection>
@@ -23,19 +24,26 @@ export default function ProjectsGrid() {
             <Link href={`/projects/${project.slug}`} className="group block">
               <motion.div
                 whileHover="hover"
-                className="grid grid-cols-1 items-center gap-4 py-8 md:grid-cols-[auto_1fr_auto_auto] md:gap-8"
+                className="grid grid-cols-1 items-center gap-6 py-8 md:grid-cols-[1fr_auto_auto] md:gap-8"
               >
-                <span
-                  className="h-3 w-3 shrink-0 rounded-full transition-transform duration-300 group-hover:scale-150"
-                  style={{ backgroundColor: project.color }}
-                />
-                <div>
-                  <h3 className="font-display text-2xl font-medium tracking-tightest sm:text-3xl">
-                    {project.name}
-                  </h3>
-                  <p className="mt-1 text-sm text-muted sm:text-base">
-                    {project.tagline}
-                  </p>
+                <div className="flex items-center gap-6">
+                  <div className="relative h-16 w-20 shrink-0 overflow-hidden rounded-lg sm:h-20 sm:w-28">
+                    <Image
+                      src={project.image}
+                      alt={project.name}
+                      fill
+                      sizes="112px"
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-2xl font-normal italic tracking-tightest text-accent sm:text-3xl">
+                      {project.name}
+                    </h3>
+                    <p className="mt-1 text-sm text-muted sm:text-base">
+                      {project.tagline}
+                    </p>
+                  </div>
                 </div>
                 <span className="text-sm text-muted">{project.year}</span>
                 <motion.span

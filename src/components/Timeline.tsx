@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { timeline } from "@/data/about";
 import AnimatedSection from "./AnimatedSection";
 
@@ -11,7 +12,7 @@ export default function Timeline() {
               {entry.years}
             </span>
             <div>
-              <h3 className="font-display text-2xl font-medium tracking-tightest sm:text-3xl">
+              <h3 className="font-display text-2xl font-normal italic tracking-tightest text-teal sm:text-3xl">
                 {entry.title}
               </h3>
               <p className="mt-2 text-sm font-medium text-accent">
@@ -22,6 +23,25 @@ export default function Timeline() {
                   <p key={idx}>{p}</p>
                 ))}
               </div>
+
+              {entry.images && entry.images.length > 0 && (
+                <div className="mt-6 flex gap-3 overflow-x-auto pb-2">
+                  {entry.images.map((src) => (
+                    <div
+                      key={src}
+                      className="relative h-40 w-32 shrink-0 overflow-hidden rounded-xl sm:h-52 sm:w-40"
+                    >
+                      <Image
+                        src={src}
+                        alt=""
+                        fill
+                        sizes="200px"
+                        className="object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </AnimatedSection>

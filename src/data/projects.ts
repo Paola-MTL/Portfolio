@@ -5,6 +5,7 @@ export type ProjectSummary = {
   role: string;
   year: string;
   color: string;
+  image: string;
 };
 
 export const projects: ProjectSummary[] = [
@@ -15,14 +16,7 @@ export const projects: ProjectSummary[] = [
     role: "UI/UX Designer",
     year: "2021–2023",
     color: "#1F3A5F",
-  },
-  {
-    slug: "vf-immigration",
-    name: "VF Immigration",
-    tagline: "Redesigning an immigration consultation site",
-    role: "UX Researcher / Product Designer",
-    year: "2024",
-    color: "#D6021E",
+    image: "/images/home/truxweb.jpg",
   },
   {
     slug: "kc-rentals",
@@ -31,6 +25,16 @@ export const projects: ProjectSummary[] = [
     role: "Web Designer",
     year: "2023",
     color: "#0C2925",
+    image: "/images/home/kcrentals.jpg",
+  },
+  {
+    slug: "vf-immigration",
+    name: "VF Immigration",
+    tagline: "Redesigning an immigration consultation site",
+    role: "UX Researcher / Product Designer",
+    year: "2024",
+    color: "#D6021E",
+    image: "/images/home/vfimmigration.jpg",
   },
 ];
 
@@ -38,6 +42,13 @@ export type ProcessStep = {
   index: string;
   title: string;
   description: string;
+};
+
+export type Feature = {
+  title: string;
+  body: string;
+  comparison?: { before: string; after: string };
+  image?: string;
 };
 
 export type ProjectDetail = ProjectSummary & {
@@ -48,6 +59,8 @@ export type ProjectDetail = ProjectSummary & {
     heading: string;
     title: string;
     body: string[];
+    features?: Feature[];
+    screenshots?: { label: string; image: string }[];
   }[];
   process?: ProcessStep[];
   learnings: {
@@ -64,6 +77,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
     role: "UI/UX Designer",
     year: "2021–2023",
     color: "#1F3A5F",
+    image: "/images/home/truxweb.jpg",
     duration: "2 years",
     collaboration: ["4 developers", "1 project manager", "2 founders"],
     about:
@@ -97,21 +111,31 @@ export const projectDetails: Record<string, ProjectDetail> = {
         heading: "04",
         title: "The results",
         body: [
-          "My senior and I wanted to recreate a reservation process similar to Google Flights / Expedia, putting users in a familiar environment while considering the technical needs of the logistics industry.",
+          "A search engine platform that simplifies the booking of a carrier. After taking into account the founders' ideas and reworking the existing lo-fis, my senior and I wanted to recreate a reservation process similar to Google Flights / Expedia to put users in a familiar environment while considering the various technical needs related to the logistics industry. A step-by-step user guidance helps refine their search as accurately as possible.",
+        ],
+        screenshots: [
+          { label: "Search", image: "/images/truxweb/search-step1.jpg" },
+          { label: "Results", image: "/images/truxweb/search-step2.jpg" },
+          { label: "Dashboard", image: "/images/truxweb/dashboard-step3.jpg" },
         ],
       },
       {
         heading: "05",
         title: "Test and feedback",
         body: [
-          "The booking process tested smoothly, but the dashboard experience wasn't satisfactory — each booking took up too much space, causing excessive scrolling. We needed to rethink how each booking was displayed for a better overview.",
+          "A smooth search experience, but difficult access to various bookings. After testing the platform with the initial users, we found that the booking process was rather smooth but the dashboard experience was not satisfactory — each item took up a considerable amount of space on the screen, leading to significant scrolling and consecutive pages. It was necessary to reconsider the space occupied by each booking for a better overview.",
         ],
       },
       {
         heading: "06",
         title: "The final design",
         body: [
-          "After deliberation between the dev and design teams, the platform became a true web app — solving the flow issues and delivering a more modern experience aligned with Truxweb's vision.",
+          "A web app allowing for an overview of reservations and easier navigation on the platform. After much deliberation between the dev and design teams, the platform took a whole new direction by becoming a true web app — a more modern environment in line with Truxweb's vision.",
+        ],
+        screenshots: [
+          { label: "Search", image: "/images/truxweb/search-step1.jpg" },
+          { label: "Results", image: "/images/truxweb/search-step2.jpg" },
+          { label: "Dashboard", image: "/images/truxweb/dashboard-step3.jpg" },
         ],
       },
     ],
@@ -134,6 +158,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
     role: "UX Researcher / Product Designer",
     year: "2024",
     color: "#D6021E",
+    image: "/images/home/vfimmigration.jpg",
     duration: "4 months",
     collaboration: ["Web Design", "Mobile Design"],
     about:
@@ -171,8 +196,40 @@ export const projectDetails: Record<string, ProjectDetail> = {
       {
         heading: "05",
         title: "The modernized web version",
-        body: [
-          "A more streamlined homepage prioritizing information and highlighting services. Consultations were reorganized by price and duration to make comparison easier. The contact page redirected simple questions to Facebook Live, reserving the representation form for genuine prospects.",
+        body: [],
+        features: [
+          {
+            title: "The homepage",
+            body: "A page in the image of Valérie, more streamlined, where information is prioritized and the services offered are highlighted.",
+            comparison: {
+              before: "/images/vf-immigration/before-homepage.jpg",
+              after: "/images/vf-immigration/after-homepage.jpg",
+            },
+          },
+          {
+            title: "The consultations",
+            body: "Services were reorganized according to their price and duration. The goal was to visually compare the services offered and let users choose the most suitable option for their needs.",
+            comparison: {
+              before: "/images/vf-immigration/before-consultations.jpg",
+              after: "/images/vf-immigration/after-consultations.jpg",
+            },
+          },
+          {
+            title: "The contact page",
+            body: "The goal was to reduce the number of users filling out a form for simple questions — an economic loss for Valérie. Her Facebook Lives were better highlighted to redirect these users, while genuine prospects still had the full representation form.",
+            comparison: {
+              before: "/images/vf-immigration/before-contact.jpg",
+              after: "/images/vf-immigration/after-contact.jpg",
+            },
+          },
+          {
+            title: "Come to Canada",
+            body: "The redesign of this page aimed to improve navigation so users can more easily and quickly recognize themselves in a given category.",
+            comparison: {
+              before: "/images/vf-immigration/before-canada.jpg",
+              after: "/images/vf-immigration/after-canada.jpg",
+            },
+          },
         ],
       },
       {
@@ -201,6 +258,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
     role: "Web Designer",
     year: "2023",
     color: "#0C2925",
+    image: "/images/home/kcrentals.jpg",
     duration: "2 months",
     collaboration: ["Web Design"],
     about:
@@ -216,10 +274,34 @@ export const projectDetails: Record<string, ProjectDetail> = {
       {
         heading: "02",
         title: "The modernized web version",
-        body: [
-          "A cleaner homepage that better illustrates Katia's core business, with a simplified menu free of repetitive pages.",
-          "Property search was simplified with a direct filter on the properties page instead of a submenu, surfacing the best listings by default for undecided visitors.",
-          "Each property listing was redesigned to foreground photography and a clear CTA to request a quote. Partner sections and customer reviews were added to reinforce legitimacy.",
+        body: [],
+        features: [
+          {
+            title: "The home page",
+            body: "A cleaner page that better illustrates Katia's core business. The menu has been simplified because some pages didn't add value or were repetitive — the user is no longer overwhelmed with information like in the old design.",
+            comparison: {
+              before: "/images/kc-rentals/before-1.jpg",
+              after: "/images/kc-rentals/after-1.jpg",
+            },
+          },
+          {
+            title: "Property search has been simplified",
+            body: "In the previous design, finding a property type meant going through a submenu, so I added a filter directly on the properties page that targets the search immediately. By default, the best properties are shown for those without specific criteria.",
+            comparison: {
+              before: "/images/kc-rentals/before-2.jpg",
+              after: "/images/kc-rentals/after-2.jpg",
+            },
+          },
+          {
+            title: "Each property is showcased and linked to a request for a quote",
+            body: "To better highlight each property, photos take on a more prominent role on every page, and a CTA is placed prominently to convert potential clients more quickly.",
+            image: "/images/kc-rentals/feature-1.jpg",
+          },
+          {
+            title: "Enhanced legitimacy",
+            body: "To meet the need for credibility, partner sections and customer reviews were added to reassure users.",
+            image: "/images/kc-rentals/feature-2.jpg",
+          },
         ],
       },
     ],

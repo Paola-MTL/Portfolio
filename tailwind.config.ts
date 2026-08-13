@@ -8,17 +8,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#141414",
-        paper: "#F7F5F1",
-        accent: "#E8542E",
+        ink: "#242322",
+        paper: "#FFFFFF",
+        accent: "#1A90AA",
         muted: "#8A8580",
+        teal: {
+          DEFAULT: "#74AEB2",
+          dark: "#5A9195",
+        },
       },
       fontFamily: {
-        display: ["var(--font-display)", "sans-serif"],
+        display: ["var(--font-display)", "serif"],
         body: ["var(--font-body)", "sans-serif"],
       },
       letterSpacing: {
-        tightest: "-0.04em",
+        tightest: "-0.02em",
       },
     },
   },
