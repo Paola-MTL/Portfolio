@@ -4,6 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Elia — Paola Cejoco",
   description: "Digitizing visitor check-in for modern workplaces.",
+  robots: { index: false, follow: false },
 };
 
 const img206 = "/images/elia/screenshot-206.png";

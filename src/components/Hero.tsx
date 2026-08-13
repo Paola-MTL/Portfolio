@@ -4,6 +4,11 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { heroTaglines } from "@/data/about";
 
+const longestTagline = heroTaglines.reduce(
+  (longest, tagline) => (tagline.length > longest.length ? tagline : longest),
+  "",
+);
+
 export default function Hero() {
   const [index, setIndex] = useState(0);
 
@@ -25,7 +30,15 @@ export default function Hero() {
         Hello, I&apos;m Paola
       </motion.h1>
 
-      <div className="relative mt-4 h-[1.4em] overflow-hidden">
+      <div className="relative mt-4 w-full max-w-xl overflow-hidden">
+        {/* Invisible sizer reserves enough height for the longest tagline
+            (including any line wrap) so the animated text is never clipped. */}
+        <p
+          aria-hidden
+          className="invisible font-body text-2xl font-medium sm:text-3xl"
+        >
+          {longestTagline}
+        </p>
         <AnimatePresence mode="wait">
           <motion.p
             key={heroTaglines[index]}
@@ -33,24 +46,11 @@ export default function Hero() {
             animate={{ y: "0%", opacity: 1 }}
             exit={{ y: "-60%", opacity: 0 }}
             transition={{ duration: 0.5, ease: [0.65, 0, 0.35, 1] }}
-            className="font-body text-2xl font-medium text-white/90 sm:text-3xl"
+            className="absolute inset-0 flex items-center justify-center font-body text-2xl font-medium text-white/90 sm:text-3xl"
           >
             {heroTaglines[index]}
           </motion.p>
         </AnimatePresence>
-      </div>
-
-      <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
-        {heroTaglines.map((tagline, i) => (
-          <button
-            key={tagline}
-            onClick={() => setIndex(i)}
-            aria-label={`Show tagline: ${tagline}`}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              i === index ? "w-8 bg-white" : "w-1.5 bg-white/30"
-            }`}
-          />
-        ))}
       </div>
     </section>
   );
