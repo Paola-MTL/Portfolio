@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AnimatedSection from "@/components/AnimatedSection";
 import ContactCTA from "@/components/ContactCTA";
-import BeforeAfterSlider from "./BeforeAfterSlider";
+import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 
 const RED = "#D6021E";
 
