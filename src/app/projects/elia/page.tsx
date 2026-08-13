@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ScrollDownHint from "./ScrollDownHint";
 
 export const metadata: Metadata = {
   title: "Elia — Paola Cejoco",
@@ -159,91 +160,81 @@ export default function EliaProjectPage() {
       data-node-id="25:735"
       data-name="Elia"
     >
-      {/* Top / Hero */}
+      {/* Top / Hero — background bleeds full viewport width, content stays
+          centered to the 1280px canvas */}
       <div
-        className="relative h-[720px] w-full overflow-hidden"
+        className="relative left-1/2 right-1/2 -mx-[50vw] h-[720px] w-screen overflow-hidden bg-[#6c65ff]"
         data-node-id="25:741"
         data-name="Top"
       >
-        <div className="absolute bg-[#6c65ff] h-[720px] left-0 top-0 w-[1280px]" />
-
-        <div
-          className="absolute contents left-[378px] top-[196px]"
-          data-node-id="25:743"
-          data-name="VF Mockup"
-        >
-          <div className="absolute bg-[#666563] h-[328px] left-[378px] rounded-[12px] top-[196px] w-[524px]" />
-          <div className="absolute contents h-[712.262px] left-[255px] top-[-48px] w-[996.431px]">
-            <CollageRow
-              left="255px"
-              top="-36.2px"
-              maskPosition="123px 232.195px"
-              images={[
-                { src: img224 },
-                { src: img2432 },
-                { src: img225 },
-                { src: img226 },
-              ]}
-            />
-            <CollageRow
-              left="330.84px"
-              top="72.57px"
-              maskPosition="47.161px 123.428px"
-              images={[
-                { src: img206 },
-                { src: img225 },
-                { src: img6051 },
-                { src: img2351 },
-              ]}
-            />
-            <CollageRow
-              left="323.2px"
-              top="204.95px"
-              maskPosition="54.796px -8.95px"
-              images={[
-                { src: img224 },
-                { src: img228 },
-                { src: img223 },
-                { src: img2432 },
-              ]}
-            />
-            <CollageRow
-              left="399.04px"
-              top="313.72px"
-              maskPosition="-21.043px -117.718px"
-              images={[
-                { src: img229 },
-                { src: img224 },
-                { src: img225 },
-                { src: img228 },
-              ]}
-            />
-          </div>
-        </div>
-
-        <Link
-          href="/#projects"
-          className="absolute left-[104px] top-[40px] text-sm font-body text-white/70 transition-colors hover:text-white"
-        >
-          ← Back to projects
-        </Link>
-
-        <div className="-translate-x-1/2 absolute flex items-center justify-center left-1/2 size-[48px] top-[598px]">
-          <div className="flex-none rotate-90">
-            <div className="bg-white content-stretch flex flex-col items-center justify-center p-[10px] relative rounded-[32px] size-[48px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                alt=""
-                className="block max-w-none size-full"
-                src={imgArrowDown}
+        <div className="relative mx-auto h-full w-full max-w-[1280px]">
+          <div
+            className="absolute contents left-[378px] top-[196px]"
+            data-node-id="25:743"
+            data-name="VF Mockup"
+          >
+            <div className="absolute bg-[#666563] h-[328px] left-[378px] rounded-[12px] top-[196px] w-[524px]" />
+            <div className="absolute contents h-[712.262px] left-[255px] top-[-48px] w-[996.431px]">
+              <CollageRow
+                left="255px"
+                top="-36.2px"
+                maskPosition="123px 232.195px"
+                images={[
+                  { src: img224 },
+                  { src: img2432 },
+                  { src: img225 },
+                  { src: img226 },
+                ]}
+              />
+              <CollageRow
+                left="330.84px"
+                top="72.57px"
+                maskPosition="47.161px 123.428px"
+                images={[
+                  { src: img206 },
+                  { src: img225 },
+                  { src: img6051 },
+                  { src: img2351 },
+                ]}
+              />
+              <CollageRow
+                left="323.2px"
+                top="204.95px"
+                maskPosition="54.796px -8.95px"
+                images={[
+                  { src: img224 },
+                  { src: img228 },
+                  { src: img223 },
+                  { src: img2432 },
+                ]}
+              />
+              <CollageRow
+                left="399.04px"
+                top="313.72px"
+                maskPosition="-21.043px -117.718px"
+                images={[
+                  { src: img229 },
+                  { src: img224 },
+                  { src: img225 },
+                  { src: img228 },
+                ]}
               />
             </div>
           </div>
-        </div>
 
-        <div className="-translate-y-1/2 absolute content-stretch flex flex-col h-[116px] items-start left-[104px] top-1/2 w-[798px]">
-          <div className="font-display font-bold flex flex-1 flex-col justify-center leading-[0] lowercase min-h-px relative text-[96px] text-white tracking-[-1.92px] w-full">
-            <p className="leading-[normal]">elia</p>
+          <Link
+            href="/#projects"
+            className="absolute left-[104px] top-[32px] inline-flex items-center gap-2 rounded-full border border-white/40 px-5 py-2 text-sm font-body text-white transition-colors duration-300 hover:bg-white hover:text-[#6c65ff]"
+          >
+            ← Back to projects
+          </Link>
+
+          <ScrollDownHint arrowSrc={imgArrowDown} />
+
+          <div className="-translate-y-1/2 absolute content-stretch flex flex-col h-[116px] items-start left-[104px] top-1/2 w-[798px]">
+            <div className="font-display font-bold flex flex-1 flex-col justify-center leading-[0] lowercase min-h-px relative text-[96px] text-white tracking-[-1.92px] w-full">
+              <p className="leading-[normal]">elia</p>
+            </div>
           </div>
         </div>
       </div>
