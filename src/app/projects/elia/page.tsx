@@ -241,7 +241,7 @@ export default function EliaProjectPage() {
         </div>
 
         <div className="-translate-y-1/2 absolute content-stretch flex flex-col h-[116px] items-start left-[104px] top-1/2 w-[798px]">
-          <div className="font-inter font-bold flex flex-1 flex-col justify-center leading-[0] lowercase min-h-px relative text-[96px] text-white tracking-[-1.92px] w-full">
+          <div className="font-display font-bold flex flex-1 flex-col justify-center leading-[0] lowercase min-h-px relative text-[96px] text-white tracking-[-1.92px] w-full">
             <p className="leading-[normal]">elia</p>
           </div>
         </div>
@@ -256,7 +256,7 @@ export default function EliaProjectPage() {
               <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] text-black tracking-[-0.2px] whitespace-nowrap">
                 <p className="leading-[24px]">about the project</p>
               </div>
-              <div className="font-inter font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
+              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">
                   Facilitating visitor management for businesses
                 </p>
@@ -386,7 +386,7 @@ export default function EliaProjectPage() {
               <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] text-black tracking-[-0.2px] whitespace-nowrap">
                 <p className="leading-[24px]">01</p>
               </div>
-              <div className="font-inter font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
+              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">The problem</p>
               </div>
             </div>
@@ -429,7 +429,7 @@ export default function EliaProjectPage() {
                 <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[#1e1e1e] text-[24px] tracking-[-0.24px] whitespace-nowrap">
                   <p className="leading-[30px]">02</p>
                 </div>
-                <div className="font-inter font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
+                <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                   <p className="leading-[normal]">Target users</p>
                 </div>
               </div>
@@ -478,7 +478,7 @@ export default function EliaProjectPage() {
               <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] text-black tracking-[-0.2px] whitespace-nowrap">
                 <p className="leading-[24px]">03</p>
               </div>
-              <div className="font-inter font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
+              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">
                   Discovery phase: pain points
                 </p>
@@ -540,7 +540,7 @@ export default function EliaProjectPage() {
               <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] text-black tracking-[-0.2px] whitespace-nowrap">
                 <p className="leading-[24px]">04</p>
               </div>
-              <div className="font-inter font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
+              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">
                   Scope definition and prioritization
                 </p>
@@ -675,7 +675,7 @@ export default function EliaProjectPage() {
               <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] text-black tracking-[-0.2px] whitespace-nowrap">
                 <p className="leading-[24px]">05</p>
               </div>
-              <div className="font-inter font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
+              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">First iterations</p>
               </div>
             </div>
@@ -788,7 +788,7 @@ export default function EliaProjectPage() {
               <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] text-black tracking-[-0.2px] whitespace-nowrap">
                 <p className="leading-[24px]">06</p>
               </div>
-              <div className="font-inter font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
+              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">Feedback and improvements</p>
               </div>
             </div>
@@ -874,7 +874,7 @@ export default function EliaProjectPage() {
               <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] text-black tracking-[-0.2px] whitespace-nowrap">
                 <p className="leading-[24px]">07</p>
               </div>
-              <div className="font-inter font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
+              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">My learnings</p>
               </div>
             </div>
@@ -939,7 +939,7 @@ export default function EliaProjectPage() {
         {/* Contact */}
         <div className="bg-[#f03241] content-stretch flex flex-col gap-[56px] items-center py-[112px] relative shrink-0 w-full">
           <div className="content-stretch flex flex-col gap-[4px] items-center leading-[0] relative shrink-0 text-center text-white w-full">
-            <div className="font-inter font-bold flex flex-col justify-center relative shrink-0 text-[56px] tracking-[-0.84px] w-[550px]">
+            <div className="font-display font-bold flex flex-col justify-center relative shrink-0 text-[56px] tracking-[-0.84px] w-[550px]">
               <p className="leading-[normal]">Like what you see?</p>
             </div>
             <div className="font-body font-medium flex flex-col justify-center min-w-full relative shrink-0 text-[24px] tracking-[-0.24px] w-[min-content]">
