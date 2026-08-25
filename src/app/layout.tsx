@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
-import Nav from "@/components/Nav";
+import ConditionalNav from "@/components/ConditionalNav";
 import ConditionalFooter from "@/components/ConditionalFooter";
 
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-body" });
@@ -33,7 +33,7 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} ${inter.variable} font-body antialiased`}
       >
-        <Nav />
+        <ConditionalNav />
         <main>{children}</main>
         <ConditionalFooter />
       </body>
