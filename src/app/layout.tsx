@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
+import ConditionalFooter from "@/components/ConditionalFooter";
 
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-body" });
 const inter = Inter({
@@ -35,7 +35,7 @@ export default function RootLayout({
       >
         <Nav />
         <main>{children}</main>
-        <Footer />
+        <ConditionalFooter />
       </body>
     </html>
   );
