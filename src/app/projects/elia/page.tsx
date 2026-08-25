@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ScrollDownHint from "./ScrollDownHint";
+import MockupsRow from "./MockupsRow";
 
 export const metadata: Metadata = {
   title: "Elia — Paola Cejoco",
@@ -7,72 +8,25 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const img206 = "/images/elia/screenshot-206.png";
-const img223 = "/images/elia/screenshot-223.png";
-const img224 = "/images/elia/screenshot-224.png";
-const img225 = "/images/elia/screenshot-225.png";
-const img226 = "/images/elia/screenshot-226.png";
-const img227 = "/images/elia/screenshot-227.png";
-const img228 = "/images/elia/screenshot-228.png";
-const img229 = "/images/elia/screenshot-229.png";
-const img2351 = "/images/elia/screenshot-2351.png";
-const img2432 = "/images/elia/screenshot-2432.png";
-const img6051 = "/images/elia/screenshot-6051.png";
 const imgDiscovery = "/images/elia/discovery-pain-points.png";
 const imgScope = "/images/elia/scope-priorities.png";
 const imgArrowDown = "/images/elia/arrow-1.svg";
 const imgArrowRight = "/images/elia/arrow-3.svg";
-const imgFrameMask = "/images/elia/frame-mask.svg";
-
-function CollageRow({
-  left,
-  top,
-  maskPosition,
-  images,
-}: {
-  left: string;
-  top: string;
-  maskPosition: string;
-  images: { src: string; rounded?: boolean; crop?: string }[];
-}) {
-  return (
-    <div
-      className="absolute flex h-[338.739px] items-center justify-center w-[852.388px]"
-      style={{ left, top }}
-    >
-      <div className="flex-none rotate-[-15.79deg]">
-        <div
-          className="content-stretch flex gap-[14.993px] h-[110.309px] items-start relative rounded-[12px] w-[854.626px]"
-          style={{
-            maskImage: `url("${imgFrameMask}")`,
-            WebkitMaskImage: `url("${imgFrameMask}")`,
-            maskPosition,
-            WebkitMaskPosition: maskPosition,
-            maskSize: "524px 328px",
-            WebkitMaskSize: "524px 328px",
-            maskRepeat: "no-repeat",
-            WebkitMaskRepeat: "no-repeat",
-          }}
-        >
-          {images.map((img, idx) => (
-            <div
-              key={idx}
-              className={`h-[110.309px] relative shrink-0 w-[202.411px] ${img.rounded === false ? "" : "rounded-[8px] overflow-hidden"}`}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                alt=""
-                className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
-                style={img.crop ? { objectPosition: img.crop } : undefined}
-                src={img.src}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
+const imgArrowBack = "/images/elia/arrow-2.svg";
+const imgHome1 = "/images/elia/home-1.png";
+const imgStep12 = "/images/elia/step-1-2.png";
+const imgStep31 = "/images/elia/step-3-1.png";
+const imgStep21 = "/images/elia/step-2-1.png";
+const imgStep71 = "/images/elia/step-7-1.png";
+const imgMobilePhotoCapture1 = "/images/elia/mobile-photo-capture-1.png";
+const imgMobileDocumentSigned = "/images/elia/mobile-document-signed.png";
+const imgMobileDocument = "/images/elia/mobile-document.png";
+const imgMobileHostTyping = "/images/elia/mobile-host-typing.png";
+const imgMobileStep3 = "/images/elia/mobile-step-3.png";
+const imgMobileStep2 = "/images/elia/mobile-step-2.png";
+const imgMobileStep1 = "/images/elia/mobile-step-1.png";
+const imgMobileHome = "/images/elia/mobile-home.png";
+const imgDiagonalScreens1 = "/images/elia/diagonal-screens-1.png";
 
 function Persona({
   label,
@@ -167,58 +121,66 @@ export default function EliaProjectPage() {
         data-name="Top"
       >
         <div className="relative mx-auto h-full w-full max-w-[1280px]">
-          <div
-            className="absolute contents left-[378px] top-[196px]"
-            data-node-id="25:743"
-            data-name="VF Mockup"
-          >
-            <div className="absolute bg-[#666563] h-[328px] left-[378px] rounded-[12px] top-[196px] w-[524px]" />
-            <div className="absolute contents h-[712.262px] left-[255px] top-[-48px] w-[996.431px]">
-              <CollageRow
-                left="255px"
-                top="-36.2px"
-                maskPosition="123px 232.195px"
-                images={[
-                  { src: img224 },
-                  { src: img2432 },
-                  { src: img225 },
-                  { src: img226 },
-                ]}
-              />
-              <CollageRow
-                left="330.84px"
-                top="72.57px"
-                maskPosition="47.161px 123.428px"
-                images={[
-                  { src: img206 },
-                  { src: img225 },
-                  { src: img6051 },
-                  { src: img2351 },
-                ]}
-              />
-              <CollageRow
-                left="323.2px"
-                top="204.95px"
-                maskPosition="54.796px -8.95px"
-                images={[
-                  { src: img224 },
-                  { src: img228 },
-                  { src: img223 },
-                  { src: img2432 },
-                ]}
-              />
-              <CollageRow
-                left="399.04px"
-                top="313.72px"
-                maskPosition="-21.043px -117.718px"
-                images={[
-                  { src: img229 },
-                  { src: img224 },
-                  { src: img225 },
-                  { src: img228 },
-                ]}
-              />
+          <div className="absolute content-stretch flex items-center left-[104px] top-0 w-[1072px]">
+            <div className="content-stretch flex items-center py-[32px] relative shrink-0">
+              <a
+                href="/#projects"
+                className="content-stretch flex gap-[10px] items-center relative shrink-0"
+              >
+                <div className="flex items-center justify-center relative shrink-0">
+                  <div className="flex-none rotate-180">
+                    <div className="h-[20.877px] relative w-[26.252px]">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        alt=""
+                        className="absolute block inset-0 max-w-none size-full"
+                        src={imgArrowBack}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="content-stretch flex items-center justify-center py-[8px] relative shrink-0">
+                  <div className="font-body font-medium flex flex-col justify-center leading-[0] relative shrink-0 text-[24px] text-center text-white tracking-[-0.24px] whitespace-nowrap">
+                    <p className="leading-[30px]">BACK</p>
+                  </div>
+                </div>
+              </a>
             </div>
+            <div className="content-stretch flex flex-1 gap-[32px] items-center justify-end min-w-px py-[32px] relative">
+              <a
+                href="/about"
+                className="content-stretch flex items-center justify-center relative shrink-0"
+              >
+                <div className="content-stretch flex items-center justify-center py-[8px] relative shrink-0">
+                  <div className="font-body font-medium flex flex-col justify-center leading-[0] relative shrink-0 text-[24px] text-center text-white tracking-[-0.24px] whitespace-nowrap">
+                    <p className="leading-[30px]">about</p>
+                  </div>
+                </div>
+              </a>
+              <a
+                href="mailto:cejoco.paola@gmail.com"
+                className="content-stretch flex items-center justify-center relative shrink-0"
+              >
+                <div className="content-stretch flex items-center justify-center py-[8px] relative shrink-0">
+                  <div className="font-body font-medium flex flex-col justify-center leading-[0] relative shrink-0 text-[24px] text-center text-white tracking-[-0.24px] whitespace-nowrap">
+                    <p className="leading-[30px]">contact</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div
+            className="absolute h-[327px] left-[354.42px] top-[197px] w-[571.163px]"
+            data-node-id="25:9100"
+            data-name="diagonal screens 1"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              alt=""
+              className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+              src={imgDiagonalScreens1}
+            />
           </div>
 
           <ScrollDownHint arrowSrc={imgArrowDown} />
@@ -242,7 +204,7 @@ export default function EliaProjectPage() {
               </div>
               <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">
-                  Facilitating visitor management for businesses
+                  Streamline company visitor management
                 </p>
               </div>
             </div>
@@ -250,26 +212,26 @@ export default function EliaProjectPage() {
               <div className="content-stretch flex flex-col gap-[32px] items-start relative self-stretch shrink-0 w-[615px]">
                 <div className="font-body font-normal flex flex-col justify-center leading-[0] min-w-full relative shrink-0 text-[#1e1e1e] text-[16px] w-[min-content] whitespace-pre-wrap">
                   <p className="leading-[20px] mb-4">
-                    elia is an all-in-one management platform for workspaces.
-                    It centralizes several services, including desk and room
-                    booking, visitor management, and service request
-                    handling.
+                    elia is an all-in-one management platform designed for
+                    workspaces. It allows for the centralization of multiple
+                    services, including office and meeting room bookings,
+                    visitor management, and service request processing.
                   </p>
                   <p className="leading-[20px] mb-0">
-                    As office dynamics evolved and client demand grew, the
-                    visitor management module was re-prioritized on our
-                    strategic roadmap.
+                    In response to the evolving dynamics of the office and the
+                    growing demand from our clients, the visitor management
+                    module has been reprioritized in our strategic roadmap.
                     <br aria-hidden />
                     <br aria-hidden />
-                    The goal: digitize company reception to eliminate
-                    operational friction and deliver a seamless experience
-                    built directly into our platform.
+                    The goal: to digitize the reception in the company to
+                    eliminate operational friction and provide a seamless
+                    experience directly integrated into our platform.
                   </p>
                 </div>
                 <div className="content-stretch flex gap-[7.539px] items-center justify-center relative shrink-0">
                   <div className="content-stretch flex items-center justify-center py-[6.031px] relative shrink-0">
                     <div className="font-body font-medium flex flex-col justify-center leading-[0] relative shrink-0 text-[#6c65ff] text-[18.09px] text-center tracking-[-0.1809px] whitespace-nowrap">
-                      <p className="leading-[22.616px]">visit site</p>
+                      <p className="leading-[22.616px]">visit the site</p>
                     </div>
                   </div>
                   <div className="h-[15.739px] relative shrink-0 w-[19.79px]">
@@ -329,38 +291,32 @@ export default function EliaProjectPage() {
           </div>
         </div>
 
-        {/* Mockups strip */}
-        <div className="content-stretch flex flex-col gap-[32px] h-[720px] items-start justify-center relative shrink-0 w-[1280px] overflow-hidden">
-          <div className="content-stretch flex gap-[32px] items-start pl-[195px] relative shrink-0">
-            {[img206, img225, img2351, img227].map((src, idx) => (
-              <div
-                key={idx}
-                className="h-[286px] relative rounded-[8px] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.2)] shrink-0 w-[524.796px] overflow-hidden"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  alt=""
-                  className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
-                  src={src}
-                />
-              </div>
-            ))}
-          </div>
-          <div className="content-stretch flex gap-[32px] items-start relative shrink-0 pl-[195px]">
-            {[img224, img228, img223, img2432].map((src, idx) => (
-              <div
-                key={idx}
-                className="h-[286.025px] relative rounded-[8px] shadow-[0px_4px_30px_0px_rgba(0,0,0,0.2)] shrink-0 w-[524.842px] overflow-hidden"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  alt=""
-                  className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
-                  src={src}
-                />
-              </div>
-            ))}
-          </div>
+        {/* Mockups strip — tile sizes scale with vw below the 1280px design
+            width and cap at their original px size above it (via min()), so
+            the intentional edge-bleed stays proportional to the section at
+            every viewport instead of growing unbounded past 1280px */}
+        <div className="content-stretch flex flex-col gap-[min(2.5vw,32px)] items-start justify-center relative shrink-0 w-full overflow-hidden py-[min(2.5vw,32px)]">
+          <MockupsRow
+            images={[imgHome1, imgStep12, imgStep31, imgStep21, imgStep71]}
+            containerClassName="content-stretch flex gap-[min(2.5vw,32px)] items-start pl-[min(15.23vw,195px)] relative shrink-0"
+            itemClassName="relative rounded-[12px] shrink-0 w-[min(29.81vw,381.597px)] aspect-[966/724] overflow-hidden"
+            imgClassName="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[12px] size-full"
+          />
+          <MockupsRow
+            images={[
+              imgMobilePhotoCapture1,
+              imgMobileDocumentSigned,
+              imgMobileDocument,
+              imgMobileHostTyping,
+              imgMobileStep3,
+              imgMobileStep2,
+              imgMobileStep1,
+              imgMobileHome,
+            ]}
+            containerClassName="content-stretch flex gap-[min(2.5vw,32px)] items-center justify-end relative shrink-0 pr-[min(15.23vw,195px)] w-full"
+            itemClassName="relative shrink-0 w-[min(10.93vw,139.891px)] aspect-[450/920]"
+            imgClassName="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+          />
         </div>
 
         {/* 01 — The problem */}
@@ -378,26 +334,27 @@ export default function EliaProjectPage() {
               <div className="font-body font-normal flex flex-col justify-center leading-[0] relative shrink-0 text-[#1e1e1e] text-[0px] w-full">
                 <p className="leading-[20px] mb-0 text-[16px] whitespace-pre-wrap">
                   In many organizations, visitor reception still relied on
-                  outdated paper-based processes. This approach created two
-                  major issues:
+                  archaic paper processes. This approach created two major
+                  issues:
                   <br aria-hidden />
                   <br aria-hidden />
                 </p>
                 <ul className="leading-[20px] list-disc text-[16px]">
                   <li className="mb-0 ms-[24px]">
                     <span className="font-body font-semibold">
-                      Suboptimal visitor experience
+                      An underwhelming visitor experience
                     </span>
-                    : long wait times and an unpolished first impression,
-                    costly for businesses serving a high-end clientele.
+                    : Long wait times and a poorly managed first impression,
+                    detrimental for companies hosting high-end clientele.
                   </li>
                   <li className="ms-[24px]">
                     <span className="font-body font-semibold">
-                      Critical security and compliance risk
+                      A critical risk to security and compliance
                     </span>
-                    : in an emergency, administrators lacked a reliable,
-                    instant digital record of who was on-site, exposing the
-                    company to traceability and data-compliance gaps.
+                    : In case of an emergency (evacuation), management lacked
+                    a reliable and instantaneous digital record of
+                    individuals present on-site, exposing them to
+                    traceability and data compliance failures.
                   </li>
                 </ul>
               </div>
@@ -405,9 +362,10 @@ export default function EliaProjectPage() {
           </div>
         </div>
 
-        {/* 02 — Target users */}
-        <div className="bg-[#e9e8ff] content-stretch flex flex-col items-start overflow-clip px-[195px] py-[40px] relative shrink-0 w-[1280px]">
-          <div className="content-stretch flex flex-col items-start relative shrink-0 w-[890px]">
+        {/* 02 — Target users — background bleeds full viewport width, content
+            stays centered to the 1280px canvas */}
+        <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen overflow-clip bg-[#e9e8ff]">
+          <div className="content-stretch mx-auto flex max-w-[1280px] flex-col items-start px-[195px] py-[40px] relative w-full">
             <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-full">
               <div className="content-stretch flex flex-col gap-[8px] items-start leading-[0] relative shrink-0 w-full">
                 <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[#1e1e1e] text-[24px] tracking-[-0.24px] whitespace-nowrap">
@@ -417,13 +375,13 @@ export default function EliaProjectPage() {
                   <p className="leading-[normal]">Target users</p>
                 </div>
               </div>
-              <div className="content-stretch flex items-start relative shrink-0 w-[890px]">
+              <div className="content-stretch flex items-start relative shrink-0 w-full">
                 <div className="content-stretch flex flex-1 items-center min-w-px relative">
                   <div className="font-body font-semibold flex flex-1 flex-col justify-center leading-[0] min-w-px relative text-[#1e1e1e] text-[16px]">
                     <p className="leading-[20px]">
-                      Since this is a multi-user product, designing this
-                      module meant addressing the specific needs of three key
-                      actors:
+                      Since this is a multi-user product, the design of this
+                      module needed to address the specific needs of three
+                      key stakeholders:
                     </p>
                   </div>
                 </div>
@@ -433,22 +391,22 @@ export default function EliaProjectPage() {
                   label="Visitor"
                   pillBg="#f4ebff"
                   pillText="#53389e"
-                  title="Courier, interview candidate, external visitor (client, vendor…)"
-                  body="Wants a fast, frictionless check-in for a great first impression, without unnecessary wait times at reception."
+                  title="Delivery person, interviewee, external visitor (client, supplier...)"
+                  body="They seek a quick and smooth registration process to enjoy an excellent first impression of the company without enduring unnecessary wait times at reception."
                 />
                 <Persona
                   label="Host"
                   pillBg="#e0f2fe"
                   pillText="#0369a1"
-                  title="Internal employee receiving a visitor"
-                  body="Wants to be notified smoothly when their visitor arrives and be able to prepare invitations in advance."
+                  title="Internal person who receives"
+                  body="They wish to be notified of their visitor's arrival seamlessly and to prepare their invitations in advance."
                 />
                 <Persona
-                  label="Admin / Reception"
+                  label="Administrator/Reception"
                   pillBg="#dcfce7"
                   pillText="#15803d"
                   title="Site manager"
-                  body="Wants to reduce the operational load on reception, get real-time visibility into who's on-site for security, and easily handle forgotten check-outs."
+                  body="Their goal is to lighten the operational burden of reception, ensure real-time visibility of individuals present on-site for security reasons, and easily manage check-out oversights."
                 />
               </div>
             </div>
@@ -479,15 +437,24 @@ export default function EliaProjectPage() {
             <div className="content-stretch flex flex-col gap-[24px] items-start leading-[0] relative shrink-0 text-[16px] w-[890px]">
               <div className="content-stretch flex flex-col gap-[16px] items-start relative shrink-0 w-full">
                 <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-black w-[342px]">
-                  <p className="leading-[20px]">Operational friction</p>
+                  <p className="leading-[20px]">Operational frictions</p>
                 </div>
                 <div className="font-body font-normal flex flex-col justify-center min-w-full relative shrink-0 text-[#1e1e1e] w-[min-content]">
-                  <p className="leading-[20px]">
-                    Outdated paper processes generated bulky stacks of
-                    documents and Excel files that took receptionists far too
-                    long to fill in by hand. Approvals also required a person
-                    to be physically present to validate them.
-                  </p>
+                  <ul className="list-disc">
+                    <li className="mb-0 ms-[24px]">
+                      <span className="leading-[20px]">
+                        Outdated paper processes generating cumbersome stacks
+                        of documents and excessively long Excel files that
+                        must be manually filled out by the receptionist.
+                      </span>
+                    </li>
+                    <li className="ms-[24px]">
+                      <span className="leading-[20px]">
+                        Need for physical human intervention to validate
+                        approvals.
+                      </span>
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div className="content-stretch flex flex-col gap-[16px] items-start relative shrink-0 w-full">
@@ -495,11 +462,15 @@ export default function EliaProjectPage() {
                   <p className="leading-[20px]">Visitor experience</p>
                 </div>
                 <div className="font-body font-normal flex flex-col justify-center min-w-full relative shrink-0 text-[#1e1e1e] w-[min-content]">
-                  <p className="leading-[20px]">
-                    Long wait times during simultaneous rushes forced
-                    visitors to arrive early or call their host directly just
-                    to announce their presence.
-                  </p>
+                  <ul className="list-disc">
+                    <li className="ms-[24px]">
+                      <span className="leading-[20px]">
+                        Extended wait times during peak periods, forcing
+                        visitors to anticipate their arrival or directly call
+                        their host to announce their presence.
+                      </span>
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div className="content-stretch flex flex-col gap-[16px] items-start relative shrink-0 w-full">
@@ -507,10 +478,15 @@ export default function EliaProjectPage() {
                   <p className="leading-[20px]">Security and tracking</p>
                 </div>
                 <div className="font-body font-normal flex flex-col justify-center min-w-full relative shrink-0 text-[#1e1e1e] w-[min-content]">
-                  <p className="leading-[20px]">
-                    Visitors frequently forgot to check out, creating real
-                    traceability risks for who was actually on-site.
-                  </p>
+                  <ul className="list-disc">
+                    <li className="ms-[24px]">
+                      <span className="leading-[20px]">
+                        Frequent forgetfulness of the check-out procedure by
+                        visitors, creating risks for the traceability of
+                        individuals present on site.
+                      </span>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -526,7 +502,7 @@ export default function EliaProjectPage() {
               </div>
               <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">
-                  Scope definition and prioritization
+                  Definition of scope and prioritization
                 </p>
               </div>
             </div>
@@ -542,47 +518,48 @@ export default function EliaProjectPage() {
               <div className="content-stretch flex flex-col gap-[16px] items-start leading-[0] relative shrink-0 text-[16px] w-full">
                 <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-black w-[342px]">
                   <p className="leading-[20px]">
-                    Must-haves (MVP essentials)
+                    Must-Haves (Essential for the MVP)
                   </p>
                 </div>
                 <div className="font-body font-normal flex flex-col justify-center min-w-full relative shrink-0 text-[#1e1e1e] w-[min-content]">
                   <ul className="list-disc">
                     <li className="mb-0 ms-[24px]">
                       <span className="leading-[20px]">
-                        Replace paper entirely with a digital visitor
-                        management system.
+                        Implementation of a digital visitor management
+                        system to completely replace the paper format.
                       </span>
                     </li>
                     <li className="mb-0 ms-[24px]">
                       <span className="leading-[20px]">
-                        Automate the check-in process.
+                        Automation of the check-in process.
                       </span>
                     </li>
                     <li className="mb-0 ms-[24px]">
                       <span className="leading-[20px]">
-                        Create an admin dashboard for tracking and manually
-                        signing out visitors who forgot to check out.
+                        Creation of an admin dashboard for tracking and
+                        manual sign-out of visitors in case of forgetfulness.
                       </span>
                     </li>
                     <li className="mb-0 ms-[24px]">
                       <span className="leading-[20px]">
-                        Real-time traceability of who is on-site.
+                        Real-time traceability of individuals present on
+                        site.
                       </span>
                     </li>
                     <li className="mb-0 ms-[24px]">
                       <span className="leading-[20px]">
-                        Require visitors to photograph an ID at check-in.
+                        Requirement for visitors to take a photo of an ID
+                        during registration.
                       </span>
                     </li>
                     <li className="mb-0 ms-[24px]">
                       <span className="leading-[20px]">
-                        Allow visitors to complete a pre-check-in.
+                        Option for visitors to perform a pre-check-in.
                       </span>
                     </li>
                     <li className="ms-[24px]">
                       <span className="leading-[20px]">
-                        Display the company&rsquo;s logo on the welcome
-                        screen.
+                        Display of the company logo on the homepage.
                       </span>
                     </li>
                   </ul>
@@ -591,35 +568,38 @@ export default function EliaProjectPage() {
               <div className="content-stretch flex flex-col gap-[16px] items-start leading-[0] relative shrink-0 text-[16px] w-full">
                 <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-black w-[342px]">
                   <p className="leading-[20px]">
-                    Nice-to-haves (future iterations)
+                    Nice-to-Haves (Future enhancements)
                   </p>
                 </div>
                 <div className="font-body font-normal flex flex-col justify-center min-w-full relative shrink-0 text-[#1e1e1e] w-[min-content]">
                   <ul className="list-disc">
                     <li className="mb-0 ms-[24px]">
                       <span className="leading-[20px]">
-                        Distinguish visit type (delivery, guest, interview).
+                        Distinction of visit type (delivery, visitor,
+                        maintenance).
                       </span>
                     </li>
                     <li className="mb-0 ms-[24px]">
                       <span className="leading-[20px]">
-                        Integrate a reception-managed approval system.
+                        Integration of an approval system managed by the
+                        reception.
                       </span>
                     </li>
                     <li className="mb-0 ms-[24px]">
                       <span className="leading-[20px]">
-                        Let hosts send personalized invitations to visitors
-                        in advance.
+                        Sending personalized invitations to visitors by the
+                        host in advance.
                       </span>
                     </li>
                     <li className="mb-0 ms-[24px]">
                       <span className="leading-[20px]">
-                        Send host notifications via Microsoft Teams.
+                        Notifications sent to the host via Microsoft Teams.
                       </span>
                     </li>
                     <li className="ms-[24px]">
                       <span className="leading-[20px]">
-                        Export the visitor log as CSV.
+                        Export functionality for the visitor log in CSV
+                        format.
                       </span>
                     </li>
                   </ul>
@@ -631,17 +611,17 @@ export default function EliaProjectPage() {
                 </div>
                 <div className="content-stretch flex items-start justify-center relative shrink-0 gap-x-16">
                   <TimelineTrack
-                    name="V1 — Must-haves"
+                    name="V1 - Must-Haves"
                     steps={[
-                      { label: "Web app", color: "#c084fc" },
+                      { label: "Web application", color: "#c084fc" },
                       { label: "Tablet", color: "#c084fc" },
                       { label: "Feedback", color: "#4ade80" },
                     ]}
                   />
                   <TimelineTrack
-                    name="V2 — Nice-to-haves"
+                    name="V2 - Nice-to-Haves"
                     steps={[
-                      { label: "Web app", color: "#3b82f6" },
+                      { label: "Web application", color: "#3b82f6" },
                       { label: "Tablet", color: "#3b82f6" },
                       { label: "Mobile", color: "#3b82f6" },
                     ]}
@@ -676,39 +656,40 @@ export default function EliaProjectPage() {
                   </div>
                   <div className="font-body font-normal flex flex-col justify-center leading-[0] min-w-full relative shrink-0 text-[#1e1e1e] text-[16px] w-[min-content]">
                     <p className="leading-[20px] mb-0 whitespace-pre-wrap">
-                      To support the sales team in converting prospects and
-                      meet growing demand from receptionists, we prioritized
-                      the following admin features:
+                      To support the sales team in converting leads and to
+                      meet the growing demand from receptionists, we
+                      prioritized the following administrator features:
                       <br aria-hidden />
                       <br aria-hidden />
                     </p>
                     <ul className="list-disc mb-0">
                       <li className="mb-0 ms-[24px]">
                         <span className="leading-[20px]">
-                          Configuring the visitor journey and managing
-                          categories.
+                          Visitor journey configuration and category
+                          management.
                         </span>
                       </li>
                       <li className="ms-[24px]">
                         <span className="leading-[20px]">
-                          The visitor log, including the ability to perform a
-                          manual check-out.
+                          The visitor log, including the ability to perform
+                          manual check-outs.
                           <br aria-hidden />
                           <br aria-hidden />
                         </span>
                       </li>
                     </ul>
                     <p className="leading-[20px] mb-0 whitespace-pre-wrap">
-                      A competitive analysis and interviews with
-                      receptionists let me map out the different visitor
-                      profiles and their associated reception flows.
+                      A competitive analysis and interviews conducted with
+                      receptionists allowed me to map out the different
+                      visitor profiles and the associated types of reception.
                       <br aria-hidden />
                       <br aria-hidden />
                     </p>
                     <p className="leading-[20px] whitespace-pre-wrap">
-                      One of the main design challenges was covering a huge
-                      variety of profiles and flows to address every use
-                      case — so I applied a core principle of our platform:
+                      One of the main design challenges was the ability to
+                      accommodate a wide variety of profiles and flows to
+                      cover all use cases. Therefore, I applied a key
+                      principle at the heart of our platform: to offer
                       maximum modularity and flexibility.
                     </p>
                   </div>
@@ -720,20 +701,16 @@ export default function EliaProjectPage() {
                     </div>
                   </div>
                   <div className="font-body font-normal flex flex-col justify-center leading-[0] min-w-full relative shrink-0 text-[#1e1e1e] text-[16px] w-[min-content] whitespace-pre-wrap">
-                    <p className="leading-[20px] mb-0">
-                      Once admins configured categories, employees
-                      (non-admins) could pre-fill and send invitations to
-                      their visitors.
-                      <br aria-hidden />
-                      <br aria-hidden />
-                    </p>
                     <p className="leading-[20px]">
-                      After this first version launched, field feedback
-                      showed us that every site had strong specificities —
-                      visitor categories and flows couldn&rsquo;t be
-                      standardized across every organization. So we evolved
-                      the flows, then adapted the tablet interface to support
-                      fully self-serve check-in.
+                      Once the categories were set up by the administrators,
+                      collaborators (non-admins) could pre-fill and send an
+                      invitation to their visitors. However, after the
+                      launch of this first version, feedback from the field
+                      indicated that each site had strong specificities: the
+                      categories and visitor flows should not be
+                      standardized across all organizations. We therefore
+                      evolved the processes and adapted the tablet interface
+                      to allow for complete self-check-in.
                     </p>
                   </div>
                 </div>
@@ -752,11 +729,12 @@ export default function EliaProjectPage() {
                   </div>
                   <div className="font-body font-normal flex flex-col justify-center leading-[0] min-w-full relative shrink-0 text-[#1e1e1e] text-[16px] w-[min-content]">
                     <p className="leading-[20px]">
-                      For this first version, facing an urgent client
-                      request, some features had to be deprioritized for a
-                      later release. We also made trade-offs on user testing
-                      ahead of launch, compensating with intensive
-                      post-launch field feedback to prepare and structure V2.
+                      For this first version, in response to an urgent
+                      client request, some features had to be deprioritized
+                      for a later version. Compromises were also made on
+                      user testing prior to the launch, compensated by
+                      intensive collection of field feedback post-launch to
+                      prepare and structure V2.
                     </p>
                   </div>
                 </div>
@@ -778,35 +756,35 @@ export default function EliaProjectPage() {
             </div>
             <div className="content-stretch flex flex-col items-start relative shrink-0 w-[890px]">
               <div className="content-stretch flex flex-col gap-[16px] items-start leading-[0] relative shrink-0 w-full">
-                <div className="font-body font-normal flex flex-col justify-center min-w-full relative shrink-0 text-[#1e1e1e] text-[0px] w-[min-content]">
-                  <p className="mb-0 text-[16px] whitespace-pre-wrap">
-                    <span className="leading-[20px]">
-                      After the first version, our users suggested several
-                      improvements:
-                      <br aria-hidden />
-                      <br aria-hidden />
-                    </span>
-                    <span className="font-body font-semibold leading-[20px]">
-                      Web app
-                    </span>
+                <div className="font-body font-normal flex flex-col justify-center min-w-full relative shrink-0 text-[#1e1e1e] text-[16px] w-[min-content]">
+                  <p className="leading-[20px] mb-0 whitespace-pre-wrap">
+                    Following the first version, several suggestions have
+                    been made by our users:
                   </p>
-                  <ul className="list-disc mb-0 text-[16px]">
+                </div>
+                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-[16px] text-black w-[342px]">
+                  <p className="leading-[20px]">Web Application</p>
+                </div>
+                <div className="font-body font-normal flex flex-col justify-center min-w-full relative shrink-0 text-[#1e1e1e] text-[16px] w-[min-content]">
+                  <ul className="list-disc mb-0">
                     <li className="mb-0 ms-[24px]">
-                      <span className="leading-[20px] text-[16px]">
-                        Scoping visitor categories to each of the
-                        company&rsquo;s different sites.
+                      <span className="leading-[20px]">
+                        Ability to compartmentalize (scope) visitor
+                        categories according to the different sites of the
+                        company.
                       </span>
                     </li>
                     <li className="mb-0 ms-[24px]">
-                      <span className="leading-[20px] text-[16px]">
-                        Managing host groups and permissions by site and by
-                        user group.
+                      <span className="leading-[20px]">
+                        Management of host groups and permissions by site
+                        and by user group.
                       </span>
                     </li>
                     <li className="ms-[24px]">
-                      <span className="leading-[20px] text-[16px]">
-                        A printable-QR-code &ldquo;mobile kiosk&rdquo; to
-                        allow check-in without a dedicated tablet or physical
+                      <span className="leading-[20px]">
+                        Implementation of a &ldquo;mobile&rdquo; kiosk (via a
+                        printable QR code) to allow registration without
+                        requiring a dedicated tablet or physical digital
                         kiosk.
                       </span>
                     </li>
@@ -819,13 +797,13 @@ export default function EliaProjectPage() {
                   <ul className="list-disc">
                     <li className="mb-0 ms-[24px]">
                       <span className="leading-[20px]">
-                        Added electronic signatures for documents (e.g.,
-                        NDAs).
+                        Addition of electronic signature for documents
+                        (e.g., confidentiality agreements).
                       </span>
                     </li>
                     <li className="ms-[24px]">
                       <span className="leading-[20px]">
-                        Added automatic printing of name badges.
+                        Addition of automatic printing of name badges.
                       </span>
                     </li>
                   </ul>
@@ -841,7 +819,7 @@ export default function EliaProjectPage() {
                   <ul>
                     <li className="list-disc ms-[24px]">
                       <span className="leading-[20px]">
-                        Integrated a mobile web kiosk.
+                        Integration of a mobile web kiosk
                       </span>
                     </li>
                   </ul>
@@ -867,35 +845,37 @@ export default function EliaProjectPage() {
                 <div className="content-stretch flex items-center justify-center relative shrink-0 w-[342px]">
                   <div className="font-body font-semibold flex flex-1 flex-col justify-center leading-[0] min-w-px relative text-[16px] text-black">
                     <p className="leading-[20px]">
-                      The importance of real-world testing
+                      The importance of testing in real conditions
                     </p>
                   </div>
                 </div>
                 <div className="font-body font-normal flex flex-1 flex-col justify-center leading-[0] min-w-px relative text-[#1e1e1e] text-[16px]">
                   <p className="leading-[20px]">
-                    Working under time constraints pushed me to focus on the
-                    essentials instead of chasing perfection. But not having
-                    a physical tablet on hand during design revealed the
-                    limits of working from theory alone — a reminder that
-                    testing on target hardware is always essential, no
-                    matter how confident you are in your own judgment.
+                    Working under time constraints forced me to focus on the
+                    essentials and not strive for perfection at all costs,
+                    concentrating on what truly matters. However, the lack
+                    of physical support (the actual tablet) during the
+                    design phase highlighted the limitations of theory. It
+                    confirmed to me that one cannot rely solely on their own
+                    judgment: it is essential to test on the target
+                    hardware.
                   </p>
                 </div>
               </div>
               <div className="content-stretch flex gap-[24px] items-start relative shrink-0 w-full">
                 <div className="content-stretch flex items-center justify-center relative shrink-0 w-[342px]">
                   <div className="font-body font-semibold flex flex-1 flex-col justify-center leading-[0] min-w-px relative text-[16px] text-black">
-                    <p className="leading-[20px]">You are not your user</p>
+                    <p className="leading-[20px]">We are not our users</p>
                   </div>
                 </div>
                 <div className="font-body font-normal flex flex-1 flex-col justify-center leading-[0] min-w-px relative text-[#1e1e1e] text-[16px]">
                   <p className="leading-[20px]">
-                    Even with rigorous design reviews, the
-                    &ldquo;tech-savvy&rdquo; trap is easy to fall into. Field
-                    feedback reminded me that a reception module has to work
-                    for everyone, including people far less comfortable with
-                    touchscreens. No amount of upfront research catches
-                    every edge case.
+                    Even with structured design reviews, the trap of being
+                    tech-savvy lurks. Analyzing field feedback reminded me
+                    that a reception module is aimed at everyone, including
+                    profiles that are much less comfortable with touch.
+                    Despite prior research, there are always use cases we
+                    hadn&rsquo;t anticipated.
                   </p>
                 </div>
               </div>
@@ -903,16 +883,17 @@ export default function EliaProjectPage() {
                 <div className="content-stretch flex items-center justify-center relative shrink-0 w-[342px]">
                   <div className="font-body font-semibold flex flex-1 flex-col justify-center leading-[0] min-w-px relative text-[#1e1e1e] text-[16px]">
                     <p className="leading-[20px]">
-                      Validate earlier, across every platform
+                      Validate earlier across all platforms
                     </p>
                   </div>
                 </div>
                 <div className="font-body font-normal flex flex-1 flex-col justify-center leading-[0] min-w-px relative text-[#1e1e1e] text-[16px]">
                   <p className="leading-[20px]">
-                    If I could do it again, I&rsquo;d push to design the
+                    If I had to do it again, I would push to design the
                     different platforms (Web Admin and Tablet) in parallel
-                    from day one — shipping simulated front-ends earlier to
-                    get real feedback as fast as possible.
+                    from day one, even if it meant releasing simulated
+                    front-end versions earlier to get real feedback as
+                    quickly as possible.
                   </p>
                 </div>
               </div>
@@ -920,35 +901,38 @@ export default function EliaProjectPage() {
           </div>
         </div>
 
-        {/* Contact */}
-        <div className="bg-[#f03241] content-stretch flex flex-col gap-[56px] items-center py-[112px] relative shrink-0 w-full">
-          <div className="content-stretch flex flex-col gap-[4px] items-center leading-[0] relative shrink-0 text-center text-white w-full">
-            <div className="font-display font-bold flex flex-col justify-center relative shrink-0 text-[56px] tracking-[-0.84px] w-[550px]">
-              <p className="leading-[normal]">Like what you see?</p>
+        {/* Contact — background bleeds full viewport width, content stays
+            centered to the 1280px canvas */}
+        <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen bg-[#6c65ff]">
+          <div className="content-stretch mx-auto flex max-w-[1280px] flex-col gap-[56px] items-center py-[112px] relative w-full">
+            <div className="content-stretch flex flex-col gap-[4px] items-center leading-[0] relative shrink-0 text-center text-white w-full">
+              <div className="font-display font-bold flex flex-col justify-center relative shrink-0 text-[56px] tracking-[-0.84px] w-[550px]">
+                <p className="leading-[normal]">Like what you see? </p>
+              </div>
+              <div className="font-body font-medium flex flex-col justify-center min-w-full relative shrink-0 text-[24px] tracking-[-0.24px] w-[min-content]">
+                <p className="leading-[30px]">We may be a match</p>
+              </div>
             </div>
-            <div className="font-body font-medium flex flex-col justify-center min-w-full relative shrink-0 text-[24px] tracking-[-0.24px] w-[min-content]">
-              <p className="leading-[30px]">We may be a match</p>
+            <div className="content-stretch flex gap-[31px] items-center justify-center relative shrink-0 w-[404px]">
+              <a
+                href="mailto:cejoco.paola@gmail.com"
+                className="bg-white content-stretch flex items-center justify-center px-[32px] py-[12px] relative rounded-[30px] shrink-0"
+              >
+                <p className="font-body font-semibold leading-[20px] relative shrink-0 text-[#7f56d9] text-[16px] whitespace-nowrap">
+                  Send email
+                </p>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/paola-cejoco/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-solid border-white content-stretch flex items-center justify-center px-[32px] py-[12px] relative rounded-[30px] shrink-0"
+              >
+                <p className="font-body font-semibold leading-[20px] relative shrink-0 text-[16px] text-white whitespace-nowrap">
+                  My Linkedin
+                </p>
+              </a>
             </div>
-          </div>
-          <div className="content-stretch flex gap-[31px] items-center justify-center relative shrink-0 w-[404px]">
-            <a
-              href="mailto:cejoco.paola@gmail.com"
-              className="bg-white content-stretch flex items-center justify-center px-[32px] py-[12px] relative rounded-[30px] shrink-0"
-            >
-              <p className="font-body font-semibold leading-[20px] relative shrink-0 text-[#f03241] text-[16px] whitespace-nowrap">
-                Send email
-              </p>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/paola-cejoco/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border border-solid border-white content-stretch flex items-center justify-center px-[32px] py-[12px] relative rounded-[30px] shrink-0"
-            >
-              <p className="font-body font-semibold leading-[20px] relative shrink-0 text-[16px] text-white whitespace-nowrap">
-                My Linkedin
-              </p>
-            </a>
           </div>
         </div>
       </div>

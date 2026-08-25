@@ -20,12 +20,14 @@ export default function ScrollDownHint({ arrowSrc }: { arrowSrc: string }) {
     >
       <div className="flex-none rotate-90">
         <div className="bg-white content-stretch flex flex-col items-center justify-center p-[10px] relative rounded-[32px] size-[48px]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            alt=""
-            className="block max-w-none size-full"
-            src={arrowSrc}
-          />
+          <div className="h-[17px] relative shrink-0 w-[26.252px]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              alt=""
+              className="absolute block inset-0 max-w-none size-full"
+              src={arrowSrc}
+            />
+          </div>
         </div>
       </div>
     </div>
