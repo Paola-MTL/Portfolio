@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
@@ -30,8 +31,15 @@ export default function Nav() {
           : "py-5 text-paper"
       }`}
     >
-      <Link href="/" className="font-display text-2xl italic">
-        PC
+      <Link href="/" aria-label="Paola Cejoco — home">
+        <Image
+          src={scrolled ? "/images/logo/pc-violet.svg" : "/images/logo/pc-white.svg"}
+          alt="PC"
+          width={48}
+          height={59}
+          className="h-7 w-auto"
+          priority
+        />
       </Link>
       <nav className="flex items-center gap-6 text-sm font-medium uppercase tracking-[0.1em]">
         <Link
