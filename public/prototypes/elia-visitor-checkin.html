@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layers — Visitor Check-in Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand-600:#7f56d9;
+    --brand-500:#9e77ed;
+    --brand-400:#b692f6;
+    --neutral-300:#d4d4d4;
+    --neutral-500:#737373;
+    --white:#ffffff;
+    --radius-2xl:24px;
+    --radius-lg:12px;
+    --radius-full:999px;
+    --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-5:20px; --sp-6:24px; --sp-10:40px; --sp-12:48px; --sp-20:80px;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:transparent;
+    font-family:'Inter', system-ui, sans-serif;
+    overflow:hidden;
+    padding:24px;
+  }
+
+  /* ---------- iPad landscape mockup ---------- */
+  .device-wrap{ display:flex; flex-direction:column; align-items:center; gap:14px; }
+  .ipad{
+    position:relative;
+    width:min(94vw, 1180px);
+    /* Height is intentionally NOT locked to 966:724 here — the bezel padding
+       below would otherwise skew the *inner* screen away from that ratio and
+       leave a sliver of the black .screen-mask background exposed on one
+       edge. The aspect-ratio lives on .screen-mask instead, so the box that
+       actually gets scaled to (see .screen) always matches it exactly. */
+    background:linear-gradient(160deg,#3a3a3f,#111113 60%,#050505);
+    border-radius:46px;
+    padding:20px;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,.05);
+  }
+  .ipad::before{ /* camera */
+    content:'';
+    position:absolute;
+    left:8px; top:50%; transform:translateY(-50%);
+    width:8px; height:8px; border-radius:50%;
+    background:#050505;
+    box-shadow:0 0 0 2px rgba(255,255,255,.04), inset 0 0 2px rgba(120,150,255,.6);
+  }
+  .screen-mask{
+    position:relative;
+    width:100%;
+    aspect-ratio:966 / 724;
+    border-radius:26px;
+    overflow:hidden;
+    background:#000;
+  }
+  .screen{
+    position:absolute; inset:0;
+    width:966px; height:724px;
+    transform-origin: top left;
+  }
+  .home-hint{
+    width:120px; height:5px; border-radius:999px;
+    background:rgba(255,255,255,.35);
+  }
+  .footnote{
+    color:rgba(255,255,255,.45);
+    font-size:12px;
+    letter-spacing:.02em;
+    text-align:center;
+    max-width:520px;
+  }
+
+  /* ---------- Screens ---------- */
+  /* The view is purely a visibility/interactivity gate — no transition at
+     all, so it snaps instantly rather than fading. That keeps it, the glass
+     container, and the back/next arrows (all direct children) completely
+     static between steps; see .card-inner below for the one thing that's
+     actually allowed to animate. */
+  .view{
+    position:absolute; inset:0;
+    color:#fff;
+    opacity:0;
+    pointer-events:none;
+  }
+  .view.active{
+    opacity:1;
+    pointer-events:auto;
+  }
+  /* Persistent background wrapper — mounted once for the entire wizard.
+     It is a sibling of every .view, sits behind all of them via DOM order,
+     and nothing in the step-navigation JS ever touches it again after first
+     paint. Only the foreground .view containers toggle on top of it. */
+  .bg-root{
+    position:absolute; inset:0;
+    z-index:0;
+  }
+  .bg-layer{
+    position:absolute; inset:0;
+    background-size:cover; background-position:center;
+  }
+  .bg-overlay{
+    position:absolute; inset:0;
+    background:rgba(0,0,0,.4);
+    z-index:1;
+    pointer-events:none;
+  }
+  /* Frosted glass — visually referenced against Figma's "Glass container"
+     (node 107:17690). NOTE: that layer's blur is an unnamed effect applied
+     directly to the frame, not a shared style or bound variable, so the
+     Figma extraction tools available here don't expose its exact numeric
+     radius — this value is estimated from the rendered screenshot and
+     dialed back after feedback that 64px read too heavy/washed-out. If you
+     can grab the exact "Background blur" radius from the Effects panel in
+     Figma, send it over and this becomes a precise match instead of a guess. */
+  /* Glass container is 100% static now — no opacity/transform/transition of
+     its own. It appears in the exact same place, same size, at the same
+     instant as its parent .view, every single step. Nothing here animates. */
+  .glass{
+    background:rgba(20,16,26,.22);
+    -webkit-backdrop-filter: blur(22px) saturate(1.3);
+    backdrop-filter: blur(22px) saturate(1.3);
+    border:1px solid rgba(255,255,255,.5);
+    border-radius:var(--radius-2xl);
+    box-shadow:
+      0 20px 50px -20px rgba(0,0,0,.45),
+      inset 0 1px 0 rgba(255,255,255,.14);
+  }
+  /* .step-body is the ONLY thing that animates on a step change — the field/
+     list/summary area beneath the stepper. The stepper itself (a sibling,
+     not a child of .step-body) is excluded on purpose: it has its own much
+     narrower animation, see the stepper rules below, and otherwise stays
+     completely still. Replays every time a view is (re)activated because the
+     animation is scoped to .view.active, so any navigation restarts it. */
+  @keyframes content-in{
+    from{ opacity:0; transform:translateY(12px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  .step-body{ opacity:0; }
+  .view.active .step-body{
+    animation:content-in .38s cubic-bezier(.22,.9,.32,1) forwards;
+  }
+
+  /* Home screen */
+  #view-home .content{
+    position:relative; z-index:1;
+    height:100%;
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
+    gap:var(--sp-10);
+    padding-bottom:var(--sp-10);
+  }
+  #view-home .card{
+    width:576px; height:488px;
+    display:flex; flex-direction:column; align-items:center;
+    gap:var(--sp-20);
+    padding:var(--sp-20) var(--sp-12);
+  }
+  .logo{ display:flex; align-items:center; gap:10px; height:44px; }
+  .logo img{ height:100%; display:block; }
+  .home-actions{ width:320px; display:flex; flex-direction:column; gap:var(--sp-5); }
+  .btn{
+    appearance:none; border:none; cursor:pointer;
+    font-family:inherit; font-weight:600; font-size:16px;
+    height:48px; border-radius:var(--radius-full);
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    transition:transform .12s ease, filter .12s ease, opacity .12s ease;
+    width:100%;
+  }
+  .btn:active{ transform:scale(.96); filter:brightness(.92); }
+  .btn-primary{ background:var(--brand-600); border:1px solid var(--brand-600); color:#fff; }
+  .btn-outline{ background:#fff; border:1px solid var(--brand-600); color:var(--brand-600); }
+  .btn-ghost-row{
+    background:transparent; border:none; color:#fff; height:auto; font-weight:600;
+  }
+  .lang-toggle{ display:flex; align-items:flex-end; gap:0; }
+  .lang-btn{
+    background:none; border:none; cursor:pointer; color:#fff;
+    font-family:inherit; font-weight:500; font-size:26px;
+    width:64px; height:44px; padding-bottom:8px;
+    border-bottom:2px solid rgba(255,255,255,.9);
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .lang-btn.active{ color:var(--brand-400); font-weight:600; border-color:var(--brand-400); }
+
+  /* Step screens shared */
+  .step-view .content{
+    position:relative; z-index:1;
+    height:100%;
+    display:flex; align-items:flex-start; justify-content:center; gap:var(--sp-10);
+    padding-top:98px; padding-bottom:var(--sp-10);
+  }
+  .icon-btn{
+    appearance:none; cursor:pointer;
+    width:48px; height:48px; border-radius:50%;
+    background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.35);
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; flex-shrink:0;
+    transition:transform .12s ease, background .12s ease, opacity .2s ease;
+  }
+  .icon-btn:active{ transform:scale(.9); background:rgba(255,255,255,.22); }
+  .icon-btn[disabled], .icon-btn.hidden-btn{ opacity:0; pointer-events:none; }
+  .icon-btn svg{ width:20px; height:20px; }
+
+  .card-step{
+    width:602px;
+    padding:var(--sp-10) var(--sp-12);
+    display:flex; flex-direction:column; gap:var(--sp-20);
+    align-items:center;
+  }
+  /* Purely structural — no animation lives here. */
+  .card-inner{ display:flex; flex-direction:column; gap:var(--sp-10); align-items:flex-start; width:100%; }
+
+  /* The stepper is static chrome: it only visually changes when the stage
+     itself changes (Profile -> Contact details -> Confirmation), never on
+     every sub-step (e.g. First Name -> Last Name stays put, silently). When
+     a stage *does* complete, only that one dot's checkmark and the segment
+     of line right after it animate — see .draw / .grow below, applied
+     conditionally by renderStepper() in JS. Everything else in the stepper
+     renders straight into its final resting state with zero motion. */
+  .stepper{ display:flex; align-items:center; gap:var(--sp-3); width:100%; }
+  .stepper .dot-wrap{ display:flex; align-items:center; gap:var(--sp-2); flex-shrink:0; }
+  .stepper .dot{
+    width:28px; height:28px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; font-weight:600; color:#fff;
+    border:.875px solid #fff; flex-shrink:0;
+  }
+  .stepper .dot.done{ background:var(--brand-600); border-color:var(--brand-600); }
+  .stepper .dot.active{ background:var(--brand-600); border-color:var(--brand-600); }
+  .stepper .label{ font-size:16px; font-weight:500; color:#fff; white-space:nowrap; }
+  .stepper .label.active{ color:var(--brand-500); font-weight:600; }
+
+  /* Checkmark: rendered fully "drawn" (dashoffset:0) by default — a dot that
+     was already done before this render just shows it, static. Only a dot
+     that finished *in this transition* gets .draw, which starts the stroke
+     hidden and animates it on, like the check is being drawn live. */
+  .stepper .check-svg path{
+    stroke-dasharray:16;
+    stroke-dashoffset:0;
+  }
+  @keyframes check-draw{ from{ stroke-dashoffset:16; } to{ stroke-dashoffset:0; } }
+  .stepper .dot.draw .check-svg path{
+    animation:check-draw .45s ease-out .05s both;
+  }
+
+  /* Connecting line: a dim track with a solid fill on top. .filled = the
+     segment is already complete from an earlier render, shown statically at
+     full width. .grow = this exact segment just completed, so the fill
+     animates from 0 to full width instead of just appearing. */
+  .stepper .rule-track{
+    position:relative; flex:1 1 auto; min-width:24px; height:2px; border-radius:999px;
+    background:rgba(255,255,255,.35); overflow:hidden;
+  }
+  .stepper .rule-fill{
+    position:absolute; inset:0; background:#fff;
+    transform-origin:left center; transform:scaleX(0);
+  }
+  .stepper .rule-track.filled .rule-fill{ transform:scaleX(1); }
+  @keyframes rule-fill{ from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
+  .stepper .rule-track.grow .rule-fill{
+    animation:rule-fill .5s cubic-bezier(.22,.9,.32,1) .05s both;
+  }
+
+  .step-title{ font-size:24px; font-weight:600; }
+  .field-group{ display:flex; flex-direction:column; gap:var(--sp-5); width:100%; }
+  .field label{ display:block; font-size:16px; font-weight:500; margin-bottom:6px; }
+  .field input{
+    width:100%; height:44px; border-radius:8px;
+    border:1px solid var(--neutral-300);
+    background:rgba(255,255,255,.06);
+    box-shadow:0 1px 2px rgba(0,0,0,.05);
+    color:#fff; font-family:inherit; font-size:16px; font-weight:600;
+    padding:10px 14px;
+    outline:none;
+  }
+  /* Placeholders only appear while the field is actively focused — an empty,
+     unfocused field shows no placeholder text at all. */
+  .field input::placeholder{ color:transparent; }
+  .field input:focus::placeholder{ color:var(--neutral-500); font-weight:400; }
+  .field input:focus{ border-color:var(--brand-400); box-shadow:0 0 0 3px rgba(182,146,246,.3); }
+  .field input.invalid{ border-color:#ff6b6b; box-shadow:0 0 0 3px rgba(255,107,107,.25); }
+  .field .hint{ color:#ffb4b4; font-size:13px; min-height:16px; margin-top:4px; }
+  /* Brief attention ring on the field that's auto-focused when a step
+     becomes active, so it's unmistakable where to type next. */
+  @keyframes field-pulse{
+    0%{ box-shadow:0 0 0 0 rgba(182,146,246,.55); }
+    70%{ box-shadow:0 0 0 12px rgba(182,146,246,0); }
+    100%{ box-shadow:0 0 0 0 rgba(182,146,246,0); }
+  }
+  .field input.pulse-in{ animation:field-pulse .9s ease-out; }
+
+  /* Profile radio list */
+  .profile-list{ width:100%; display:flex; flex-direction:column; }
+  .profile-item{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:var(--sp-6) var(--sp-3);
+    border-bottom:1px solid #fff;
+    cursor:pointer; user-select:none;
+    transition:background .12s ease;
+  }
+  .profile-item:last-child{ border-bottom:none; }
+  .profile-item:active{ background:rgba(255,255,255,.08); }
+  .profile-item span{ font-size:20px; font-weight:500; }
+  .radio{
+    width:16px; height:16px; border-radius:8px;
+    border:1px solid var(--neutral-300); background:#fff;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .radio.checked{ background:var(--brand-600); border-color:var(--brand-600); }
+  .radio.checked::after{ content:''; width:7px; height:7px; border-radius:50%; background:#fff; }
+
+  /* Host search */
+  .host-list{ width:100%; display:flex; flex-direction:column; gap:4px; max-height:260px; overflow-y:auto; }
+  .host-tile{
+    display:flex; align-items:center; gap:8px; padding:8px; border-radius:12px;
+    cursor:pointer; transition:background .12s ease;
+  }
+  .host-tile:active{ background:rgba(255,255,255,.1); }
+  .host-tile.selected{ background:rgba(255,255,255,.16); box-shadow:0 0 0 1.5px var(--brand-400) inset; }
+  .host-tile img{ width:40px; height:40px; border-radius:200px; object-fit:cover; background:#555; }
+  .host-tile .names{ display:flex; flex-direction:column; line-height:1.3; }
+  .host-tile .names b{ font-size:16px; font-weight:600; }
+  .host-tile .names span{ font-size:14px; font-weight:400; color:#eee; }
+  .host-empty{ font-size:14px; color:#ddd; padding:8px; }
+
+  /* Confirmation */
+  .confirm-lines{ display:flex; flex-direction:column; gap:var(--sp-5); width:100%; }
+  .confirm-line{ display:flex; gap:20px; align-items:center; }
+  .confirm-line .lbl{ width:120px; font-size:16px; font-weight:400; }
+  .confirm-line .val{ font-size:16px; font-weight:600; }
+  .confirm-line .host-inline{ display:flex; align-items:center; gap:8px; }
+  .confirm-line .host-inline img{ width:40px; height:40px; border-radius:200px; object-fit:cover; }
+  .confirm-line .host-inline .names{ display:flex; flex-direction:column; line-height:1.3; }
+  .confirm-line .host-inline .names span{ font-size:14px; font-weight:400; color:#eee; }
+  .submit-wrap{ position:absolute; left:50%; bottom:40px; transform:translateX(-50%); width:320px; z-index:2; }
+
+  /* Keyboard — always in the layout (never display:none) so the slide-up
+     is an actual animated transition rather than an instant pop-in. */
+  .kbd{
+    position:absolute; left:20px; right:20px; bottom:20px;
+    background:rgba(230,233,237,.94);
+    border-radius:22px;
+    padding:10px 10px 16px;
+    z-index:3;
+    box-shadow:0 -10px 30px rgba(0,0,0,.35);
+    transform:translateY(calc(100% + 40px));
+    opacity:0;
+    pointer-events:none;
+    transition:transform .38s cubic-bezier(.22,.9,.32,1), opacity .28s ease;
+    will-change:transform, opacity;
+  }
+  .kbd.show{
+    transform:translateY(0);
+    opacity:1;
+    pointer-events:auto;
+  }
+  .kbd .row{ display:flex; gap:8px; margin-bottom:8px; }
+  .kbd .row:last-child{ margin-bottom:0; }
+  .kbd key{ display:none; }
+  .key{
+    flex:1; height:46px; border-radius:8px;
+    background:rgba(255,255,255,.85);
+    box-shadow:0 1px 0 rgba(0,0,0,.08);
+    display:flex; align-items:center; justify-content:center;
+    font-size:19px; color:#111; font-weight:400; cursor:pointer;
+    user-select:none; transition:transform .08s ease, background .08s ease;
+  }
+  .key:active{ background:#fff; transform:scale(.95); }
+  .key.wide{ flex:1.6; }
+  .key.space{ flex:6; }
+  .key.func{ font-size:13px; font-weight:600; color:#333; background:rgba(180,184,192,.75); }
+  .kbd-numeric{ max-width:391px; margin:0 auto; }
+  .kbd-numeric .row{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .kbd-numeric .key{ height:58px; flex:none; flex-direction:column; gap:2px; }
+  .kbd-numeric .key small{ font-size:9px; letter-spacing:1.5px; font-weight:700; color:#555; }
+
+  /* End / Checkout / QR screens */
+  .center-card{
+    position:relative; z-index:1; height:100%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .end-card{
+    width:576px; min-height:420px; padding:var(--sp-20) var(--sp-12);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--sp-20);
+    text-align:center;
+  }
+  .end-card h1{ font-size:32px; font-weight:600; margin:0; }
+  .end-card p{ font-size:20px; font-weight:400; margin:4px 0 0; opacity:.95; }
+  .restart-link{
+    margin-top:8px; background:none; border:none; color:rgba(255,255,255,.75);
+    font-family:inherit; font-size:13px; text-decoration:underline; cursor:pointer;
+  }
+  .qr-box{
+    width:220px; height:220px; border:3px solid #fff; border-radius:20px;
+    display:flex; align-items:center; justify-content:center; position:relative; margin-bottom:8px;
+  }
+  .qr-box::before, .qr-box::after{ content:''; position:absolute; width:36px; height:36px; border:4px solid var(--brand-400); }
+  .qr-box::before{ top:-4px; left:-4px; border-right:none; border-bottom:none; border-radius:16px 0 0 0; }
+  .qr-box::after{ bottom:-4px; right:-4px; border-left:none; border-top:none; border-radius:0 0 16px 0; }
+  .qr-scanline{ position:absolute; left:8px; right:8px; height:2px; background:var(--brand-400); box-shadow:0 0 10px var(--brand-400); animation:scan 1.6s ease-in-out infinite; }
+  @keyframes scan{ 0%,100%{ top:10%; } 50%{ top:88%; } }
+
+  ::-webkit-scrollbar{ width:6px; }
+  ::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.3); border-radius:3px; }
+</style>
+</head>
+<body>
+
+<div class="device-wrap">
+  <div class="ipad">
+    <div class="screen-mask" id="screenMask">
+      <div class="screen" id="screen">
+
+        <!-- Persistent background wrapper: mounted once, lives for the whole session.
+             This node is never removed, re-created, or re-styled by step navigation —
+             it is set once below and the JS never touches it again. -->
+        <div class="bg-root" id="bgRoot">
+          <div class="bg-layer" id="bgLayer" style="background-image:url('assets/background.png')"></div>
+          <div class="bg-overlay"></div>
+        </div>
+
+        <!-- HOME -->
+        <div class="view active" id="view-home">
+          <div class="content">
+            <div class="glass card">
+              <div class="logo">
+                <img src="assets/logo.png" alt="Layers">
+              </div>
+              <div class="home-actions">
+                <button class="btn btn-primary" onclick="goRegister()">Register</button>
+                <button class="btn btn-outline" onclick="goCheckout()">Check out</button>
+                <button class="btn btn-ghost-row" onclick="goQR()">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20v.01"/></svg>
+                  I already have a QR code
+                </button>
+              </div>
+            </div>
+            <div class="lang-toggle">
+              <button class="lang-btn" id="langFR" onclick="setLang('FR')">FR</button>
+              <button class="lang-btn active" id="langEN" onclick="setLang('EN')">EN</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP: profile -->
+        <div class="view step-view" id="view-profile">
+          <div class="content">
+            <button class="icon-btn" onclick="goHome()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="glass card-step">
+              <div class="card-inner">
+                <div class="stepper" id="stepper-profile"></div>
+                <div class="step-body" style="width:100%;">
+                  <div class="step-title" style="margin-bottom:20px;">Select a profile</div>
+                  <div class="profile-list" id="profileList"></div>
+                </div>
+              </div>
+            </div>
+            <button class="icon-btn" id="next-profile" disabled onclick="nextFrom('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+          </div>
+        </div>
+
+        <!-- STEP: firstName -->
+        <div class="view step-view" id="view-firstName">
+          <div class="content">
+            <button class="icon-btn" onclick="prevFrom('firstName')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="glass card-step">
+              <div class="card-inner">
+                <div class="stepper" id="stepper-firstName"></div>
+                <div class="field-group step-body">
+                  <div class="field">
+                    <label>First Name*</label>
+                    <input type="text" id="input-firstName" placeholder="Type your first name" autocomplete="off" oninput="onField('firstName', this.value)">
+                    <div class="hint" id="hint-firstName"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="icon-btn" id="next-firstName" disabled onclick="nextFrom('firstName')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+          </div>
+        </div>
+
+        <!-- STEP: lastName (now directly after First Name) -->
+        <div class="view step-view" id="view-lastName">
+          <div class="content">
+            <button class="icon-btn" onclick="prevFrom('lastName')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="glass card-step">
+              <div class="card-inner">
+                <div class="stepper" id="stepper-lastName"></div>
+                <div class="field-group step-body">
+                  <div class="field">
+                    <label>Last Name*</label>
+                    <input type="text" id="input-lastName" placeholder="Type your last name" autocomplete="off" oninput="onField('lastName', this.value)">
+                    <div class="hint" id="hint-lastName"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="icon-btn" id="next-lastName" disabled onclick="nextFrom('lastName')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+          </div>
+        </div>
+
+        <!-- STEP: phone -->
+        <div class="view step-view" id="view-phone">
+          <div class="content">
+            <button class="icon-btn" onclick="prevFrom('phone')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="glass card-step">
+              <div class="card-inner">
+                <div class="stepper" id="stepper-phone"></div>
+                <div class="field-group step-body">
+                  <div class="field">
+                    <label>Phone*</label>
+                    <input type="text" id="input-phone" placeholder="(000)000-0000" autocomplete="off" oninput="onField('phone', this.value)">
+                    <div class="hint" id="hint-phone"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="icon-btn" id="next-phone" onclick="nextFrom('phone')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+          </div>
+        </div>
+
+        <!-- STEP: email -->
+        <div class="view step-view" id="view-email">
+          <div class="content">
+            <button class="icon-btn" onclick="prevFrom('email')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="glass card-step">
+              <div class="card-inner">
+                <div class="stepper" id="stepper-email"></div>
+                <div class="field-group step-body">
+                  <div class="field">
+                    <label>Email*</label>
+                    <input type="text" id="input-email" placeholder="you@company.com" autocomplete="off" oninput="onField('email', this.value)">
+                    <div class="hint" id="hint-email"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="icon-btn" id="next-email" disabled onclick="nextFrom('email')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+          </div>
+        </div>
+
+        <!-- STEP: host -->
+        <div class="view step-view" id="view-host">
+          <div class="content">
+            <button class="icon-btn" onclick="prevFrom('host')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="glass card-step" style="width:620px;">
+              <div class="card-inner">
+                <div class="stepper" id="stepper-host"></div>
+                <div class="field-group step-body">
+                  <div class="field">
+                    <label>Host*</label>
+                    <input type="text" id="input-host" placeholder="Search for your host" autocomplete="off" oninput="onHostSearch(this.value)">
+                  </div>
+                  <div class="host-list" id="hostList"></div>
+                </div>
+              </div>
+            </div>
+            <button class="icon-btn" id="next-host" disabled onclick="nextFrom('host')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+          </div>
+        </div>
+
+        <!-- STEP: confirm -->
+        <div class="view step-view" id="view-confirm">
+          <div class="content" style="align-items:flex-start;">
+            <button class="icon-btn" onclick="prevFrom('confirm')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="glass card-step" style="width:620px;">
+              <div class="card-inner">
+                <div class="stepper" id="stepper-confirm"></div>
+                <div class="confirm-lines step-body" id="confirmLines"></div>
+              </div>
+            </div>
+          </div>
+          <div class="submit-wrap">
+            <button class="btn btn-primary" id="submitBtn" onclick="submitCheckin()">Submit</button>
+          </div>
+        </div>
+
+        <!-- END -->
+        <div class="view" id="view-end">
+          <div class="center-card">
+            <div class="glass end-card">
+              <div>
+                <h1 id="endName">Welcome</h1>
+                <p>Your host has been notified, they'll be right with you.</p>
+              </div>
+              <div class="logo">
+                <img src="assets/logo.png" alt="Layers">
+              </div>
+              <button class="restart-link" onclick="resetAll()">Start a new check-in</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHECKOUT -->
+        <div class="view" id="view-checkout">
+          <div class="center-card">
+            <div class="glass end-card">
+              <div>
+                <h1>See you soon!</h1>
+                <p>You've been successfully checked out.</p>
+              </div>
+              <div class="logo">
+                <img src="assets/logo.png" alt="Layers">
+              </div>
+              <button class="restart-link" onclick="resetAll()">Back to home</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- QR -->
+        <div class="view" id="view-qr">
+          <div class="center-card">
+            <div class="glass end-card">
+              <div class="qr-box"><div class="qr-scanline"></div>
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+              </div>
+              <div><h1 style="font-size:22px;">Scanning your QR code…</h1><p style="font-size:16px;">Hold it steady in front of the camera</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QWERTY keyboard -->
+        <div class="kbd" id="kbd-qwerty">
+          <div class="row">
+            <div class="key" data-k="q">q</div><div class="key" data-k="w">w</div><div class="key" data-k="e">e</div><div class="key" data-k="r">r</div><div class="key" data-k="t">t</div><div class="key" data-k="y">y</div><div class="key" data-k="u">u</div><div class="key" data-k="i">i</div><div class="key" data-k="o">o</div><div class="key" data-k="p">p</div>
+            <div class="key wide func" data-action="back">⌫</div>
+          </div>
+          <div class="row">
+            <div class="key" data-k="a">a</div><div class="key" data-k="s">s</div><div class="key" data-k="d">d</div><div class="key" data-k="f">f</div><div class="key" data-k="g">g</div><div class="key" data-k="h">h</div><div class="key" data-k="j">j</div><div class="key" data-k="k">k</div><div class="key" data-k="l">l</div>
+            <div class="key wide func" data-action="enter">↵</div>
+          </div>
+          <div class="row">
+            <div class="key wide func" data-action="shift">⇧</div>
+            <div class="key" data-k="z">z</div><div class="key" data-k="x">x</div><div class="key" data-k="c">c</div><div class="key" data-k="v">v</div><div class="key" data-k="b">b</div><div class="key" data-k="n">n</div><div class="key" data-k="m">m</div>
+            <div class="key" data-k="@">@</div><div class="key" data-k=".">.</div>
+          </div>
+          <div class="row">
+            <div class="key wide func" data-action="hide">⌄ Hide</div>
+            <div class="key space" data-k=" ">space</div>
+            <div class="key wide func" data-action="hide">Done</div>
+          </div>
+        </div>
+
+        <!-- Numeric keypad -->
+        <div class="kbd kbd-numeric" id="kbd-numeric">
+          <div class="row">
+            <div class="key" data-k="1">1</div><div class="key" data-k="2">2<small>ABC</small></div><div class="key" data-k="3">3<small>DEF</small></div>
+          </div>
+          <div class="row">
+            <div class="key" data-k="4">4<small>GHI</small></div><div class="key" data-k="5">5<small>JKL</small></div><div class="key" data-k="6">6<small>MNO</small></div>
+          </div>
+          <div class="row">
+            <div class="key" data-k="7">7<small>PQRS</small></div><div class="key" data-k="8">8<small>TUV</small></div><div class="key" data-k="9">9<small>WXYZ</small></div>
+          </div>
+          <div class="row">
+            <div class="key func" data-action="hide">Hide</div><div class="key" data-k="0">0</div><div class="key func" data-action="back">⌫</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="home-hint"></div>
+  <p class="footnote">Interactive prototype of the Layers visitor check-in flow — reconstructed from Figma for review. Tap through as you would on the lobby iPad.</p>
+</div>
+
+<script>
+/* ---------------- Data ---------------- */
+const HOSTS = [
+  {name:'Jessica McDonalds', title:'Account Executive', photo:'assets/jessica-mcdonalds.png'},
+  {name:'John Douglas', title:'VP of Sales', photo:'assets/john-douglas.png'},
+  {name:'Jonathan Smith', title:'Financial Director', photo:'assets/jonathan-smith.png'},
+  {name:'Julia McGuire', title:'Marketing Director', photo:'assets/julia-mcguire.png'}
+];
+const PROFILES = ['Visitor','Interview','Consultant','Delivery'];
+
+const STEP_ORDER = ['profile','firstName','lastName','phone','email','host','confirm'];
+const STAGE_OF = {profile:1, firstName:2, phone:2, lastName:2, email:2, host:2, confirm:3};
+const STAGE_LABELS = ['Profile','Contact details','Confirmation'];
+const ERROR_MESSAGES = {
+  firstName: 'Please enter your first name.',
+  lastName: 'Please enter your last name.',
+  phone: 'Enter a valid 10-digit phone number.',
+  email: 'Enter a valid email with a domain, e.g. name@company.com.'
+};
+
+/* ---------------- Avatar fallback ---------------- */
+// Figma's exported asset URLs expire a few days after generation, so a host
+// photo that worked earlier can start 404ing later. Every avatar renders
+// through this helper so a broken/missing photo always falls back to a
+// generated initials avatar instead of a broken-image icon.
+function hashCode(str){
+  let h = 0;
+  for(let i=0;i<str.length;i++){ h = ((h<<5)-h) + str.charCodeAt(i); h |= 0; }
+  return h;
+}
+function initialsAvatarUri(name){
+  const initials = (name||'?').split(' ').filter(Boolean).map(w=>w[0]).slice(0,2).join('').toUpperCase() || '?';
+  const hue = Math.abs(hashCode(name||'')) % 360;
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">'+
+    '<rect width="80" height="80" rx="40" fill="hsl('+hue+',55%,42%)"/>'+
+    '<text x="40" y="43" text-anchor="middle" dominant-baseline="middle" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="600" fill="#fff">'+initials+'</text>'+
+    '</svg>';
+  return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg).split("'").join('%27');
+}
+function avatarImgTag(person){
+  const fallback = initialsAvatarUri(person.name).split("'").join('%27');
+  return '<img src="'+person.photo+'" alt="'+person.name+'" loading="lazy" onerror="this.onerror=null;this.src=\''+fallback+'\'">';
+}
+
+/* The background photo is set once on #bgLayer (see HTML) and step
+   navigation never reads or writes it again — that's what makes it
+   persistent. Nothing here references it, on purpose. */
+
+let state = { profile:null, firstName:'', phone:'', lastName:'', email:'', host:null };
+let activeInputId = null;
+let shiftOn = false;
+
+/* ---------------- Navigation ---------------- */
+// Which on-screen keyboard (if any) a step's field needs — used to decide
+// whether the keyboard should stay put across a step change instead of
+// sliding down and back up for no visual reason.
+const KEYBOARD_TYPE_FOR = { firstName:'qwerty', lastName:'qwerty', email:'qwerty', host:'qwerty', phone:'numeric' };
+function keyboardTypeFor(step){ return KEYBOARD_TYPE_FOR[step] || null; }
+
+function showView(id, keepKeyboard){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+id).classList.add('active');
+  if(!keepKeyboard) hideKeyboard();
+}
+function goHome(){ showView('home'); }
+// This is the one entry point into the wizard that doesn't go through
+// goToStep() (Home -> Register jumps straight to the profile step), so it
+// has to do goToStep's setup itself — renderStepper() in particular, whose
+// absence is what made the stepper header intermittently blank.
+function goRegister(){
+  resetData();
+  renderStepper('profile');
+  renderProfile();
+  showView('profile');
+  updateNextState('profile');
+}
+function goCheckout(){ showView('checkout'); setTimeout(()=>showView('home'), 4500); }
+function goQR(){ showView('qr'); setTimeout(()=>{ document.getElementById('endName').textContent='Welcome Alex'; showView('end'); startAutoReturn(); }, 2200); }
+
+function resetData(){
+  state = { profile:null, firstName:'', phone:'', lastName:'', email:'', host:null };
+  lastRenderedStage = null; // fresh run: the next stepper render shouldn't animate anything
+}
+function resetAll(){ resetData(); showView('home'); }
+
+function stepIndex(step){ return STEP_ORDER.indexOf(step); }
+
+function prevFrom(step){
+  const i = stepIndex(step);
+  if(i<=0){ goHome(); return; }
+  goToStep(STEP_ORDER[i-1]);
+}
+// Returns true if navigation actually happened. Invalid input never blocks
+// silently — it flips the field into its error state (red border + hint)
+// so the person always sees *why* they can't move on.
+function nextFrom(step){
+  const inp = document.getElementById('input-'+step);
+  const hint = document.getElementById('hint-'+step);
+  if(!isValid(step)){
+    if(inp) inp.classList.add('invalid');
+    if(hint) hint.textContent = ERROR_MESSAGES[step] || 'Please complete this field.';
+    return false;
+  }
+  if(inp) inp.classList.remove('invalid');
+  if(hint) hint.textContent = '';
+  const i = stepIndex(step);
+  if(i === STEP_ORDER.length-1) return false;
+  goToStep(STEP_ORDER[i+1]);
+  return true;
+}
+function goToStep(step){
+  // renderStepper() reports whether this navigation just triggered the
+  // checkmark-draw/line-fill stage-change animation — when it did, the
+  // keyboard/input focus below waits for it to finish first instead of
+  // racing it (see focusStepField).
+  const stepperAnimating = renderStepper(step);
+  if(step==='profile') renderProfile();
+  if(step==='host') renderHostList('');
+  if(step==='confirm') renderConfirm();
+  syncFieldInputs();
+  // If the step we're leaving needed the same keyboard (qwerty/numeric) as
+  // the one we're entering, leave it exactly where it is instead of hiding
+  // and re-showing it — e.g. First Name -> Last Name, or Email -> Host.
+  const fromView = document.querySelector('.view.active');
+  const fromStep = fromView ? fromView.id.replace('view-','') : null;
+  const keepKeyboard = !!(fromStep && keyboardTypeFor(fromStep) && keyboardTypeFor(fromStep)===keyboardTypeFor(step));
+  showView(step, keepKeyboard);
+  updateNextState(step);
+  focusStepField(step, stepperAnimating);
+}
+
+// Draws the eye to whatever needs filling in: focus its input (which also
+// slides the on-screen keyboard up) and flash a brief highlight ring around
+// it. When the stepper is mid-way through its stage-change animation
+// (checkmark drawing, line filling), that plays out fully and undisturbed
+// first — the keyboard only slides up and the field only pulses once it's
+// done, rather than both animations competing for attention at once.
+const STEPPER_ANIM_MS = 600; // covers the .05s delay + .5s longest keyframe (rule-fill) with a small buffer
+function focusStepField(step, waitForStepper){
+  const inp = document.getElementById('input-'+step);
+  if(!inp) return;
+  clearTimeout(focusStepField._t);
+  focusStepField._t = setTimeout(()=>{
+    inp.focus();
+    inp.classList.remove('pulse-in');
+    void inp.offsetWidth; // restart the animation if it's already mid-pulse
+    inp.classList.add('pulse-in');
+    setTimeout(()=>inp.classList.remove('pulse-in'), 900);
+  }, waitForStepper ? STEPPER_ANIM_MS : 220);
+}
+
+/* ---------------- Stepper header ---------------- */
+// Tracks the stage actually shown on screen last, independent of which
+// sub-step within it (e.g. First Name vs Last Name) the person is on — that's
+// what lets renderStepper() tell "just moved to a new stage" apart from
+// "still in the same stage, different field" and only animate the former.
+let lastRenderedStage = null;
+const CHECK_SVG = '<svg class="check-svg" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">'+
+  '<path d="M3 8.5L6.5 12L13 4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function renderStepper(step){
+  const el = document.getElementById('stepper-'+step);
+  if(!el) return;
+  const stage = STAGE_OF[step];
+  // Only a *forward* move into a brand-new stage counts as "changing steps."
+  // Same stage as before (any sub-step shuffle) or moving backward both
+  // render the plain, final, motionless state.
+  const advancing = lastRenderedStage !== null && stage > lastRenderedStage;
+  const justCompletedDot = advancing ? stage - 1 : null; // the dot finishing right now
+
+  let html = '';
+  for(let s=1; s<=3; s++){
+    const done = s<stage, active = s===stage;
+    const drawing = done && s===justCompletedDot;
+    html += '<div class="dot-wrap">';
+    if(done){
+      html += '<div class="dot done'+(drawing?' draw':'')+'">'+CHECK_SVG+'</div>';
+    } else {
+      html += '<div class="dot '+(active?'active':'')+'">'+s+'</div>';
+    }
+    html += '<div class="label '+(active?'active':'')+'">'+STAGE_LABELS[s-1]+'</div>';
+    html += '</div>';
+    if(s<3){
+      const filled = s<stage;
+      const growing = s===justCompletedDot;
+      html += '<div class="rule-track '+(growing?'grow':(filled?'filled':''))+'"><div class="rule-fill"></div></div>';
+    }
+  }
+  el.innerHTML = html;
+  lastRenderedStage = stage;
+  return advancing; // lets callers (goToStep) know to hold off on the keyboard
+}
+
+/* ---------------- Profile step ---------------- */
+function renderProfile(){
+  const el = document.getElementById('profileList');
+  el.innerHTML = PROFILES.map(p=>{
+    const checked = state.profile===p;
+    return '<div class="profile-item" onclick="selectProfile(\''+p+'\')"><span>'+p+'</span><div class="radio '+(checked?'checked':'')+'"></div></div>';
+  }).join('');
+}
+function selectProfile(p){ state.profile = p; renderProfile(); updateNextState('profile'); }
+
+/* ---------------- Text fields ---------------- */
+// Formats raw digits as (438)491-0869, growing the mask as digits arrive —
+// caps at 10 digits and never inserts a trailing formatting character, so
+// backspacing (native or on-screen) always removes an actual digit.
+function formatPhone(digits){
+  digits = digits.slice(0,10);
+  if(!digits.length) return '';
+  if(digits.length<4) return '('+digits;
+  if(digits.length<7) return '('+digits.slice(0,3)+')'+digits.slice(3);
+  return '('+digits.slice(0,3)+')'+digits.slice(3,6)+'-'+digits.slice(6);
+}
+function onField(key, val){
+  if(key==='phone'){
+    const digits = val.replace(/\D/g,'').slice(0,10);
+    val = formatPhone(digits);
+    const inp = document.getElementById('input-phone');
+    if(inp && inp.value!==val) inp.value = val;
+  }
+  state[key] = val;
+  const hint = document.getElementById('hint-'+key);
+  if(hint) hint.textContent = '';
+  const inp = document.getElementById('input-'+key);
+  if(inp) inp.classList.remove('invalid');
+  updateNextState(key);
+}
+function syncFieldInputs(){
+  ['firstName','phone','lastName','email'].forEach(k=>{
+    const inp = document.getElementById('input-'+k);
+    if(inp) inp.value = state[k] || '';
+  });
+  const hostInput = document.getElementById('input-host');
+  if(hostInput) hostInput.value = state.host ? state.host.name : '';
+}
+
+/* ---------------- Host search ---------------- */
+function onHostSearch(q){
+  state.host = null;
+  renderHostList(q);
+  updateNextState('host');
+}
+function renderHostList(q){
+  const el = document.getElementById('hostList');
+  const query = (q||'').toLowerCase().trim();
+  const filtered = HOSTS.filter(h=> h.name.toLowerCase().includes(query));
+  if(!filtered.length){ el.innerHTML = '<div class="host-empty">No matching host found.</div>'; return; }
+  el.innerHTML = filtered.map(h=>{
+    const sel = state.host && state.host.name===h.name;
+    return '<div class="host-tile '+(sel?'selected':'')+'" onclick="selectHost(\''+h.name.replace(/'/g,"\\'")+'\')">'+
+      avatarImgTag(h)+
+      '<div class="names"><b>'+h.name+'</b><span>'+h.title+'</span></div>'+
+    '</div>';
+  }).join('');
+}
+function selectHost(name){
+  state.host = HOSTS.find(h=>h.name===name) || null;
+  renderHostList(document.getElementById('input-host').value);
+  updateNextState('host');
+  // Selecting a host is the whole interaction for this step — advance on its
+  // own rather than making the person hunt for a Next button. The short delay
+  // lets them see the tile highlight before the screen changes.
+  if(state.host){
+    setTimeout(()=>{ nextFrom('host'); }, 260);
+  }
+}
+
+/* ---------------- Validation ---------------- */
+function isValid(step){
+  switch(step){
+    case 'profile': return !!state.profile;
+    case 'firstName': return state.firstName.trim().length>1;
+    case 'lastName': return state.lastName.trim().length>1;
+    // Exactly 10 digits — matches the "(123) 456-7890" placeholder format.
+    case 'phone': return state.phone.replace(/\D/g,'').length===10;
+    // Requires an "@" AND a domain extension (.com, .ca, .co.uk, etc.) —
+    // e.g. "a@b" is no longer accepted, "a@b.com" is.
+    case 'email': return /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(state.email.trim());
+    case 'host': return !!state.host;
+    default: return true;
+  }
+}
+function updateNextState(step){
+  const btn = document.getElementById('next-'+step);
+  if(!btn) return;
+  if(step==='phone'){
+    // Phone's Next stays visible/enabled at all times; invalid taps show an
+    // inline error instead of the button disappearing (see nextFrom()).
+    btn.disabled = false;
+    btn.classList.remove('hidden-btn');
+    return;
+  }
+  const valid = isValid(step);
+  btn.disabled = !valid;
+  btn.classList.toggle('hidden-btn', !valid);
+}
+
+/* ---------------- Confirmation ---------------- */
+function renderConfirm(){
+  const el = document.getElementById('confirmLines');
+  el.innerHTML =
+    line('First Name', state.firstName) +
+    line('Last Name', state.lastName) +
+    line('Email', state.email) +
+    line('Phone', state.phone) +
+    hostLine();
+  function line(l,v){ return '<div class="confirm-line"><div class="lbl">'+l+'</div><div class="val">'+escapeHtml(v)+'</div></div>'; }
+  function hostLine(){
+    if(!state.host) return '';
+    return '<div class="confirm-line"><div class="lbl">Host</div><div class="host-inline">'+avatarImgTag(state.host)+'<div class="names"><b>'+state.host.name+'</b><span>'+state.host.title+'</span></div></div></div>';
+  }
+}
+function escapeHtml(s){ const d=document.createElement('div'); d.textContent = s||''; return d.innerHTML; }
+
+function submitCheckin(){
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true; btn.textContent = 'Submitting…';
+  setTimeout(()=>{
+    btn.disabled = false; btn.textContent = 'Submit';
+    document.getElementById('endName').textContent = 'Welcome '+(state.firstName || '');
+    showView('end');
+    startAutoReturn();
+  }, 900);
+}
+
+let autoReturnTimer = null;
+function startAutoReturn(){
+  clearTimeout(autoReturnTimer);
+  autoReturnTimer = setTimeout(()=>{ resetAll(); }, 8000);
+}
+
+/* ---------------- On-screen keyboard ---------------- */
+const textFieldSteps = {firstName:1, lastName:1, email:1};
+document.querySelectorAll('.field input').forEach(inp=>{
+  inp.addEventListener('focus', ()=>{
+    activeInputId = inp.id;
+    const key = inp.id.replace('input-','');
+    if(key==='phone') showKeyboard('numeric'); else showKeyboard('qwerty');
+  });
+  // Physical Enter key (useful when reviewing the prototype with a real
+  // keyboard/mouse) mirrors the on-screen keyboard's return key below.
+  inp.addEventListener('keydown', (e)=>{
+    if(e.key !== 'Enter') return;
+    e.preventDefault();
+    const step = inp.id.replace('input-','');
+    const advanced = nextFrom(step);
+    if(advanced) hideKeyboard();
+  });
+  // Backstop: for steps whose Next button stays hidden until valid (e.g.
+  // Email), leaving the field is another moment to surface the error state.
+  inp.addEventListener('blur', ()=>{
+    const step = inp.id.replace('input-','');
+    if(step==='email' && state.email.trim().length && !isValid('email')){
+      inp.classList.add('invalid');
+      const hint = document.getElementById('hint-email');
+      if(hint) hint.textContent = ERROR_MESSAGES.email;
+    }
+  });
+});
+
+function showKeyboard(type){
+  document.getElementById('kbd-qwerty').classList.toggle('show', type==='qwerty');
+  document.getElementById('kbd-numeric').classList.toggle('show', type==='numeric');
+}
+function hideKeyboard(){
+  document.getElementById('kbd-qwerty').classList.remove('show');
+  document.getElementById('kbd-numeric').classList.remove('show');
+}
+
+function typeIntoActive(ch){
+  if(!activeInputId) return;
+  const inp = document.getElementById(activeInputId);
+  inp.value += ch;
+  inp.dispatchEvent(new Event('input'));
+  inp.focus();
+}
+function backspaceActive(){
+  if(!activeInputId) return;
+  const inp = document.getElementById(activeInputId);
+  inp.value = inp.value.slice(0,-1);
+  inp.dispatchEvent(new Event('input'));
+  inp.focus();
+}
+
+document.querySelectorAll('.kbd .key').forEach(k=>{
+  k.addEventListener('click', ()=>{
+    const action = k.getAttribute('data-action');
+    if(action==='back'){ backspaceActive(); return; }
+    if(action==='hide'){ hideKeyboard(); return; }
+    if(action==='enter'){
+      // Return key on the on-screen keyboard behaves like physical Enter:
+      // try to advance, and only close the keyboard if that succeeded.
+      if(activeInputId){
+        const step = activeInputId.replace('input-','');
+        const advanced = nextFrom(step);
+        if(advanced) hideKeyboard();
+      } else {
+        hideKeyboard();
+      }
+      return;
+    }
+    if(action==='shift'){
+      shiftOn = !shiftOn;
+      document.querySelectorAll('#kbd-qwerty [data-k]').forEach(kk=>{
+        const c = kk.getAttribute('data-k');
+        if(c.length===1 && /[a-z]/i.test(c)){ kk.textContent = shiftOn ? c.toUpperCase() : c.toLowerCase(); }
+      });
+      return;
+    }
+    const val = k.getAttribute('data-k');
+    if(val!=null){
+      typeIntoActive(shiftOn ? val.toUpperCase() : val);
+      if(shiftOn){ shiftOn=false; document.querySelectorAll('#kbd-qwerty [data-k]').forEach(kk=>{ const c=kk.getAttribute('data-k'); if(c.length===1 && /[a-z]/i.test(c)) kk.textContent=c; }); }
+    }
+  });
+});
+
+/* ---------------- Language toggle (cosmetic) ---------------- */
+function setLang(l){
+  document.getElementById('langFR').classList.toggle('active', l==='FR');
+  document.getElementById('langEN').classList.toggle('active', l==='EN');
+}
+
+/* ---------------- Scale the fixed 966x724 canvas to fit the bezel ---------------- */
+function rescale(){
+  const mask = document.getElementById('screenMask');
+  const screen = document.getElementById('screen');
+  const scaleX = mask.clientWidth/966;
+  const scaleY = mask.clientHeight/724;
+  const scale = Math.min(scaleX, scaleY);
+  screen.style.transform = 'scale('+scale+')';
+  screen.style.width = '966px';
+  screen.style.height = '724px';
+  const offX = (mask.clientWidth - 966*scale)/2;
+  const offY = (mask.clientHeight - 724*scale)/2;
+  screen.style.left = offX+'px';
+  screen.style.top = offY+'px';
+}
+window.addEventListener('resize', rescale);
+window.addEventListener('load', rescale);
+rescale();
+</script>
+</body>
+</html>

@@ -6,6 +6,10 @@ const PROTECTED_PATH = "/projects/elia";
 const UNLOCK_PATH = "/elia-unlock";
 
 export function middleware(request: NextRequest) {
+  if (process.env.NODE_ENV !== "production") {
+    return NextResponse.next();
+  }
+
   if (request.cookies.get(COOKIE_NAME)?.value === COOKIE_VALUE) {
     return NextResponse.next();
   }

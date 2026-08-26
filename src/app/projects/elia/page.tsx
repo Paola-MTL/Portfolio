@@ -737,6 +737,17 @@ export default function EliaProjectPage() {
                       prepare and structure V2.
                     </p>
                   </div>
+                  <div
+                    className="relative w-full overflow-hidden rounded-md"
+                    style={{ aspectRatio: "890 / 771" }}
+                  >
+                    <iframe
+                      src="/prototypes/elia-visitor-checkin.html"
+                      title="Elia visitor check-in interactive prototype"
+                      className="absolute inset-0 h-full w-full border-0"
+                      loading="lazy"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

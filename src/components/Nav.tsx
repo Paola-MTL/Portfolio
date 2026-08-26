@@ -43,7 +43,7 @@ export default function Nav() {
       </Link>
       <nav className="flex items-center gap-6 text-sm font-medium uppercase tracking-[0.1em]">
         <Link
-          href="/#projects"
+          href="/projects"
           className={`transition-opacity hover:opacity-60 ${isProjects ? "opacity-100" : "opacity-70"}`}
         >
           My Projects
