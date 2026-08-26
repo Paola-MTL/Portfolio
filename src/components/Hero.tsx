@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
@@ -67,6 +67,13 @@ function Glow({
 
 export default function Hero() {
   const [revealed, setRevealed] = useState(false);
+  const [sideCardsVisible, setSideCardsVisible] = useState(false);
+
+  useEffect(() => {
+    if (!revealed) return;
+    const timer = setTimeout(() => setSideCardsVisible(true), 2000);
+    return () => clearTimeout(timer);
+  }, [revealed]);
 
   return (
     <section className="relative flex min-h-screen w-full overflow-hidden bg-[#0f0c21]">
@@ -95,6 +102,33 @@ export default function Hero() {
           independent elements fading in and out near each other.
         */}
         <div className="flex items-center justify-center">
+          {/*
+            The About/Projects side cards are plain fades (no layoutId) —
+            they're not part of the deck-to-ID-card shared transition, just
+            two siblings that fade in 2s after the ID card lands, flanking
+            it with the same 40px overlap the Figma spec uses.
+          */}
+          <AnimatePresence>
+            {sideCardsVisible && (
+              <motion.div
+                key="about-card"
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, ease: EASE_OUT }}
+                className="relative z-[1] mr-[-40px] flex h-[300px] w-[214.286px] shrink-0 items-center justify-center overflow-hidden rounded-[14.286px] border-[5.714px] border-[rgba(255,254,254,0.13)] bg-gradient-to-b from-[#5dadf4] via-[#3c3180] to-[#0f0c21] bg-clip-padding"
+              >
+                <Link
+                  href="/about"
+                  className="flex size-full items-center justify-center p-[14.286px] text-center font-display text-[20px] font-bold tracking-[-0.3px] text-white"
+                >
+                  About me
+                </Link>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <div className="relative z-[2] flex items-center justify-center">
           <AnimatePresence mode="popLayout" initial={false}>
             {!revealed ? (
               <motion.div
@@ -155,7 +189,7 @@ export default function Hero() {
                   className="relative z-[2] flex h-[193px] w-full shrink-0 flex-col items-start rounded-t-xl bg-white"
                 >
                   <div className="mb-[-64px] h-[150px] w-full shrink-0 rounded-t-xl bg-gradient-to-r from-[#5545b5] via-[#3c3180] to-[#0f0c21]" />
-                  <div className="flex w-full shrink-0 flex-col items-center py-5">
+                  <div className="flex w-full shrink-0 flex-col items-center">
                     <div className="relative size-[120px] overflow-hidden rounded-full">
                       <Image
                         src="/images/hero/paola.png"
@@ -174,13 +208,34 @@ export default function Hero() {
                   transition={{ duration: 0.4, delay: 0.3, ease: EASE_OUT }}
                   className="relative z-[1] flex w-full flex-1 flex-col items-center justify-center overflow-hidden rounded-b-xl bg-white px-5 py-5 text-center"
                 >
-                  <p className="w-full shrink-0 text-[20px] font-bold leading-[24px] tracking-[-0.3px] text-[#1e293b]">
+                  <p className="w-full shrink-0 font-display text-[20px] font-bold leading-[24px] tracking-[-0.3px] text-[#1e293b]">
                     Hi, I&rsquo;m Paola Cejoco
                   </p>
-                  <p className="w-full shrink-0 text-[14px] font-medium leading-[18px] tracking-[-0.14px] text-[#64748b]">
+                  <p className="w-full shrink-0 font-display text-[14px] font-medium leading-[18px] tracking-[-0.14px] text-[#64748b]">
                     Product Designer based in Montreal, fueled by lattes
                   </p>
                 </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          </div>
+
+          <AnimatePresence>
+            {sideCardsVisible && (
+              <motion.div
+                key="projects-card"
+                initial={{ opacity: 0, x: -40 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, ease: EASE_OUT }}
+                className="relative z-[1] ml-[-40px] flex h-[300px] w-[214.286px] shrink-0 items-center justify-center overflow-hidden rounded-[14.286px] border-[5.714px] border-[rgba(255,254,254,0.13)] bg-gradient-to-b from-[#bf5df4] via-[#3c3180] to-[#0f0c21] bg-clip-padding"
+              >
+                <Link
+                  href="/projects"
+                  className="flex size-full items-center justify-center p-[14.286px] text-center font-display text-[20px] font-bold tracking-[-0.3px] text-white"
+                >
+                  Projects
+                </Link>
               </motion.div>
             )}
           </AnimatePresence>
@@ -188,7 +243,7 @@ export default function Hero() {
 
         <div className="relative flex items-center justify-center">
           <AnimatePresence mode="wait" initial={false}>
-            {!revealed ? (
+            {!revealed && (
               <motion.p
                 key="headline"
                 initial={{ opacity: 0 }}
@@ -199,42 +254,6 @@ export default function Hero() {
               >
                 Draw a card
               </motion.p>
-            ) : (
-              <motion.div
-                key="buttons"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 12 }}
-                transition={{ duration: 0.4, ease: EASE_OUT, delay: 0.35 }}
-                className="flex items-center justify-center gap-2"
-              >
-                {/*
-                  The Figma "HomePage-Buttons" component (node 1:83) has a
-                  labeling bug: Secondary's Hover/Pressed variants (nodes
-                  1:86, 1:88) are mistagged Hierarchy=Primary internally
-                  (a copy-paste slip), which is what made the code
-                  generator treat them as identical to Default the first
-                  time. Checked those two nodes directly instead of
-                  trusting the buggy variant lookup — the real states both
-                  just grow ~8.3%, same scale factor and no fill, matching
-                  Primary's growth but staying border-only/transparent.
-                  Font is font-display (Inter) per the spec, not the
-                  page's default body font (Montserrat) — missing on both
-                  buttons before.
-                */}
-                <Link
-                  href="/about"
-                  className="flex items-center justify-center rounded-lg border border-white px-5 py-3 font-display text-xl font-semibold text-white drop-shadow-[0px_1px_1px_rgba(0,0,0,0.05)] transition-transform duration-150 ease-out hover:scale-[1.0833] active:scale-[1.0833]"
-                >
-                  About me
-                </Link>
-                <Link
-                  href="/#projects"
-                  className="flex items-center justify-center rounded-lg bg-[#715df4] px-5 py-3 font-display text-xl font-semibold text-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] transition-transform duration-150 ease-out hover:scale-[1.0833] active:scale-[1.0833] active:bg-[#422bd9]"
-                >
-                  See projects
-                </Link>
-              </motion.div>
             )}
           </AnimatePresence>
         </div>
