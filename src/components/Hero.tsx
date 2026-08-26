@@ -6,13 +6,15 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
-// Spring for the shared hero-card layoutId morph. damping:20/stiffness:300
-// gives a damping ratio of ~0.58 — low enough to actually overshoot and
-// settle back, so the card visibly "arrives" instead of just easing to a
-// stop. (Note: a mass:2/damping:32 spring, closer to critically damped,
-// is nearly indistinguishable from a plain ease-out curve at this
-// distance — the ratio is what makes a spring read as a spring.)
-const CARD_SPRING = { type: "spring", damping: 20, stiffness: 300, mass: 1 } as const;
+// Spring for the shared hero-card layoutId morph. damping:14/stiffness:150
+// keeps the same ~0.58 damping ratio as the original 20/300 tuning (so it
+// still overshoots and settles back the same way) but at roughly half the
+// stiffness, which stretches the morph out and makes the ID card's
+// arrival read as slower rather than snappier. (Note: a mass:2/damping:32
+// spring, closer to critically damped, is nearly indistinguishable from a
+// plain ease-out curve at this distance — the ratio is what makes a
+// spring read as a spring.)
+const CARD_SPRING = { type: "spring", damping: 14, stiffness: 150, mass: 1 } as const;
 
 /*
   The deck's isometric tilt is normally one CSS matrix() — but Framer can't
@@ -72,7 +74,7 @@ export default function Hero() {
 
   useEffect(() => {
     if (!revealed) return;
-    const timer = setTimeout(() => setSideCardsVisible(true), 2000);
+    const timer = setTimeout(() => setSideCardsVisible(true), 500);
     return () => clearTimeout(timer);
   }, [revealed]);
 
@@ -113,10 +115,10 @@ export default function Hero() {
             {sideCardsVisible && (
               <motion.div
                 key="about-card"
-                initial={{ opacity: 0, x: 40 }}
+                initial={{ opacity: 0, x: 12 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.5, ease: EASE_OUT }}
+                transition={{ duration: 0.25, ease: EASE_OUT }}
                 whileHover={{ y: -8, scale: 1.05, transition: { duration: 0.3, ease: EASE_OUT } }}
                 onMouseEnter={() => setSideCardHovered(true)}
                 onMouseLeave={() => setSideCardHovered(false)}
@@ -234,10 +236,10 @@ export default function Hero() {
             {sideCardsVisible && (
               <motion.div
                 key="projects-card"
-                initial={{ opacity: 0, x: -40 }}
+                initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.5, ease: EASE_OUT }}
+                transition={{ duration: 0.25, ease: EASE_OUT }}
                 whileHover={{ y: -8, scale: 1.05, transition: { duration: 0.3, ease: EASE_OUT } }}
                 onMouseEnter={() => setSideCardHovered(true)}
                 onMouseLeave={() => setSideCardHovered(false)}
