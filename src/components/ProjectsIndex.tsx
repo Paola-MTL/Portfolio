@@ -110,7 +110,7 @@ export default function ProjectsIndex() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: EASE_OUT }}
-          className="relative mx-auto grid w-fit grid-cols-1 justify-items-center gap-5 px-6 sm:grid-cols-[repeat(2,fit-content(100%))] sm:justify-items-start md:px-12"
+          className="relative mx-auto grid w-full max-w-[656px] grid-cols-1 gap-5 px-6 sm:grid-cols-2 md:px-12"
         >
           {PROJECTS.map((project, i) => (
             <motion.div
@@ -123,8 +123,11 @@ export default function ProjectsIndex() {
                 href={`/projects/${project.slug}`}
                 className="isolate flex flex-col overflow-hidden rounded-[20px] transition-transform duration-300 ease-out hover:-translate-y-1"
               >
-                <div className="relative z-[2] flex w-full shrink-0 items-center justify-center overflow-hidden p-5">
-                  <div className="relative h-[201px] w-[268px] shrink-0 overflow-hidden">
+                <div
+                  className="glass glass--clear glass--caption-top relative z-[2] flex w-full shrink-0 items-center justify-center overflow-hidden p-5"
+                  style={{ "--glass-radius": "12px" } as React.CSSProperties}
+                >
+                  <div className="relative aspect-[268/201] w-full max-w-[268px] shrink-0 overflow-hidden">
                     <div className="absolute" style={{ inset: project.imageInset }}>
                       <Image
                         src={project.image}
@@ -136,11 +139,20 @@ export default function ProjectsIndex() {
                     </div>
                   </div>
                 </div>
-                <div className="z-[1] flex w-full flex-col items-start justify-center border-t border-white/10 bg-white px-5 py-4">
-                  <p className="w-full whitespace-nowrap font-display text-[20px] font-bold leading-6 tracking-[-0.3px] text-[#1e293b]">
+                <div
+                  className="glass glass--regular glass--caption relative z-[1] flex w-full flex-col items-start justify-center px-5 py-4"
+                  style={
+                    {
+                      "--glass-radius": "12px",
+                      "--glass-tint": "rgba(255, 255, 255, 0.1)",
+                      "--glass-border-soft": "rgba(255, 255, 255, 0.1)",
+                    } as React.CSSProperties
+                  }
+                >
+                  <p className="w-full whitespace-nowrap font-display text-[20px] font-bold leading-6 tracking-[-0.3px] text-white">
                     {project.name}
                   </p>
-                  <p className="w-full font-display text-[14px] font-medium leading-[18px] tracking-[-0.14px] text-[#64748b]">
+                  <p className="w-full font-display text-[14px] font-medium leading-[18px] tracking-[-0.14px] text-white">
                     {project.tagline}
                   </p>
                 </div>
