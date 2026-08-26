@@ -19,3 +19,116 @@ body {
 .text-balance {
   text-wrap: balance;
 }
+
+/* Liquid Glass — mockup panel and caption on project cards.
+   See .claude/skills/liquid-glass/references/design-principles.md */
+:root {
+  --glass-blur: 20px;
+  --glass-saturation: 180%;
+  --glass-tint: rgba(255, 255, 255, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.65);
+  --glass-border-soft: rgba(255, 255, 255, 0.28);
+  --glass-shadow-color: rgba(0, 0, 0, 0.18);
+  --glass-radius: 20px;
+}
+
+.glass {
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--glass-radius);
+  background: var(--glass-tint);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  box-shadow:
+    0 1px 1px var(--glass-border-soft) inset,
+    0 8px 24px -8px var(--glass-shadow-color),
+    0 1px 3px var(--glass-shadow-color);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    var(--glass-border) 0%,
+    var(--glass-border-soft) 35%,
+    var(--glass-border-soft) 65%,
+    var(--glass-border) 100%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: 1;
+}
+
+.glass > * {
+  position: relative;
+  z-index: 3;
+}
+
+/* Clear: for glass sitting over media-rich backgrounds — here, the project
+   card's shifting violet/pink/blue hero gradient behind the mockup panel. */
+.glass--clear {
+  --glass-blur: 16px;
+  background: rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+}
+
+/* Caption-top: glass flush against the top of a card. No border of its own —
+   when the sibling below is also glass (e.g. .glass--caption), that panel's
+   own border-top already draws the shared hairline; drawing it here too would
+   double it up. Only add a border-bottom here if the sibling below is plain,
+   non-glass content. */
+.glass--caption-top::before {
+  display: none;
+}
+.glass--caption-top {
+  border-radius: var(--glass-radius) var(--glass-radius) 0 0;
+}
+
+/* Caption: glass flush against the bottom of a card, hairline rim only on
+   the edge that borders the panel above (no gap between them). */
+.glass--caption::before {
+  display: none;
+}
+.glass--caption {
+  border-radius: 0 0 var(--glass-radius) var(--glass-radius);
+  border-top: 1px solid var(--glass-border-soft);
+}
+
+/* The base .glass box-shadow includes a generic 1px inset highlight along
+   the element's own top edge (part of the material's illumination layer).
+   For .glass--caption that top edge is the seam shared with the glass panel
+   above, which already carries its own explicit border-top — so the inset
+   highlight stacks on top of it and reads as a doubled, heavier line there.
+   .glass--caption-top's top edge is the card's outer top edge instead (not
+   a seam), so it keeps the default box-shadow and its rim light. */
+.glass--caption {
+  box-shadow:
+    0 8px 24px -8px var(--glass-shadow-color),
+    0 1px 3px var(--glass-shadow-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass {
+    transition: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .glass {
+    background: canvas;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: 1px solid canvastext;
+  }
+  .glass::before {
+    display: none;
+  }
+}
