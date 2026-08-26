@@ -68,6 +68,7 @@ function Glow({
 export default function Hero() {
   const [revealed, setRevealed] = useState(false);
   const [sideCardsVisible, setSideCardsVisible] = useState(false);
+  const [sideCardHovered, setSideCardHovered] = useState(false);
 
   useEffect(() => {
     if (!revealed) return;
@@ -116,7 +117,10 @@ export default function Hero() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5, ease: EASE_OUT }}
-                className="relative z-[1] mr-[-40px] flex h-[300px] w-[214.286px] shrink-0 items-center justify-center overflow-hidden rounded-[14.286px] border-[5.714px] border-[rgba(255,254,254,0.13)] bg-gradient-to-b from-[#5dadf4] via-[#3c3180] to-[#0f0c21] bg-clip-padding"
+                whileHover={{ y: -8, scale: 1.05, transition: { duration: 0.3, ease: EASE_OUT } }}
+                onMouseEnter={() => setSideCardHovered(true)}
+                onMouseLeave={() => setSideCardHovered(false)}
+                className="relative z-[1] mr-[-40px] flex h-[300px] w-[214.286px] shrink-0 items-center justify-center overflow-hidden rounded-[14.286px] border-[5.714px] border-[rgba(255,254,254,0.13)] bg-gradient-to-b from-[#5dadf4] via-[#3c3180] to-[#0f0c21] bg-clip-padding transition-shadow duration-300 ease-out hover:z-10 hover:shadow-2xl"
               >
                 <Link
                   href="/about"
@@ -128,7 +132,13 @@ export default function Hero() {
             )}
           </AnimatePresence>
 
-          <div className="relative z-[2] flex items-center justify-center">
+          <div
+            className="relative z-[2] flex items-center justify-center"
+            style={{
+              transform: sideCardHovered ? "scale(0.92)" : "scale(1)",
+              transition: "transform 300ms cubic-bezier(0.22, 1, 0.36, 1)",
+            }}
+          >
           <AnimatePresence mode="popLayout" initial={false}>
             {!revealed ? (
               <motion.div
@@ -228,7 +238,10 @@ export default function Hero() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5, ease: EASE_OUT }}
-                className="relative z-[1] ml-[-40px] flex h-[300px] w-[214.286px] shrink-0 items-center justify-center overflow-hidden rounded-[14.286px] border-[5.714px] border-[rgba(255,254,254,0.13)] bg-gradient-to-b from-[#bf5df4] via-[#3c3180] to-[#0f0c21] bg-clip-padding"
+                whileHover={{ y: -8, scale: 1.05, transition: { duration: 0.3, ease: EASE_OUT } }}
+                onMouseEnter={() => setSideCardHovered(true)}
+                onMouseLeave={() => setSideCardHovered(false)}
+                className="relative z-[1] ml-[-40px] flex h-[300px] w-[214.286px] shrink-0 items-center justify-center overflow-hidden rounded-[14.286px] border-[5.714px] border-[rgba(255,254,254,0.13)] bg-gradient-to-b from-[#bf5df4] via-[#3c3180] to-[#0f0c21] bg-clip-padding transition-shadow duration-300 ease-out hover:z-10 hover:shadow-2xl"
               >
                 <Link
                   href="/projects"
