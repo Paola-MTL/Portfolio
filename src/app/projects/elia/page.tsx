@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import BackButton from "./BackButton";
 import ScrollDownHint from "./ScrollDownHint";
-import MockupsRow from "./MockupsRow";
+import MockupsSection from "./MockupsSection";
 
 export const metadata: Metadata = {
   title: "Elia — Paola Cejoco",
@@ -12,20 +13,6 @@ const imgDiscovery = "/images/elia/discovery-pain-points.png";
 const imgScope = "/images/elia/scope-priorities.png";
 const imgArrowDown = "/images/elia/arrow-1.svg";
 const imgArrowRight = "/images/elia/arrow-3.svg";
-const imgArrowBack = "/images/elia/arrow-2.svg";
-const imgHome1 = "/images/elia/home-1.png";
-const imgStep12 = "/images/elia/step-1-2.png";
-const imgStep31 = "/images/elia/step-3-1.png";
-const imgStep21 = "/images/elia/step-2-1.png";
-const imgStep71 = "/images/elia/step-7-1.png";
-const imgMobilePhotoCapture1 = "/images/elia/mobile-photo-capture-1.png";
-const imgMobileDocumentSigned = "/images/elia/mobile-document-signed.png";
-const imgMobileDocument = "/images/elia/mobile-document.png";
-const imgMobileHostTyping = "/images/elia/mobile-host-typing.png";
-const imgMobileStep3 = "/images/elia/mobile-step-3.png";
-const imgMobileStep2 = "/images/elia/mobile-step-2.png";
-const imgMobileStep1 = "/images/elia/mobile-step-1.png";
-const imgMobileHome = "/images/elia/mobile-home.png";
 const imgDiagonalScreens1 = "/images/elia/diagonal-screens-1.png";
 
 function Persona({
@@ -121,54 +108,7 @@ export default function EliaProjectPage() {
         data-name="Top"
       >
         <div className="relative mx-auto h-full w-full max-w-[1280px]">
-          <div className="absolute content-stretch flex items-center left-[104px] top-0 w-[1072px]">
-            <div className="content-stretch flex items-center py-[32px] relative shrink-0">
-              <a
-                href="/#projects"
-                className="content-stretch flex gap-[10px] items-center relative shrink-0"
-              >
-                <div className="flex items-center justify-center relative shrink-0">
-                  <div className="flex-none rotate-180">
-                    <div className="h-[20.877px] relative w-[26.252px]">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        alt=""
-                        className="absolute block inset-0 max-w-none size-full"
-                        src={imgArrowBack}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="content-stretch flex items-center justify-center py-[8px] relative shrink-0">
-                  <div className="font-body font-medium flex flex-col justify-center leading-[0] relative shrink-0 text-[24px] text-center text-white tracking-[-0.24px] whitespace-nowrap">
-                    <p className="leading-[30px]">BACK</p>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div className="content-stretch flex flex-1 gap-[32px] items-center justify-end min-w-px py-[32px] relative">
-              <a
-                href="/about"
-                className="content-stretch flex items-center justify-center relative shrink-0"
-              >
-                <div className="content-stretch flex items-center justify-center py-[8px] relative shrink-0">
-                  <div className="font-body font-medium flex flex-col justify-center leading-[0] relative shrink-0 text-[24px] text-center text-white tracking-[-0.24px] whitespace-nowrap">
-                    <p className="leading-[30px]">about</p>
-                  </div>
-                </div>
-              </a>
-              <a
-                href="mailto:cejoco.paola@gmail.com"
-                className="content-stretch flex items-center justify-center relative shrink-0"
-              >
-                <div className="content-stretch flex items-center justify-center py-[8px] relative shrink-0">
-                  <div className="font-body font-medium flex flex-col justify-center leading-[0] relative shrink-0 text-[24px] text-center text-white tracking-[-0.24px] whitespace-nowrap">
-                    <p className="leading-[30px]">contact</p>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
+          <BackButton />
 
           <div
             className="absolute h-[327px] left-[354.42px] top-[197px] w-[571.163px]"
@@ -200,7 +140,7 @@ export default function EliaProjectPage() {
           <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-[890px]">
             <div className="content-stretch flex flex-col gap-[4px] items-start leading-[0] relative shrink-0 w-[731px]">
               <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] text-black tracking-[-0.2px] whitespace-nowrap">
-                <p className="leading-[24px]">about the project</p>
+                <p className="leading-[24px]">About the project</p>
               </div>
               <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">
@@ -228,10 +168,13 @@ export default function EliaProjectPage() {
                     experience directly integrated into our platform.
                   </p>
                 </div>
-                <div className="content-stretch flex gap-[7.539px] items-center justify-center relative shrink-0">
+                <a
+                  href="#prototype"
+                  className="content-stretch flex gap-[7.539px] items-center justify-center relative shrink-0 transition-opacity hover:opacity-70"
+                >
                   <div className="content-stretch flex items-center justify-center py-[6.031px] relative shrink-0">
                     <div className="font-body font-medium flex flex-col justify-center leading-[0] relative shrink-0 text-[#6c65ff] text-[18.09px] text-center tracking-[-0.1809px] whitespace-nowrap">
-                      <p className="leading-[22.616px]">visit the site</p>
+                      <p className="leading-[22.616px]">Jump to prototype</p>
                     </div>
                   </div>
                   <div className="h-[15.739px] relative shrink-0 w-[19.79px]">
@@ -242,7 +185,7 @@ export default function EliaProjectPage() {
                       src={imgArrowRight}
                     />
                   </div>
-                </div>
+                </a>
               </div>
               <div className="content-stretch flex flex-1 flex-col gap-[24.124px] items-start leading-[0] min-w-px relative self-stretch text-black">
                 <div className="content-stretch flex flex-col gap-[4px] items-start relative shrink-0 w-full">
@@ -250,12 +193,12 @@ export default function EliaProjectPage() {
                     <p className="leading-[24px]">Role</p>
                   </div>
                   <div className="font-body font-normal flex flex-col justify-center min-w-full relative shrink-0 text-[16px] w-[min-content]">
-                    <p className="leading-[20px]">Product Designer</p>
+                    <p className="leading-[20px]">Lead Product Designer</p>
                   </div>
                 </div>
                 <div className="content-stretch flex flex-col gap-[4px] items-start relative shrink-0 w-full">
                   <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] tracking-[-0.2px] w-[195.252px]">
-                    <p className="leading-[24px]">duration</p>
+                    <p className="leading-[24px]">Duration</p>
                   </div>
                   <div className="font-body font-normal flex flex-col justify-center relative shrink-0 text-[16px] w-[195.252px]">
                     <p className="leading-[20px]">4 months</p>
@@ -263,7 +206,7 @@ export default function EliaProjectPage() {
                 </div>
                 <div className="content-stretch flex flex-col gap-[4px] items-start relative shrink-0 w-full">
                   <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] tracking-[-0.2px] w-full">
-                    <p className="leading-[24px]">COLLABORATION</p>
+                    <p className="leading-[24px]">Collaboration</p>
                   </div>
                   <div className="font-body font-normal flex flex-col justify-center relative shrink-0 text-[14px] w-full">
                     <p className="leading-[20px]">
@@ -276,7 +219,7 @@ export default function EliaProjectPage() {
                 </div>
                 <div className="content-stretch flex flex-col gap-[4px] items-start relative shrink-0 w-full">
                   <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] tracking-[-0.2px] w-full">
-                    <p className="leading-[24px]">PROJECT TYPE</p>
+                    <p className="leading-[24px]">Project type</p>
                   </div>
                   <div className="font-body font-normal flex flex-col justify-center relative shrink-0 text-[14px] w-full">
                     <p className="leading-[20px]">
@@ -291,33 +234,10 @@ export default function EliaProjectPage() {
           </div>
         </div>
 
-        {/* Mockups strip — tile sizes scale with vw below the 1280px design
-            width and cap at their original px size above it (via min()), so
-            the intentional edge-bleed stays proportional to the section at
-            every viewport instead of growing unbounded past 1280px */}
-        <div className="content-stretch flex flex-col gap-[min(2.5vw,32px)] items-start justify-center relative shrink-0 w-full overflow-hidden py-[min(2.5vw,32px)]">
-          <MockupsRow
-            images={[imgHome1, imgStep12, imgStep31, imgStep21, imgStep71]}
-            containerClassName="content-stretch flex gap-[min(2.5vw,32px)] items-start pl-[min(15.23vw,195px)] relative shrink-0"
-            itemClassName="relative rounded-[12px] shrink-0 w-[min(29.81vw,381.597px)] aspect-[966/724] overflow-hidden"
-            imgClassName="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[12px] size-full"
-          />
-          <MockupsRow
-            images={[
-              imgMobilePhotoCapture1,
-              imgMobileDocumentSigned,
-              imgMobileDocument,
-              imgMobileHostTyping,
-              imgMobileStep3,
-              imgMobileStep2,
-              imgMobileStep1,
-              imgMobileHome,
-            ]}
-            containerClassName="content-stretch flex gap-[min(2.5vw,32px)] items-center justify-end relative shrink-0 pr-[min(15.23vw,195px)] w-full"
-            itemClassName="relative shrink-0 w-[min(10.93vw,139.891px)] aspect-[450/920]"
-            imgClassName="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
-          />
-        </div>
+        {/* Mockups strip — recreation of Framer's div.framer-tcpmhp: two
+            infinite marquees (tablet row left, phone row right) at 40 px/s,
+            each sliding in from its travel direction on scroll-into-view. */}
+        <MockupsSection />
 
         {/* 01 — The problem */}
         <div className="content-stretch flex flex-col items-start px-[195px] py-[112px] relative shrink-0 w-[1280px]">
@@ -738,7 +658,8 @@ export default function EliaProjectPage() {
                     </p>
                   </div>
                   <div
-                    className="relative w-full overflow-hidden rounded-md"
+                    id="prototype"
+                    className="relative w-full overflow-hidden rounded-md scroll-mt-[112px]"
                     style={{ aspectRatio: "890 / 771" }}
                   >
                     <iframe

@@ -20,6 +20,36 @@ body {
   text-wrap: balance;
 }
 
+/* Elia mockups marquee — continuous horizontal scroll.
+   The track holds 4 identical sequences laid end to end; translating by
+   exactly -25% (= one sequence, as a percentage so it stays pixel-exact
+   at any subpixel width) lands on an identical frame, so the CSS-loop
+   restart is seamless. Keep the -25% in sync with REPEAT in
+   projects/elia/MockupsSection.tsx (-100% / REPEAT). */
+@keyframes elia-marquee-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-25%, 0, 0);
+  }
+}
+
+@keyframes elia-marquee-right {
+  from {
+    transform: translate3d(-25%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .elia-marquee-track {
+    animation: none !important;
+  }
+}
+
 /* Liquid Glass — mockup panel and caption on project cards.
    See .claude/skills/liquid-glass/references/design-principles.md */
 :root {
