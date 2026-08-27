@@ -20,7 +20,7 @@ export default function BackButton() {
 
   return (
     <a
-      href="/#projects"
+      href="/projects"
       aria-label="Back to projects"
       className={`group fixed top-[28px] left-[max(24px,calc(50vw-536px))] z-50 flex size-[44px] items-center justify-center rounded-full border backdrop-blur-sm transition-colors duration-300 ${
         pastHero
