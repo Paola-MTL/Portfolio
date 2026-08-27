@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 // Spring for the shared hero-card layoutId morph. damping:14/stiffness:150
@@ -67,16 +68,125 @@ function Glow({
   );
 }
 
+// The overlay wipe and the hero's parallax lift share this timing, so the
+// dark curtain rising from the bottom and the hero sliding up read as one
+// continuous downward scroll into the Projects page.
+const SCROLL_DOWN_MS = 620;
+const SCROLL_DOWN_EASE = [0.65, 0, 0.35, 1] as const;
+
+// Once the deck has been drawn, remember it for the rest of the session so
+// returning from the Projects page (browser back, or the scroll-up gesture)
+// lands straight on the three cards instead of resetting to the deck.
+const REVEALED_KEY = "hero:revealed";
+
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
 export default function Hero() {
+  const router = useRouter();
+  const reduceMotion = useReducedMotion();
   const [revealed, setRevealed] = useState(false);
   const [sideCardsVisible, setSideCardsVisible] = useState(false);
   const [sideCardHovered, setSideCardHovered] = useState(false);
+  const [leavingToProjects, setLeavingToProjects] = useState(false);
+  // `returning` = mounted already-revealed (came back from Projects); it drives
+  // the reverse wipe — a dark curtain that starts covering the viewport and
+  // lifts away while the cards settle down from above, mirroring the scroll.
+  const [returning, setReturning] = useState(false);
+  const [curtainRetracted, setCurtainRetracted] = useState(false);
+  const leavingRef = useRef(false);
+
+  useIsomorphicLayoutEffect(() => {
+    let wasRevealed = false;
+    try {
+      wasRevealed = sessionStorage.getItem(REVEALED_KEY) === "1";
+    } catch {}
+    if (wasRevealed) {
+      setRevealed(true);
+      setSideCardsVisible(true);
+      setReturning(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (!revealed) return;
+    try {
+      sessionStorage.setItem(REVEALED_KEY, "1");
+    } catch {}
+    if (returning) return;
     const timer = setTimeout(() => setSideCardsVisible(true), 500);
     return () => clearTimeout(timer);
-  }, [revealed]);
+  }, [revealed, returning]);
+
+  // On a returning mount the curtain is painted covering the screen; drop it
+  // on the next frame so Framer animates it up out of view.
+  useEffect(() => {
+    if (!returning) return;
+    const id = requestAnimationFrame(() => setCurtainRetracted(true));
+    return () => cancelAnimationFrame(id);
+  }, [returning]);
+
+  const goToProjects = useCallback(() => {
+    if (leavingRef.current) return;
+    leavingRef.current = true;
+    if (reduceMotion) {
+      router.push("/projects");
+      return;
+    }
+    setLeavingToProjects(true);
+    window.setTimeout(() => router.push("/projects"), SCROLL_DOWN_MS);
+  }, [reduceMotion, router]);
+
+  const handleProjectsCardClick = (event: React.MouseEvent) => {
+    // Let modified clicks (new tab, etc.) behave normally.
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    goToProjects();
+  };
+
+  // Once the three cards are settled, a downward scroll / upward swipe at the
+  // top of the page runs the same wipe as clicking the Projects card — the
+  // mirror of the scroll-up gesture on the Projects page.
+  useEffect(() => {
+    if (!revealed) return;
+    if (returning && !curtainRetracted) return;
+
+    const onWheel = (event: WheelEvent) => {
+      if (window.scrollY <= 0 && event.deltaY > 8) goToProjects();
+    };
+    let touchStartY = 0;
+    const onTouchStart = (event: TouchEvent) => {
+      touchStartY = event.touches[0]?.clientY ?? 0;
+    };
+    const onTouchMove = (event: TouchEvent) => {
+      const y = event.touches[0]?.clientY ?? 0;
+      if (window.scrollY <= 0 && touchStartY - y > 64) goToProjects();
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+    };
+  }, [revealed, returning, curtainRetracted, goToProjects]);
+
+  // Curtain: parked below (100%), rising to cover on the way down to Projects,
+  // painted covering (0%) on a returning mount, then lifting away (-100%).
+  const curtainY = leavingToProjects
+    ? "0%"
+    : returning
+      ? curtainRetracted
+        ? "-100%"
+        : "0%"
+      : "100%";
+
+  // Hero content lifts up as we leave; on a returning mount it starts lifted
+  // and settles back down as the curtain clears.
+  const contentLifted =
+    !reduceMotion && (leavingToProjects || (returning && !curtainRetracted));
 
   return (
     <section className="relative flex min-h-screen w-full overflow-hidden bg-[#0f0c21]">
@@ -87,7 +197,13 @@ export default function Hero() {
       <Glow left="-7.44%" top="-23.2%" visible={revealed} />
       <Glow left="82.7%" top="49.4%" visible={revealed} />
 
-      <div className="relative flex h-screen min-w-0 flex-1 flex-col items-center justify-between px-5 py-[9.6vh]">
+      <motion.div
+        key={returning ? "hero-content-return" : "hero-content"}
+        initial={{ y: returning && !reduceMotion ? -80 : 0 }}
+        animate={{ y: contentLifted ? -80 : 0 }}
+        transition={{ duration: SCROLL_DOWN_MS / 1000, ease: SCROLL_DOWN_EASE }}
+        className="relative flex h-screen min-w-0 flex-1 flex-col items-center justify-between px-5 py-[9.6vh]"
+      >
         <p
           aria-hidden
           className="m-0 select-none whitespace-nowrap p-2 text-center font-display text-[clamp(28px,4.5vw,52.857px)] font-extrabold tracking-[-0.53px] text-[#1e293b] opacity-0"
@@ -247,6 +363,7 @@ export default function Hero() {
               >
                 <Link
                   href="/projects"
+                  onClick={handleProjectsCardClick}
                   className="flex size-full items-center justify-center p-[14.286px] text-center font-display text-[20px] font-bold tracking-[-0.3px] text-white"
                 >
                   Projects
@@ -272,7 +389,22 @@ export default function Hero() {
             )}
           </AnimatePresence>
         </div>
-      </div>
+      </motion.div>
+
+      {/*
+        Dark curtain shared by both directions: it rises from the bottom edge
+        when the Projects card is clicked (scroll down), and on the way back it
+        starts covering the viewport and lifts off the top edge (scroll up).
+        It's the same #0f0c21 as the Projects page, so the seam is invisible.
+      */}
+      <motion.div
+        key={returning ? "curtain-up" : "curtain-down"}
+        aria-hidden
+        initial={returning ? { y: "0%" } : false}
+        animate={{ y: curtainY }}
+        transition={{ duration: SCROLL_DOWN_MS / 1000, ease: SCROLL_DOWN_EASE }}
+        className="pointer-events-none fixed inset-0 z-50 bg-[#0f0c21]"
+      />
     </section>
   );
 }
