@@ -14,6 +14,7 @@ const imgScope = "/images/elia/scope-priorities.png";
 const imgArrowDown = "/images/elia/arrow-1.svg";
 const imgArrowRight = "/images/elia/arrow-3.svg";
 const imgDiagonalScreens1 = "/images/elia/diagonal-screens-1.png";
+const imgVisitorLog = "/images/elia/visitor-log.png";
 
 function Persona({
   label,
@@ -612,6 +613,14 @@ export default function EliaProjectPage() {
                       principle at the heart of our platform: to offer
                       maximum modularity and flexibility.
                     </p>
+                  </div>
+                  <div className="relative shrink-0 w-full overflow-hidden rounded-md">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      alt="elia visitor log — web admin interface"
+                      className="block w-full h-auto"
+                      src={imgVisitorLog}
+                    />
                   </div>
                 </div>
                 <div className="content-stretch flex flex-col gap-[8px] items-start relative shrink-0 w-full">
