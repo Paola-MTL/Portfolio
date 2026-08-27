@@ -79,8 +79,8 @@ function ShapeGlow({
 
 export default function ProjectsIndex() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#0f0c21] pb-24 pt-32 md:pt-40">
-      <div className="relative mx-auto max-w-[1280px]">
+    <section className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#0f0c21] py-24">
+      <div className="relative mx-auto w-full max-w-[1280px]">
         <ShapeGlow
           src="/images/projects-hub/shape-2.svg"
           left="42.81%"
