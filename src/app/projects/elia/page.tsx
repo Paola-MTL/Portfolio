@@ -15,6 +15,7 @@ const imgArrowDown = "/images/elia/arrow-1.svg";
 const imgArrowRight = "/images/elia/arrow-3.svg";
 const imgDiagonalScreens1 = "/images/elia/diagonal-screens-1.png";
 const imgVisitorLog = "/images/elia/visitor-log.png";
+const imgVisitorJourney = "/images/elia/visitor-journey-config.png";
 
 function Persona({
   label,
@@ -620,6 +621,14 @@ export default function EliaProjectPage() {
                       alt="elia visitor log — web admin interface"
                       className="block w-full h-auto"
                       src={imgVisitorLog}
+                    />
+                  </div>
+                  <div className="relative shrink-0 w-full overflow-hidden rounded-md">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      alt="elia visitor journey configuration — building a visitor flow and document actions in the web admin"
+                      className="block w-full h-auto"
+                      src={imgVisitorJourney}
                     />
                   </div>
                 </div>
