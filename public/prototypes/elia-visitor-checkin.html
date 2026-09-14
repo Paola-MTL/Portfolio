@@ -438,11 +438,11 @@
                 <img src="assets/logo.png" alt="Layers">
               </div>
               <div class="home-actions">
-                <button class="btn btn-primary" onclick="goRegister()">Register</button>
-                <button class="btn btn-outline" onclick="goCheckout()">Check out</button>
+                <button class="btn btn-primary" data-i18n="btn_register" onclick="goRegister()">Register</button>
+                <button class="btn btn-outline" data-i18n="btn_checkout" onclick="goCheckout()">Check out</button>
                 <button class="btn btn-ghost-row" onclick="goQR()">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20v.01"/></svg>
-                  I already have a QR code
+                  <span data-i18n="btn_qr">I already have a QR code</span>
                 </button>
               </div>
             </div>
@@ -461,7 +461,7 @@
               <div class="card-inner">
                 <div class="stepper" id="stepper-profile"></div>
                 <div class="step-body" style="width:100%;">
-                  <div class="step-title" style="margin-bottom:20px;">Select a profile</div>
+                  <div class="step-title" style="margin-bottom:20px;" data-i18n="title_profile">Select a profile</div>
                   <div class="profile-list" id="profileList"></div>
                 </div>
               </div>
@@ -479,8 +479,8 @@
                 <div class="stepper" id="stepper-firstName"></div>
                 <div class="field-group step-body">
                   <div class="field">
-                    <label>First Name*</label>
-                    <input type="text" id="input-firstName" placeholder="Type your first name" autocomplete="off" oninput="onField('firstName', this.value)">
+                    <label data-i18n="label_firstName">First Name*</label>
+                    <input type="text" id="input-firstName" data-i18n-placeholder="ph_firstName" placeholder="Type your first name" autocomplete="off" oninput="onField('firstName', this.value)">
                     <div class="hint" id="hint-firstName"></div>
                   </div>
                 </div>
@@ -499,8 +499,8 @@
                 <div class="stepper" id="stepper-lastName"></div>
                 <div class="field-group step-body">
                   <div class="field">
-                    <label>Last Name*</label>
-                    <input type="text" id="input-lastName" placeholder="Type your last name" autocomplete="off" oninput="onField('lastName', this.value)">
+                    <label data-i18n="label_lastName">Last Name*</label>
+                    <input type="text" id="input-lastName" data-i18n-placeholder="ph_lastName" placeholder="Type your last name" autocomplete="off" oninput="onField('lastName', this.value)">
                     <div class="hint" id="hint-lastName"></div>
                   </div>
                 </div>
@@ -519,7 +519,7 @@
                 <div class="stepper" id="stepper-phone"></div>
                 <div class="field-group step-body">
                   <div class="field">
-                    <label>Phone*</label>
+                    <label data-i18n="label_phone">Phone*</label>
                     <input type="text" id="input-phone" placeholder="(000)000-0000" autocomplete="off" oninput="onField('phone', this.value)">
                     <div class="hint" id="hint-phone"></div>
                   </div>
@@ -539,7 +539,7 @@
                 <div class="stepper" id="stepper-email"></div>
                 <div class="field-group step-body">
                   <div class="field">
-                    <label>Email*</label>
+                    <label data-i18n="label_email">Email*</label>
                     <input type="text" id="input-email" placeholder="you@company.com" autocomplete="off" oninput="onField('email', this.value)">
                     <div class="hint" id="hint-email"></div>
                   </div>
@@ -559,8 +559,8 @@
                 <div class="stepper" id="stepper-host"></div>
                 <div class="field-group step-body">
                   <div class="field">
-                    <label>Host*</label>
-                    <input type="text" id="input-host" placeholder="Search for your host" autocomplete="off" oninput="onHostSearch(this.value)">
+                    <label data-i18n="label_host">Host*</label>
+                    <input type="text" id="input-host" data-i18n-placeholder="ph_host" placeholder="Search for your host" autocomplete="off" oninput="onHostSearch(this.value)">
                   </div>
                   <div class="host-list" id="hostList"></div>
                 </div>
@@ -582,7 +582,7 @@
             </div>
           </div>
           <div class="submit-wrap">
-            <button class="btn btn-primary" id="submitBtn" onclick="submitCheckin()">Submit</button>
+            <button class="btn btn-primary" id="submitBtn" data-i18n="btn_submit" onclick="submitCheckin()">Submit</button>
           </div>
         </div>
 
@@ -592,12 +592,12 @@
             <div class="glass end-card">
               <div>
                 <h1 id="endName">Welcome</h1>
-                <p>Your host has been notified, they'll be right with you.</p>
+                <p data-i18n="end_notified">Your host has been notified, they'll be right with you.</p>
               </div>
               <div class="logo">
                 <img src="assets/logo.png" alt="Layers">
               </div>
-              <button class="restart-link" onclick="resetAll()">Start a new check-in</button>
+              <button class="restart-link" data-i18n="btn_restart" onclick="resetAll()">Start a new check-in</button>
             </div>
           </div>
         </div>
@@ -607,13 +607,13 @@
           <div class="center-card">
             <div class="glass end-card">
               <div>
-                <h1>See you soon!</h1>
-                <p>You've been successfully checked out.</p>
+                <h1 data-i18n="checkout_title">See you soon!</h1>
+                <p data-i18n="checkout_body">You've been successfully checked out.</p>
               </div>
               <div class="logo">
                 <img src="assets/logo.png" alt="Layers">
               </div>
-              <button class="restart-link" onclick="resetAll()">Back to home</button>
+              <button class="restart-link" data-i18n="btn_backhome" onclick="resetAll()">Back to home</button>
             </div>
           </div>
         </div>
@@ -625,7 +625,7 @@
               <div class="qr-box"><div class="qr-scanline"></div>
                 <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
               </div>
-              <div><h1 style="font-size:22px;">Scanning your QR code…</h1><p style="font-size:16px;">Hold it steady in front of the camera</p></div>
+              <div><h1 style="font-size:22px;" data-i18n="qr_title">Scanning your QR code…</h1><p style="font-size:16px;" data-i18n="qr_body">Hold it steady in front of the camera</p></div>
             </div>
           </div>
         </div>
@@ -646,9 +646,9 @@
             <div class="key" data-k="@">@</div><div class="key" data-k=".">.</div>
           </div>
           <div class="row">
-            <div class="key wide func" data-action="hide">⌄ Hide</div>
+            <div class="key wide func" data-action="hide" data-i18n="kbd_hide">⌄ Hide</div>
             <div class="key space" data-k=" ">space</div>
-            <div class="key wide func" data-action="hide">Done</div>
+            <div class="key wide func" data-action="hide" data-i18n="kbd_done">Done</div>
           </div>
         </div>
 
@@ -664,7 +664,7 @@
             <div class="key" data-k="7">7<small>PQRS</small></div><div class="key" data-k="8">8<small>TUV</small></div><div class="key" data-k="9">9<small>WXYZ</small></div>
           </div>
           <div class="row">
-            <div class="key func" data-action="hide">Hide</div><div class="key" data-k="0">0</div><div class="key func" data-action="back">⌫</div>
+            <div class="key func" data-action="hide" data-i18n="kbd_hide_numeric">Hide</div><div class="key" data-k="0">0</div><div class="key func" data-action="back">⌫</div>
           </div>
         </div>
 
@@ -676,24 +676,83 @@
 </div>
 
 <script>
+/* ---------------- i18n ---------------- */
+// Person names are never translated; everything else the visitor reads on
+// screen is. Host job titles and profile options are looked up by a stable
+// key so switching language mid-flow never breaks an already-made selection
+// (state.profile / state.host keep the key, not the display string).
+const I18N = {
+  EN: {
+    btn_register:'Register', btn_checkout:'Check out', btn_qr:'I already have a QR code',
+    title_profile:'Select a profile',
+    label_firstName:'First Name*', ph_firstName:'Type your first name',
+    label_lastName:'Last Name*', ph_lastName:'Type your last name',
+    label_phone:'Phone*', label_email:'Email*',
+    label_host:'Host*', ph_host:'Search for your host',
+    host_empty:'No matching host found.',
+    btn_submit:'Submit', submitting:'Submitting…',
+    welcome:'Welcome',
+    end_notified:"Your host has been notified, they'll be right with you.",
+    btn_restart:'Start a new check-in',
+    checkout_title:'See you soon!', checkout_body:"You've been successfully checked out.",
+    btn_backhome:'Back to home',
+    qr_title:'Scanning your QR code…', qr_body:'Hold it steady in front of the camera',
+    kbd_hide:'⌄ Hide', kbd_done:'Done', kbd_hide_numeric:'Hide',
+    stage_profile:'Profile', stage_contact:'Contact details', stage_confirmation:'Confirmation',
+    confirm_firstName:'First Name', confirm_lastName:'Last Name', confirm_email:'Email',
+    confirm_phone:'Phone', confirm_host:'Host',
+    err_firstName:'Please enter your first name.',
+    err_lastName:'Please enter your last name.',
+    err_phone:'Enter a valid 10-digit phone number.',
+    err_email:'Enter a valid email with a domain, e.g. name@company.com.',
+    err_generic:'Please complete this field.',
+    profile_visitor:'Visitor', profile_interview:'Interview', profile_consultant:'Consultant', profile_delivery:'Delivery',
+    host_title_jessica:'Account Executive', host_title_john:'VP of Sales',
+    host_title_jonathan:'Financial Director', host_title_julia:'Marketing Director'
+  },
+  FR: {
+    btn_register:"S'enregistrer", btn_checkout:'Quitter', btn_qr:'J’ai déjà un code QR',
+    title_profile:'Sélectionnez un profil',
+    label_firstName:'Prénom*', ph_firstName:'Entrez votre prénom',
+    label_lastName:'Nom de famille*', ph_lastName:'Entrez votre nom de famille',
+    label_phone:'Téléphone*', label_email:'Courriel*',
+    label_host:'Hôte*', ph_host:'Recherchez votre hôte',
+    host_empty:'Aucun hôte correspondant trouvé.',
+    btn_submit:'Soumettre', submitting:'Envoi en cours…',
+    welcome:'Bienvenue',
+    end_notified:'Votre hôte a été avisé et sera avec vous sous peu.',
+    btn_restart:'Commencer un nouvel enregistrement',
+    checkout_title:'À bientôt!', checkout_body:'Votre départ a été enregistré avec succès.',
+    btn_backhome:"Retour à l'accueil",
+    qr_title:'Numérisation de votre code QR…', qr_body:'Tenez-le stable devant la caméra',
+    kbd_hide:'⌄ Masquer', kbd_done:'OK', kbd_hide_numeric:'Masquer',
+    stage_profile:'Profil', stage_contact:'Coordonnées', stage_confirmation:'Confirmation',
+    confirm_firstName:'Prénom', confirm_lastName:'Nom de famille', confirm_email:'Courriel',
+    confirm_phone:'Téléphone', confirm_host:'Hôte',
+    err_firstName:'Veuillez entrer votre prénom.',
+    err_lastName:'Veuillez entrer votre nom de famille.',
+    err_phone:'Entrez un numéro de téléphone valide à 10 chiffres.',
+    err_email:'Entrez un courriel valide avec un domaine, ex. nom@entreprise.com.',
+    err_generic:'Veuillez remplir ce champ.',
+    profile_visitor:'Visiteur', profile_interview:'Entrevue', profile_consultant:'Consultant', profile_delivery:'Livraison',
+    host_title_jessica:'Chargée de compte', host_title_john:'VP des ventes',
+    host_title_jonathan:'Directeur financier', host_title_julia:'Directrice marketing'
+  }
+};
+let currentLang = 'EN';
+function t(key){ return (I18N[currentLang] && I18N[currentLang][key]) || I18N.EN[key] || key; }
+
 /* ---------------- Data ---------------- */
 const HOSTS = [
-  {name:'Jessica McDonalds', title:'Account Executive', photo:'assets/jessica-mcdonalds.png'},
-  {name:'John Douglas', title:'VP of Sales', photo:'assets/john-douglas.png'},
-  {name:'Jonathan Smith', title:'Financial Director', photo:'assets/jonathan-smith.png'},
-  {name:'Julia McGuire', title:'Marketing Director', photo:'assets/julia-mcguire.png'}
+  {name:'Jessica McDonalds', titleKey:'host_title_jessica', photo:'assets/jessica-mcdonalds.png'},
+  {name:'John Douglas', titleKey:'host_title_john', photo:'assets/john-douglas.png'},
+  {name:'Jonathan Smith', titleKey:'host_title_jonathan', photo:'assets/jonathan-smith.png'},
+  {name:'Julia McGuire', titleKey:'host_title_julia', photo:'assets/julia-mcguire.png'}
 ];
-const PROFILES = ['Visitor','Interview','Consultant','Delivery'];
+const PROFILE_KEYS = ['visitor','interview','consultant','delivery'];
 
 const STEP_ORDER = ['profile','firstName','lastName','phone','email','host','confirm'];
 const STAGE_OF = {profile:1, firstName:2, phone:2, lastName:2, email:2, host:2, confirm:3};
-const STAGE_LABELS = ['Profile','Contact details','Confirmation'];
-const ERROR_MESSAGES = {
-  firstName: 'Please enter your first name.',
-  lastName: 'Please enter your last name.',
-  phone: 'Enter a valid 10-digit phone number.',
-  email: 'Enter a valid email with a domain, e.g. name@company.com.'
-};
 
 /* ---------------- Avatar fallback ---------------- */
 // Figma's exported asset URLs expire a few days after generation, so a host
@@ -752,7 +811,18 @@ function goRegister(){
   updateNextState('profile');
 }
 function goCheckout(){ showView('checkout'); setTimeout(()=>showView('home'), 4500); }
-function goQR(){ showView('qr'); setTimeout(()=>{ document.getElementById('endName').textContent='Welcome Alex'; showView('end'); startAutoReturn(); }, 2200); }
+function goQR(){ showView('qr'); setTimeout(()=>{ setEndGreeting('Alex'); showView('end'); startAutoReturn(); }, 2200); }
+
+// The "Welcome"/"Bienvenue" greeting on the end screen is set from two
+// different flows (submit + QR scan) and needs to re-render in place when
+// the language changes while it's showing — keep the name it was given so
+// applyTranslations() can just recompute the same greeting in the new language.
+let endGreetName = '';
+function setEndGreeting(name){
+  endGreetName = name || '';
+  const el = document.getElementById('endName');
+  if(el) el.textContent = t('welcome') + (endGreetName ? ' '+endGreetName : '');
+}
 
 function resetData(){
   state = { profile:null, firstName:'', phone:'', lastName:'', email:'', host:null };
@@ -775,7 +845,7 @@ function nextFrom(step){
   const hint = document.getElementById('hint-'+step);
   if(!isValid(step)){
     if(inp) inp.classList.add('invalid');
-    if(hint) hint.textContent = ERROR_MESSAGES[step] || 'Please complete this field.';
+    if(hint) hint.textContent = t('err_'+step) || t('err_generic');
     return false;
   }
   if(inp) inp.classList.remove('invalid');
@@ -855,7 +925,7 @@ function renderStepper(step){
     } else {
       html += '<div class="dot '+(active?'active':'')+'">'+s+'</div>';
     }
-    html += '<div class="label '+(active?'active':'')+'">'+STAGE_LABELS[s-1]+'</div>';
+    html += '<div class="label '+(active?'active':'')+'">'+t(['stage_profile','stage_contact','stage_confirmation'][s-1])+'</div>';
     html += '</div>';
     if(s<3){
       const filled = s<stage;
@@ -871,9 +941,9 @@ function renderStepper(step){
 /* ---------------- Profile step ---------------- */
 function renderProfile(){
   const el = document.getElementById('profileList');
-  el.innerHTML = PROFILES.map(p=>{
+  el.innerHTML = PROFILE_KEYS.map(p=>{
     const checked = state.profile===p;
-    return '<div class="profile-item" onclick="selectProfile(\''+p+'\')"><span>'+p+'</span><div class="radio '+(checked?'checked':'')+'"></div></div>';
+    return '<div class="profile-item" onclick="selectProfile(\''+p+'\')"><span>'+t('profile_'+p)+'</span><div class="radio '+(checked?'checked':'')+'"></div></div>';
   }).join('');
 }
 function selectProfile(p){ state.profile = p; renderProfile(); updateNextState('profile'); }
@@ -922,12 +992,12 @@ function renderHostList(q){
   const el = document.getElementById('hostList');
   const query = (q||'').toLowerCase().trim();
   const filtered = HOSTS.filter(h=> h.name.toLowerCase().includes(query));
-  if(!filtered.length){ el.innerHTML = '<div class="host-empty">No matching host found.</div>'; return; }
+  if(!filtered.length){ el.innerHTML = '<div class="host-empty">'+t('host_empty')+'</div>'; return; }
   el.innerHTML = filtered.map(h=>{
     const sel = state.host && state.host.name===h.name;
     return '<div class="host-tile '+(sel?'selected':'')+'" onclick="selectHost(\''+h.name.replace(/'/g,"\\'")+'\')">'+
       avatarImgTag(h)+
-      '<div class="names"><b>'+h.name+'</b><span>'+h.title+'</span></div>'+
+      '<div class="names"><b>'+h.name+'</b><span>'+t(h.titleKey)+'</span></div>'+
     '</div>';
   }).join('');
 }
@@ -977,25 +1047,25 @@ function updateNextState(step){
 function renderConfirm(){
   const el = document.getElementById('confirmLines');
   el.innerHTML =
-    line('First Name', state.firstName) +
-    line('Last Name', state.lastName) +
-    line('Email', state.email) +
-    line('Phone', state.phone) +
+    line(t('confirm_firstName'), state.firstName) +
+    line(t('confirm_lastName'), state.lastName) +
+    line(t('confirm_email'), state.email) +
+    line(t('confirm_phone'), state.phone) +
     hostLine();
   function line(l,v){ return '<div class="confirm-line"><div class="lbl">'+l+'</div><div class="val">'+escapeHtml(v)+'</div></div>'; }
   function hostLine(){
     if(!state.host) return '';
-    return '<div class="confirm-line"><div class="lbl">Host</div><div class="host-inline">'+avatarImgTag(state.host)+'<div class="names"><b>'+state.host.name+'</b><span>'+state.host.title+'</span></div></div></div>';
+    return '<div class="confirm-line"><div class="lbl">'+t('confirm_host')+'</div><div class="host-inline">'+avatarImgTag(state.host)+'<div class="names"><b>'+state.host.name+'</b><span>'+t(state.host.titleKey)+'</span></div></div></div>';
   }
 }
 function escapeHtml(s){ const d=document.createElement('div'); d.textContent = s||''; return d.innerHTML; }
 
 function submitCheckin(){
   const btn = document.getElementById('submitBtn');
-  btn.disabled = true; btn.textContent = 'Submitting…';
+  btn.disabled = true; btn.textContent = t('submitting');
   setTimeout(()=>{
-    btn.disabled = false; btn.textContent = 'Submit';
-    document.getElementById('endName').textContent = 'Welcome '+(state.firstName || '');
+    btn.disabled = false; btn.textContent = t('btn_submit');
+    setEndGreeting(state.firstName || '');
     showView('end');
     startAutoReturn();
   }, 900);
@@ -1031,7 +1101,7 @@ document.querySelectorAll('.field input').forEach(inp=>{
     if(step==='email' && state.email.trim().length && !isValid('email')){
       inp.classList.add('invalid');
       const hint = document.getElementById('hint-email');
-      if(hint) hint.textContent = ERROR_MESSAGES.email;
+      if(hint) hint.textContent = t('err_email');
     }
   });
 });
@@ -1093,10 +1163,45 @@ document.querySelectorAll('.kbd .key').forEach(k=>{
   });
 });
 
-/* ---------------- Language toggle (cosmetic) ---------------- */
+/* ---------------- Language toggle ---------------- */
 function setLang(l){
+  currentLang = l;
+  document.documentElement.lang = l.toLowerCase();
   document.getElementById('langFR').classList.toggle('active', l==='FR');
   document.getElementById('langEN').classList.toggle('active', l==='EN');
+  applyTranslations();
+}
+
+// Re-paints every piece of on-screen text in the new language: the static
+// data-i18n(-placeholder) elements declared in the HTML, plus everything
+// built dynamically from JS (profile list, host list, stepper, confirmation
+// summary, any currently-shown validation error, the end-screen greeting).
+function applyTranslations(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    el.textContent = t(el.getAttribute('data-i18n'));
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder')));
+  });
+
+  renderProfile();
+  const hostInput = document.getElementById('input-host');
+  renderHostList(hostInput ? hostInput.value : '');
+  if(document.getElementById('view-confirm').classList.contains('active')) renderConfirm();
+
+  const activeView = document.querySelector('.view.active');
+  const activeStep = activeView ? activeView.id.replace('view-','') : null;
+  if(activeStep && STEP_ORDER.includes(activeStep)) renderStepper(activeStep);
+
+  STEP_ORDER.forEach(step=>{
+    const inp = document.getElementById('input-'+step);
+    const hint = document.getElementById('hint-'+step);
+    if(inp && hint && inp.classList.contains('invalid')){
+      hint.textContent = t('err_'+step) || t('err_generic');
+    }
+  });
+
+  setEndGreeting(endGreetName);
 }
 
 /* ---------------- Scale the fixed 966x724 canvas to fit the bezel ---------------- */
