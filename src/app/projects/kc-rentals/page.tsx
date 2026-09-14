@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import AnimatedSection from "@/components/AnimatedSection";
+import BackButton from "@/components/BackButton";
 import ContactCTA from "@/components/ContactCTA";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 
@@ -31,8 +31,10 @@ function SectionHeading({ index, title }: { index: string; title: string }) {
 export default function KcRentalsPage() {
   return (
     <>
+      <BackButton href="/#projects" />
+
       {/* Hero */}
-      <section className="relative overflow-hidden bg-ink text-white">
+      <section id="hero" className="relative overflow-hidden bg-ink text-white">
         <div className="absolute inset-0">
           <Image
             src="/images/kc-rentals/after-1.jpg"
@@ -53,12 +55,6 @@ export default function KcRentalsPage() {
 
         <div className="relative px-6 pb-20 pt-32 md:px-12 md:pt-40">
           <AnimatedSection>
-            <Link
-              href="/#projects"
-              className="mb-8 inline-block text-sm text-white/60 transition-colors hover:text-white"
-            >
-              ← Back to projects
-            </Link>
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-[#e0a458]">
               KC Rentals · 2023
             </p>

@@ -1,26 +1,34 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
-/** Height of the purple hero (see page.tsx: the "Top" block is h-[720px]).
- *  A little earlier than the full height so the arrow flips to its dark
- *  variant right as it crosses onto the white background below. */
-const HERO_HEIGHT = 720;
-const FLIP_AT = HERO_HEIGHT - 64;
-
-export default function BackButton() {
+/** Fixed circular back-arrow button. Starts light (for a dark hero) and
+ *  flips to a dark variant once the hero (identified by `heroId`) has
+ *  scrolled out of view, so it stays legible over the light body below. */
+export default function BackButton({
+  href,
+  heroId = "hero",
+}: {
+  href: string;
+  heroId?: string;
+}) {
   const [pastHero, setPastHero] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setPastHero(window.scrollY > FLIP_AT);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    const hero = document.getElementById(heroId);
+    if (!hero) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setPastHero(entry.boundingClientRect.bottom <= 64),
+      { threshold: 0 },
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, [heroId]);
 
   return (
-    <a
-      href="/projects"
+    <Link
+      href={href}
       aria-label="Back to projects"
       className={`group fixed top-6 left-6 z-50 flex size-11 items-center justify-center rounded-full border backdrop-blur-sm transition-colors duration-300 md:left-12 ${
         pastHero
@@ -28,14 +36,11 @@ export default function BackButton() {
           : "border-white/45 text-white hover:border-white/80 hover:bg-white/10"
       }`}
     >
-      {/* On hover/focus the arrow rotates to point toward the top-left,
-          then eases back on leave (Figma "Button arrow / Hover" variant:
-          the glyph turns -35° about its centre). */}
       <span className="flex size-[22px] items-center justify-center transition-transform duration-200 ease-out will-change-transform group-hover:rotate-[35deg] group-focus-visible:rotate-[35deg] motion-reduce:transition-none motion-reduce:group-hover:rotate-0 motion-reduce:group-focus-visible:rotate-0">
         <svg viewBox="0 0 256 256" className="size-full" fill="currentColor" aria-hidden>
           <path d="M244 128a12 12 0 0 1-12 12H52.9l52.5 52.5a12 12 0 0 1-17 17l-73-73a12 12 0 0 1 0-17l73-73a12 12 0 0 1 17 17L52.9 116H232a12 12 0 0 1 12 12Z" />
         </svg>
       </span>
-    </a>
+    </Link>
   );
 }
