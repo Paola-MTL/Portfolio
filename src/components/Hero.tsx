@@ -87,7 +87,9 @@ export default function Hero() {
   const reduceMotion = useReducedMotion();
   const [revealed, setRevealed] = useState(false);
   const [sideCardsVisible, setSideCardsVisible] = useState(false);
-  const [sideCardHovered, setSideCardHovered] = useState(false);
+  // Which side card is hovered, if any — drives both the centre-stack shrink and
+  // the edge it shrinks toward, so Frame 13's -40 About↔ID overlap is preserved.
+  const [hoveredSide, setHoveredSide] = useState<"about" | "projects" | null>(null);
   const [leavingToProjects, setLeavingToProjects] = useState(false);
   // `returning` = mounted already-revealed (came back from Projects); it drives
   // the reverse wipe — a dark curtain that starts covering the viewport and
@@ -235,9 +237,12 @@ export default function Hero() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25, ease: EASE_OUT }}
-                whileHover={{ y: -8, scale: 1.05, transition: { duration: 0.3, ease: EASE_OUT } }}
-                onMouseEnter={() => setSideCardHovered(true)}
-                onMouseLeave={() => setSideCardHovered(false)}
+                // Hover (Figma node 94:11354): the card grows from 214.286×300 to
+                // 300×420 — a uniform 1.4× that scales its border, radius, padding
+                // and label to match, ending up the same size the ID card normally is.
+                whileHover={{ scale: 1.4, transition: { duration: 0.3, ease: EASE_OUT } }}
+                onMouseEnter={() => setHoveredSide("about")}
+                onMouseLeave={() => setHoveredSide(null)}
                 className="relative z-[1] mr-[-40px] flex h-[300px] w-[214.286px] shrink-0 items-center justify-center overflow-hidden rounded-[14.286px] border-[5.714px] border-[rgba(255,254,254,0.13)] bg-gradient-to-b from-[#5dadf4] via-[#3c3180] to-[#0f0c21] bg-clip-padding transition-shadow duration-300 ease-out hover:z-10 hover:shadow-2xl"
               >
                 <Link
@@ -250,11 +255,26 @@ export default function Hero() {
             )}
           </AnimatePresence>
 
+          {/*
+            While a side card is hovered the centre stack shrinks by the inverse
+            1.4× (300×420 → 214.286×300), so the hovered card and the ID card
+            trade sizes exactly as the Figma hover frame (node 94:11354) shows.
+            It shrinks toward the OPPOSITE edge from the hovered card, so the
+            edge that overlaps the untouched side card holds its Frame 13 gap
+            of -40 (otherwise the centred shrink would open a ~3px gap there).
+          */}
           <div
             className="relative z-[2] flex items-center justify-center"
             style={{
-              transform: sideCardHovered ? "scale(0.92)" : "scale(1)",
-              transition: "transform 300ms cubic-bezier(0.22, 1, 0.36, 1)",
+              transform: hoveredSide ? "scale(0.7143)" : "scale(1)",
+              transformOrigin:
+                hoveredSide === "projects"
+                  ? "left center"
+                  : hoveredSide === "about"
+                    ? "right center"
+                    : "center",
+              transition:
+                "transform 300ms cubic-bezier(0.22, 1, 0.36, 1)",
             }}
           >
           <AnimatePresence mode="popLayout" initial={false}>
@@ -356,9 +376,12 @@ export default function Hero() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25, ease: EASE_OUT }}
-                whileHover={{ y: -8, scale: 1.05, transition: { duration: 0.3, ease: EASE_OUT } }}
-                onMouseEnter={() => setSideCardHovered(true)}
-                onMouseLeave={() => setSideCardHovered(false)}
+                // Hover (Figma node 94:11354): the card grows from 214.286×300 to
+                // 300×420 — a uniform 1.4× that scales its border, radius, padding
+                // and label to match, ending up the same size the ID card normally is.
+                whileHover={{ scale: 1.4, transition: { duration: 0.3, ease: EASE_OUT } }}
+                onMouseEnter={() => setHoveredSide("projects")}
+                onMouseLeave={() => setHoveredSide(null)}
                 className="relative z-[1] ml-[-40px] flex h-[300px] w-[214.286px] shrink-0 items-center justify-center overflow-hidden rounded-[14.286px] border-[5.714px] border-[rgba(255,254,254,0.13)] bg-gradient-to-b from-[#bf5df4] via-[#3c3180] to-[#0f0c21] bg-clip-padding transition-shadow duration-300 ease-out hover:z-10 hover:shadow-2xl"
               >
                 <Link

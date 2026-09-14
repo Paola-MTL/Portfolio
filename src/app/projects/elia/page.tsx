@@ -555,7 +555,7 @@ export default function EliaProjectPage() {
         </div>
 
         {/* 05 — First iterations */}
-        <div className="content-stretch flex flex-col items-start px-[195px] py-[112px] relative shrink-0 w-[1280px]">
+        <div className="content-stretch flex flex-col items-start px-[195px] pt-[112px] relative shrink-0 w-[1280px]">
           <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-[890px]">
             <div className="content-stretch flex flex-col gap-[4px] items-start leading-[0] relative shrink-0 w-[731px]">
               <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] text-black tracking-[-0.2px] whitespace-nowrap">
@@ -757,6 +757,17 @@ export default function EliaProjectPage() {
                       </span>
                     </li>
                   </ul>
+                </div>
+                <div
+                  className="relative shrink-0 w-full overflow-hidden rounded-md"
+                  style={{ aspectRatio: "890 / 771" }}
+                >
+                  <iframe
+                    src="/prototypes/elia-visitor-checkin-v2.html"
+                    title="Elia visitor check-in interactive prototype — V2"
+                    className="absolute inset-0 h-full w-full border-0"
+                    loading="lazy"
+                  />
                 </div>
               </div>
             </div>

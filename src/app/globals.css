@@ -50,6 +50,26 @@ body {
   }
 }
 
+/* About "My story" photo carousel — same continuous-scroll technique as
+   the Elia mockups marquee above, kept as its own keyframes since the two
+   tracks' REPEAT counts are set independently.
+   Keep the -25% in sync with REPEAT in about/PhotoCarousel.tsx
+   (-100% / REPEAT). */
+@keyframes about-marquee-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-25%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-marquee-track {
+    animation: none !important;
+  }
+}
+
 /* Liquid Glass — mockup panel and caption on project cards.
    See .claude/skills/liquid-glass/references/design-principles.md */
 :root {
