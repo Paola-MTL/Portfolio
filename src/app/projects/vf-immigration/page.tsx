@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import AnimatedSection from "@/components/AnimatedSection";
+import BackButton from "@/components/BackButton";
 import ContactCTA from "@/components/ContactCTA";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 
@@ -42,8 +42,10 @@ function Stat({ value, label }: { value: string; label: string }) {
 export default function VfImmigrationPage() {
   return (
     <>
+      <BackButton href="/#projects" />
+
       {/* Hero */}
-      <section className="relative overflow-hidden bg-ink text-white">
+      <section id="hero" className="relative overflow-hidden bg-ink text-white">
         <div className="absolute inset-0">
           <Image
             src="/images/vf-immigration/after-homepage.jpg"
@@ -58,12 +60,6 @@ export default function VfImmigrationPage() {
 
         <div className="relative px-6 pb-20 pt-32 md:px-12 md:pt-40">
           <AnimatedSection>
-            <Link
-              href="/#projects"
-              className="mb-8 inline-block text-sm text-white/60 transition-colors hover:text-white"
-            >
-              ← Back to projects
-            </Link>
             <p
               className="mb-4 text-sm font-semibold uppercase tracking-[0.25em]"
               style={{ color: RED }}
