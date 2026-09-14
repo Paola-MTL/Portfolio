@@ -8,10 +8,12 @@ import { motion, useReducedMotion } from "framer-motion";
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
-// Mirrors Hero's scroll-down transition timing/curve so the round trip feels
-// symmetric: scrolling up from the top of this page wipes back to the Hero.
-const SCROLL_UP_MS = 620;
-const SCROLL_UP_EASE = [0.65, 0, 0.35, 1] as const;
+// Same wipe timing/curve as Hero's scroll-down-into-Projects transition, so
+// every curtain on the site reads as one continuous gesture: rising from the
+// bottom to go deeper (here, into a case study), dropping from the top to
+// back out (here, up to the Hero).
+const WIPE_MS = 620;
+const WIPE_EASE = [0.65, 0, 0.35, 1] as const;
 
 const PROJECTS = [
   {
@@ -20,6 +22,7 @@ const PROJECTS = [
     tagline: "Reimagining enterprise visitor management, from paper to digital",
     image: "/images/projects-hub/elia-mockup.png",
     imageInset: "-4.44%",
+    heroBg: "#6c65ff",
   },
   {
     slug: "truxweb",
@@ -27,6 +30,7 @@ const PROJECTS = [
     tagline: "Cutting the middleman out of B2B freight booking",
     image: "/images/projects-hub/truxweb-mockup.png",
     imageInset: "-10.75%",
+    heroBg: "#74AEB2",
   },
   {
     slug: "vf-immigration",
@@ -35,6 +39,7 @@ const PROJECTS = [
       "Redesigning a trusted brand for clarity, conversion, and less inbox overload",
     image: "/images/projects-hub/vf-immigration-mockup.png",
     imageInset: "-7.87% 0% -10.33% 0%",
+    heroBg: "#242322",
   },
   {
     slug: "kc-rentals",
@@ -43,6 +48,7 @@ const PROJECTS = [
       "Rebranding a local agency for trust, without losing what clients already knew",
     image: "/images/projects-hub/kc-rentals-mockup.png",
     imageInset: "-11.34% 0.68% -11.5% 0.68%",
+    heroBg: "#242322",
   },
 ];
 
@@ -88,7 +94,22 @@ export default function ProjectsIndex() {
   const router = useRouter();
   const reduceMotion = useReducedMotion();
   const [leavingUp, setLeavingUp] = useState(false);
+  const [leavingProject, setLeavingProject] = useState<
+    (typeof PROJECTS)[number] | null
+  >(null);
   const leavingRef = useRef(false);
+
+  const handleProjectClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    project: (typeof PROJECTS)[number],
+  ) => {
+    if (leavingRef.current) return;
+    if (reduceMotion) return;
+    event.preventDefault();
+    leavingRef.current = true;
+    setLeavingProject(project);
+    window.setTimeout(() => router.push(`/projects/${project.slug}`), WIPE_MS);
+  };
 
   useEffect(() => {
     const goHome = () => {
@@ -99,7 +120,7 @@ export default function ProjectsIndex() {
         return;
       }
       setLeavingUp(true);
-      window.setTimeout(() => router.push("/"), SCROLL_UP_MS);
+      window.setTimeout(() => router.push("/"), WIPE_MS);
     };
 
     const onWheel = (event: WheelEvent) => {
@@ -128,8 +149,16 @@ export default function ProjectsIndex() {
   return (
     <section className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#0f0c21] py-24">
       <motion.div
-        animate={{ y: leavingUp && !reduceMotion ? 80 : 0 }}
-        transition={{ duration: SCROLL_UP_MS / 1000, ease: SCROLL_UP_EASE }}
+        animate={{
+          y: reduceMotion
+            ? 0
+            : leavingUp
+              ? 80
+              : leavingProject
+                ? -80
+                : 0,
+        }}
+        transition={{ duration: WIPE_MS / 1000, ease: WIPE_EASE }}
         className="relative mx-auto w-full max-w-[1280px]"
       >
         <ShapeGlow
@@ -172,7 +201,8 @@ export default function ProjectsIndex() {
             >
               <Link
                 href={`/projects/${project.slug}`}
-                className="isolate flex w-full max-w-[308px] flex-col overflow-hidden rounded-[20px] transition-transform duration-300 ease-out hover:-translate-y-1"
+                onClick={(event) => handleProjectClick(event, project)}
+                className="isolate flex w-full max-w-[308px] flex-col overflow-hidden rounded-[20px] transition-transform duration-300 ease-out hover:-translate-y-1 active:scale-[0.98]"
               >
                 <div
                   className="glass glass--clear glass--caption-top relative z-[2] flex w-full shrink-0 items-center justify-center overflow-hidden p-5"
@@ -222,8 +252,23 @@ export default function ProjectsIndex() {
         aria-hidden
         initial={false}
         animate={{ y: leavingUp ? "0%" : "-100%" }}
-        transition={{ duration: SCROLL_UP_MS / 1000, ease: SCROLL_UP_EASE }}
+        transition={{ duration: WIPE_MS / 1000, ease: WIPE_EASE }}
         className="pointer-events-none fixed inset-0 z-50 bg-[#0f0c21]"
+      />
+
+      {/*
+        Curtain for going deeper into a case study: parked just below the
+        viewport, rises to cover on click — same rising-from-the-bottom
+        gesture as Hero's curtain into Projects — in that project's own hero
+        color, so the case study's hero appears to already be there underneath.
+      */}
+      <motion.div
+        aria-hidden
+        initial={false}
+        animate={{ y: leavingProject ? "0%" : "100%" }}
+        transition={{ duration: WIPE_MS / 1000, ease: WIPE_EASE }}
+        className="pointer-events-none fixed inset-0 z-50"
+        style={{ backgroundColor: leavingProject?.heroBg ?? "#0f0c21" }}
       />
     </section>
   );
