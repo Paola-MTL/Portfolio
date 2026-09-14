@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import AnimatedSection from "@/components/AnimatedSection";
-import ContactCTA from "@/components/ContactCTA";
 import PhotoCarousel from "./PhotoCarousel";
+import BackButton from "./BackButton";
+import SocialButtons from "./SocialButtons";
 
 export const metadata: Metadata = {
   title: "About — Paola Cejoco",
@@ -14,7 +15,7 @@ function StoryHeader({ years, title }: { years: string; title: string }) {
       <span className="font-body text-lg font-medium text-black sm:text-xl">
         {years}
       </span>
-      <h2 className="font-display text-4xl font-bold leading-[1.05] tracking-tightest text-[#fba313] sm:text-5xl md:text-6xl lg:text-[56px]">
+      <h2 className="font-display text-4xl font-bold leading-[1.05] tracking-tightest text-[#0f172a] sm:text-5xl md:text-6xl lg:text-[56px]">
         {title}
       </h2>
     </div>
@@ -66,16 +67,34 @@ const carousel = [
 export default function AboutPage() {
   return (
     <>
-      <section className="bg-[#fba313] lg:overflow-hidden">
-        <div className="mx-auto flex w-full max-w-[1280px] flex-col items-center gap-10 px-6 py-16 md:flex-row md:items-center md:gap-8 md:px-12 md:py-20 lg:mx-0 lg:w-max lg:max-w-none lg:gap-12 lg:py-24 lg:pl-[104px]">
-          <AnimatedSection className="flex w-full flex-col items-start md:w-auto md:shrink-0">
-            <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tightest text-white sm:text-5xl md:text-6xl lg:text-7xl xl:text-[96px]">
+      <section id="about-hero" className="relative overflow-hidden bg-[#0f0c21]">
+        <div className="pointer-events-none absolute left-[-8%] top-[-12%] aspect-[818.81/739.81] w-[50%] max-w-[520px]">
+          <Image
+            src="/images/hero/blob.svg"
+            alt=""
+            fill
+            className="rotate-[31.79deg] object-contain"
+          />
+        </div>
+        <div className="pointer-events-none absolute right-[-8%] bottom-[-12%] aspect-[818.81/739.81] w-[50%] max-w-[520px]">
+          <Image
+            src="/images/hero/blob.svg"
+            alt=""
+            fill
+            className="rotate-[31.79deg] object-contain"
+          />
+        </div>
+        <BackButton />
+        <SocialButtons />
+        <div className="mx-auto flex w-full max-w-[1280px] flex-col items-center gap-10 px-6 py-16 md:flex-row md:items-center md:gap-8 md:px-12 md:py-20 lg:mx-0 lg:w-max lg:max-w-none lg:gap-12 lg:py-24 lg:pl-[calc(50vw-445px)]">
+          <AnimatedSection className="flex w-full flex-col items-start md:w-auto md:shrink-0 lg:relative lg:z-10">
+            <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tightest text-white sm:text-5xl md:text-6xl lg:text-7xl lg:drop-shadow-[0_4px_24px_rgba(0,0,0,0.35)] xl:text-[96px]">
               Hello,
               <br />
               I&apos;m Paola
             </h1>
           </AnimatedSection>
-          <div className="relative aspect-[980/551] w-full min-w-0 overflow-hidden md:max-w-[980px] md:flex-1 lg:w-[980px] lg:max-w-none lg:flex-none">
+          <div className="relative aspect-[980/551] w-full min-w-0 overflow-hidden md:max-w-[980px] md:flex-1 lg:-ml-[220px] lg:w-[980px] lg:max-w-none lg:flex-none">
             <Image
               src="/images/about/hero.jpg"
               alt="Paola smiling in front of a wall of hand-painted decorative plates"
@@ -121,7 +140,40 @@ export default function AboutPage() {
         </AnimatedSection>
       </section>
 
-      <ContactCTA />
+      {/* Contact — background bleeds full viewport width, content stays
+          centered to the 1280px canvas */}
+      <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen bg-[#6c65ff]">
+        <div className="content-stretch mx-auto flex max-w-[1280px] flex-col gap-[56px] items-center py-[112px] relative w-full">
+          <div className="content-stretch flex flex-col gap-[4px] items-center leading-[0] relative shrink-0 text-center text-white w-full">
+            <div className="font-display font-bold flex flex-col justify-center relative shrink-0 text-[56px] tracking-[-0.84px] w-[550px]">
+              <p className="leading-[normal]">Like what you see? </p>
+            </div>
+            <div className="font-body font-medium flex flex-col justify-center min-w-full relative shrink-0 text-[24px] tracking-[-0.24px] w-[min-content]">
+              <p className="leading-[30px]">We may be a match</p>
+            </div>
+          </div>
+          <div className="content-stretch flex gap-[31px] items-center justify-center relative shrink-0 w-[404px]">
+            <a
+              href="mailto:cejoco.paola@gmail.com"
+              className="bg-white content-stretch flex items-center justify-center px-[32px] py-[12px] relative rounded-[30px] shrink-0"
+            >
+              <p className="font-body font-semibold leading-[20px] relative shrink-0 text-[#7f56d9] text-[16px] whitespace-nowrap">
+                Send email
+              </p>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/paola-cejoco/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-solid border-white content-stretch flex items-center justify-center px-[32px] py-[12px] relative rounded-[30px] shrink-0"
+            >
+              <p className="font-body font-semibold leading-[20px] relative shrink-0 text-[16px] text-white whitespace-nowrap">
+                My Linkedin
+              </p>
+            </a>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
