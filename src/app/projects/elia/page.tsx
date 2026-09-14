@@ -16,7 +16,9 @@ const imgArrowRight = "/images/elia/arrow-3.svg";
 const imgDiagonalScreens1 = "/images/elia/diagonal-screens-1.png";
 const imgVisitorLog = "/images/elia/visitor-log.png";
 const imgVisitorJourney = "/images/elia/visitor-journey-config.png";
-const imgInvitingVisitor = "/images/elia/inviting-a-visitor.png";
+const imgInvitingVisitorSchedule = "/images/elia/inviting-visitor-schedule.png";
+const imgInvitingVisitorType = "/images/elia/inviting-visitor-type.png";
+const imgInvitingVisitorDetails = "/images/elia/inviting-visitor-details.png";
 
 function Persona({
   label,
@@ -652,13 +654,36 @@ export default function EliaProjectPage() {
                       to allow for complete self-check-in.
                     </p>
                   </div>
-                  <div className="relative shrink-0 w-full overflow-hidden rounded-md">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      alt="elia inviting a visitor — host flow for scheduling a visit, choosing a visitor type, and entering details"
-                      className="block w-full h-auto"
-                      src={imgInvitingVisitor}
-                    />
+                  <div className="relative left-1/2 right-1/2 -mx-[50vw] mt-2 w-screen">
+                    <div className="flex items-start gap-5 px-[50px]">
+                      <div className="min-w-0 flex-1 overflow-hidden rounded-md">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          alt="elia inviting a visitor — scheduling the visit"
+                          className="block w-full h-auto"
+                          src={imgInvitingVisitorSchedule}
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1 overflow-hidden rounded-md">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          alt="elia inviting a visitor — choosing a visitor type"
+                          className="block w-full h-auto"
+                          src={imgInvitingVisitorType}
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1 overflow-hidden rounded-md">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          alt="elia inviting a visitor — entering visitor details"
+                          className="block w-full h-auto"
+                          src={imgInvitingVisitorDetails}
+                        />
+                      </div>
+                    </div>
+                    <p className="mt-2 text-center text-[20px] font-semibold text-[#334155]">
+                      Inviting a visitor
+                    </p>
                   </div>
                 </div>
               </div>
