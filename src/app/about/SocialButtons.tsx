@@ -23,7 +23,7 @@ export default function SocialButtons() {
 
   return (
     <div
-      className={`fixed top-[38px] right-[max(24px,calc(50vw-536px))] z-50 flex items-center gap-[16px] transition-colors duration-300 ${colorClass}`}
+      className={`fixed top-[34px] right-6 z-50 flex items-center gap-[16px] transition-colors duration-300 md:right-12 ${colorClass}`}
     >
       <a
         href="https://www.linkedin.com/in/paola-cejoco/"
