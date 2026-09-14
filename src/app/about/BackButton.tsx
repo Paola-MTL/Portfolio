@@ -23,7 +23,7 @@ export default function BackButton() {
     <a
       href="/"
       aria-label="Back to home"
-      className={`group fixed top-[28px] left-[max(24px,calc(50vw-536px))] z-50 flex size-[44px] items-center justify-center rounded-full border backdrop-blur-sm transition-colors duration-300 ${
+      className={`group fixed top-6 left-6 z-50 flex size-11 items-center justify-center rounded-full border backdrop-blur-sm transition-colors duration-300 md:left-12 ${
         pastHero
           ? "border-[#1e293b]/30 text-[#1e293b] hover:border-[#1e293b]/60 hover:bg-[#1e293b]/5"
           : "border-white/45 text-white hover:border-white/80 hover:bg-white/10"
