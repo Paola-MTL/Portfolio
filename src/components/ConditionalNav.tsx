@@ -5,6 +5,6 @@ import Nav from "./Nav";
 
 export default function ConditionalNav() {
   const pathname = usePathname();
-  if (pathname === "/projects/elia") return null;
+  if (pathname === "/projects/elia" || pathname === "/about") return null;
   return <Nav />;
 }
