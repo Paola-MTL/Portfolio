@@ -16,6 +16,7 @@ const imgArrowRight = "/images/elia/arrow-3.svg";
 const imgDiagonalScreens1 = "/images/elia/diagonal-screens-1.png";
 const imgVisitorLog = "/images/elia/visitor-log.png";
 const imgVisitorJourney = "/images/elia/visitor-journey-config.png";
+const imgInvitingVisitor = "/images/elia/inviting-a-visitor.png";
 
 function Persona({
   label,
@@ -650,6 +651,14 @@ export default function EliaProjectPage() {
                       evolved the processes and adapted the tablet interface
                       to allow for complete self-check-in.
                     </p>
+                  </div>
+                  <div className="relative shrink-0 w-full overflow-hidden rounded-md">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      alt="elia inviting a visitor — host flow for scheduling a visit, choosing a visitor type, and entering details"
+                      className="block w-full h-auto"
+                      src={imgInvitingVisitor}
+                    />
                   </div>
                 </div>
               </div>
