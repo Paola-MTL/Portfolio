@@ -4,6 +4,9 @@ import Image from "next/image";
 import AnimatedSection from "@/components/AnimatedSection";
 import BackButton from "@/components/BackButton";
 import ResultsShowcase from "./ResultsShowcase";
+import ScrollDownHint from "./ScrollDownHint";
+import MockupsSection from "./MockupsSection";
+import ProcessCarousel from "./ProcessCarousel";
 
 const TEAL = "#74AEB2";
 const TEAL_LIGHT = "#A3CCD3";
@@ -23,15 +26,15 @@ function SectionIntro({
   dark?: boolean;
 }) {
   return (
-    <div className="mb-6">
+    <div className="mb-8 flex max-w-[700px] flex-col gap-1">
       <p
-        className={`mb-2 text-sm font-semibold ${dark ? "text-white/70" : "text-ink/60"}`}
+        className={`font-body text-base font-medium tracking-tight lg:text-[20px] lg:tracking-[-0.2px] ${dark ? "text-white" : "text-black"}`}
       >
         {index}
       </p>
       <h2
-        className="font-display text-4xl font-bold tracking-tightest text-balance sm:text-5xl"
-        style={{ color: dark ? "#fff" : TEAL }}
+        className="font-display text-4xl font-bold tracking-tightest text-balance sm:text-5xl lg:text-[56px] lg:tracking-[-0.84px]"
+        style={{ color: dark ? "#fff" : "#0f172a" }}
       >
         {title}
       </h2>
@@ -42,19 +45,20 @@ function SectionIntro({
 const process: { index: string; title: string; description: string }[] = [
   {
     index: "01",
-    title: "Discovery phase",
+    title: "Discover",
     description: "User needs analysis and customer journey.",
   },
   {
     index: "02",
     title: "Define",
-    description: "Determine the features, feasibility analysis, and UX flow.",
+    description:
+      "Determine functionalities, analyze their feasibility and UX flow.",
   },
   {
     index: "03",
-    title: "Build the lo-fi",
+    title: "Build the Lo-FI",
     description:
-      "Creation and/or validation of lo-fi and re-iterations as needed.",
+      "Creation and/or validation of existing lo-fi designs and iterations as needed.",
   },
   {
     index: "04",
@@ -85,72 +89,27 @@ const process: { index: string; title: string; description: string }[] = [
   },
 ];
 
-function ProcessCard({
-  index,
-  title,
-  description,
-}: {
-  index: string;
-  title: string;
-  description: string;
-}) {
-  return (
-    <div className="w-64 shrink-0 snap-start rounded-2xl bg-white p-6 shadow-sm">
-      <p className="text-sm font-semibold" style={{ color: TEAL }}>
-        {index}
-      </p>
-      <h3 className="mt-3 text-base font-bold uppercase tracking-wide text-ink">
-        {title}
-      </h3>
-      <p className="mt-2 text-sm leading-relaxed text-ink/70">
-        {description}
-      </p>
-    </div>
-  );
-}
-
-function TruckIcon() {
-  return (
-    <svg viewBox="0 0 48 48" className="size-12" fill="none" aria-hidden>
-      <path
-        d="M2 12h24v20H2z"
-        fill="currentColor"
-        fillOpacity="0.9"
-      />
-      <path
-        d="M26 20h9l7 7v5h-16z"
-        fill="currentColor"
-        fillOpacity="0.65"
-      />
-      <circle cx="12" cy="34" r="4" fill="currentColor" />
-      <circle cx="36" cy="34" r="4" fill="currentColor" />
-    </svg>
-  );
-}
-
 function PersonaCard({
-  bg,
-  textClass,
   label,
   quote,
   icon,
 }: {
-  bg: string;
-  textClass: string;
   label: string;
   quote: string;
   icon: ReactNode;
 }) {
   return (
     <div
-      className="flex flex-col items-center gap-4 rounded-2xl p-8 text-center"
-      style={{ backgroundColor: bg }}
+      className="relative flex h-[220px] w-full flex-col justify-center gap-2 overflow-visible p-8 text-white sm:w-[342px] lg:h-[250px] lg:p-[58px]"
+      style={{ backgroundColor: TEAL }}
     >
-      <div className={textClass}>{icon}</div>
-      <p className={`text-xs font-bold uppercase tracking-[0.15em] ${textClass}`}>
+      <div className="pointer-events-none absolute -top-14 right-6 lg:-top-16 lg:right-10">
+        {icon}
+      </div>
+      <p className="font-body text-lg font-medium tracking-tight lg:text-[20px] lg:tracking-[-0.2px]">
         {label}
       </p>
-      <p className={`text-sm leading-relaxed ${textClass}`}>{quote}</p>
+      <p className="font-body text-sm leading-relaxed lg:text-[14px]">{quote}</p>
     </div>
   );
 }
@@ -158,202 +117,215 @@ function PersonaCard({
 export default function TruxwebPage() {
   return (
     <>
-      <BackButton href="/#projects" />
+      <BackButton href="/projects" />
 
       {/* Hero */}
       <section
         id="hero"
-        className="overflow-hidden text-white"
+        className="relative overflow-hidden text-white"
         style={{ backgroundColor: TEAL }}
       >
-        <div className="mx-auto flex max-w-4xl flex-col items-center px-6 pb-16 pt-32 text-center md:pt-40">
-          <AnimatedSection className="w-full">
-            <div className="relative mx-auto aspect-[840/482] w-full max-w-2xl drop-shadow-2xl">
-              <Image
-                src="/images/truxweb/hero-illustration.png"
-                alt="Collage of Truxweb product screens and branding"
-                fill
-                priority
-                sizes="(min-width: 768px) 640px, 100vw"
-                className="object-contain"
-              />
-            </div>
-            <h1 className="mt-10 font-display text-6xl font-bold tracking-tightest sm:text-7xl">
-              Truxweb
-            </h1>
-          </AnimatedSection>
+        <div className="relative mx-auto flex min-h-screen max-w-[1280px] flex-col items-center justify-center gap-12 px-6 py-24 text-center lg:px-0 lg:py-0 lg:text-left">
+          <div className="lg:absolute lg:left-[104px] lg:top-1/2 lg:z-10 lg:w-[798px] lg:-translate-y-1/2">
+            <AnimatedSection>
+              <h1 className="font-display text-6xl font-bold tracking-tightest sm:text-7xl lg:text-[96px] lg:leading-none lg:tracking-[-1.92px]">
+                Truxweb
+              </h1>
+            </AnimatedSection>
+          </div>
+
+          <div className="w-full max-w-xl lg:absolute lg:left-[378px] lg:top-1/2 lg:w-[571px] lg:max-w-none lg:-translate-y-1/2">
+            <AnimatedSection delay={0.1}>
+              <div className="relative aspect-[1636/1024] w-full overflow-hidden rounded-lg drop-shadow-2xl">
+                <Image
+                  src="/images/truxweb/hero-collage.png"
+                  alt="Collage of Truxweb product screens and branding"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 890px, 640px"
+                  className="object-contain"
+                />
+              </div>
+            </AnimatedSection>
+          </div>
+
+          <ScrollDownHint arrowSrc="/images/truxweb/scroll-arrow.svg" />
         </div>
       </section>
 
       {/* About the project */}
-      <section className="px-6 py-16 md:px-12">
-        <div className="mx-auto flex max-w-4xl flex-col gap-12 md:flex-row md:gap-16">
-          <AnimatedSection className="flex-1">
-            <p className="mb-2 text-sm font-semibold uppercase tracking-[0.15em] text-ink/60">
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <div className="mx-auto flex max-w-5xl flex-col gap-8">
+          <AnimatedSection className="flex max-w-[700px] flex-col gap-1">
+            <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
               About the project
             </p>
-            <h2
-              className="font-display text-4xl font-bold tracking-tightest text-balance sm:text-5xl"
-              style={{ color: TEAL }}
-            >
+            <h2 className="font-display text-4xl font-bold tracking-tightest text-balance text-[#0f172a] sm:text-5xl lg:text-[56px] lg:tracking-[-0.84px]">
               Designing a B2B web app in logistics
             </h2>
-            <p className="mt-6 text-base leading-relaxed text-ink/80">
-              Truxweb is a Quebec-based start-up that aims to simplify the
-              trucking transportation management process. It specializes in
-              B2B freight logistics. My role was to help them develop an
-              online platform (SAAS) by collaborating with a designer to
-              create a platform that is both aesthetically pleasing and
-              user-friendly. I also had the opportunity to work on other
-              projects such as the homepage and other sales tools.
-            </p>
           </AnimatedSection>
 
-          <AnimatedSection delay={0.1} className="flex w-full flex-col gap-6 sm:w-56">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-ink/50">
-                Role
+          <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
+            <AnimatedSection className="flex max-w-[700px] flex-col gap-8">
+              <p className="font-body text-sm font-normal leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+                Truxweb is a Quebec-based start-up that aims to simplify the
+                trucking transportation management process. It specializes in
+                B2B freight logistics. My role was to help them develop an
+                online platform (SAAS) by collaborating with a designer to
+                create a platform that is both aesthetically pleasing and
+                user-friendly. I also had the opportunity to work on other
+                projects such as the homepage and other sales tools.
               </p>
-              <p className="mt-1 text-sm text-ink/80">UI/UX Designer</p>
-            </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-ink/50">
-                Duration
-              </p>
-              <p className="mt-1 text-sm text-ink/80">2 years</p>
-            </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-ink/50">
-                Collaboration
-              </p>
-              <p className="mt-1 text-sm leading-relaxed text-ink/80">
-                1 senior designer
-                <br />4 developers
-                <br />1 project manager
-                <br />2 founders
-              </p>
-            </div>
-          </AnimatedSection>
+              <a
+                href="#prototype"
+                className="inline-flex w-fit items-center gap-2 font-body text-sm font-medium transition-opacity hover:opacity-70 lg:text-[18.09px] lg:tracking-[-0.1809px]"
+                style={{ color: TEAL }}
+              >
+                Jump to prototype
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  alt=""
+                  src="/images/truxweb/arrow-right.svg"
+                  className="h-[16px] w-[20px]"
+                />
+              </a>
+            </AnimatedSection>
+
+            <AnimatedSection delay={0.1} className="flex w-full flex-col gap-6 sm:w-56 lg:gap-[24px]">
+              <div>
+                <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
+                  Role
+                </p>
+                <p className="mt-1 font-body text-sm text-black lg:text-[16px]">UI/UX Designer</p>
+              </div>
+              <div>
+                <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
+                  Duration
+                </p>
+                <p className="mt-1 font-body text-sm text-black lg:text-[16px]">2 years</p>
+              </div>
+              <div>
+                <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
+                  Collaboration
+                </p>
+                <p className="mt-1 font-body text-sm leading-relaxed text-black lg:text-[14px]">
+                  1 Sr. designer
+                  <br />4 developers
+                  <br />1 PM
+                  <br />2 founders
+                </p>
+              </div>
+              <div>
+                <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
+                  Project type
+                </p>
+                <p className="mt-1 font-body text-sm text-black lg:text-[14px]">Web App</p>
+              </div>
+            </AnimatedSection>
+          </div>
         </div>
       </section>
 
-      {/* Screens strip */}
-      <AnimatedSection>
-        <div className="overflow-x-auto px-6 pb-16 md:px-12">
-          <div className="mx-auto flex w-fit max-w-5xl gap-5">
-            {[
-              { src: "/images/truxweb/carousel-hero.png", rotate: "-rotate-2", w: 1493, h: 927 },
-              { src: "/images/truxweb/carousel-login.png", rotate: "rotate-1", w: 1497, h: 928 },
-              { src: "/images/truxweb/carousel-dashboard.png", rotate: "-rotate-1", w: 1456, h: 910 },
-              { src: "/images/truxweb/carousel-branding.png", rotate: "rotate-2", w: 2049, h: 1152 },
-            ].map((shot) => (
-              <div
-                key={shot.src}
-                className={`h-40 shrink-0 overflow-hidden rounded-lg shadow-md ${shot.rotate}`}
-                style={{ width: (160 * shot.w) / shot.h }}
-              >
-                <Image
-                  src={shot.src}
-                  alt="Truxweb product screenshot"
-                  width={shot.w}
-                  height={shot.h}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </AnimatedSection>
+      {/* Mockups */}
+      <MockupsSection />
 
       {/* 01 — The problem */}
-      <section className="px-6 py-16 md:px-12">
-        <div className="mx-auto max-w-3xl">
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <div className="mx-auto max-w-5xl">
           <AnimatedSection>
             <SectionIntro index="01" title="The problem" />
-            <p className="mb-4 text-base font-semibold text-ink">
-              A lot of manual processes and a myriad of stakeholders
-              enriching themselves at the expense of carriers
-            </p>
-            <div className="flex flex-col gap-4 text-base leading-relaxed text-ink/80">
-              <p>
-                The field of logistics, especially in the B2B transport
-                sector, appears to have stagnated over the past 40 years.
-                The processes remain complex, administrative systems are
-                still largely manual, and communication between the various
-                players is hindered by the absence of a centralized
-                platform meeting their needs.
+
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-6">
+              <p className="font-body text-base font-semibold text-black lg:w-[343px] lg:shrink-0 lg:text-[16px] lg:leading-[20px]">
+                Many manual processes and a multitude of stakeholders
+                profiting at the expense of carriers.
               </p>
-              <p>
-                Furthermore, the increasing number of intermediaries between
-                carriers and clients, often in the form of transport
-                brokers, results in additional costs that reduce carriers&apos;
-                revenues.
-              </p>
-              <p>
-                Another major challenge is that after delivering a shipment
-                from A to B, trucks typically return empty from B to A,
-                representing a significant loss of resources.
-              </p>
+              <div className="flex flex-col gap-4 lg:max-w-[700px]">
+                <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+                  The logistics sector, particularly in B2B transportation,
+                  seems to have stagnated over the past 40 years. Processes
+                  remain complex, administrative systems are still largely
+                  manual, and communication among various players is
+                  hindered by the lack of a centralized platform that meets
+                  their needs.
+                </p>
+                <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+                  Moreover, the increasing number of intermediaries between
+                  carriers and clients, often in the form of freight
+                  brokers, leads to additional costs that cut into carriers&apos;
+                  revenues.
+                </p>
+                <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+                  Another major challenge is that after delivering a load
+                  from A to B, trucks usually return empty from B to A,
+                  representing a significant waste of resources.
+                </p>
+              </div>
             </div>
           </AnimatedSection>
 
-          <AnimatedSection delay={0.05} className="mt-10 grid gap-4 sm:grid-cols-2">
+          <AnimatedSection
+            delay={0.05}
+            className="mt-16 flex flex-col gap-16 sm:flex-row sm:flex-wrap sm:justify-between lg:pt-4"
+          >
             <PersonaCard
-              bg={TEAL_LIGHT}
-              textClass="text-ink"
               label="Shipper"
-              quote="Marjorie is frustrated to have to write many emails to her broker to track the delivery."
+              quote="Marjorie is frustrated with having to write numerous emails to her broker to track the delivery."
               icon={
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src="/images/truxweb/icon-shipper.svg"
+                  src="/images/truxweb/icon-boxes.svg"
                   alt=""
-                  className="h-16 w-auto"
+                  className="w-[110px] lg:w-[130px]"
                 />
               }
             />
             <PersonaCard
-              bg={TEAL}
-              textClass="text-white"
               label="Carrier"
-              quote="Michel is struggling to make a name for himself among transportation multinationals and needs to lower his prices to attract clients."
-              icon={<TruckIcon />}
+              quote="Michel struggles to compete with multinational transport companies and has to lower his prices to attract clients."
+              icon={
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src="/images/truxweb/icon-truck-parcels.svg"
+                  alt=""
+                  className="w-[140px] -scale-y-100 rotate-180 lg:w-[170px]"
+                />
+              }
             />
           </AnimatedSection>
         </div>
       </section>
 
       {/* 02 — The Truxweb solution */}
-      <section className="px-6 py-16 md:px-12" style={{ backgroundColor: "#F2F5F8" }}>
-        <div className="mx-auto max-w-3xl">
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <div className="mx-auto max-w-5xl">
           <AnimatedSection>
             <SectionIntro index="02" title="The Truxweb solution" />
             <div className="flex flex-col gap-8">
-              <div>
-                <p className="mb-2 text-base font-semibold text-ink">
-                  A 100% digital platform allowing customers to quickly book
-                  a carrier and track their goods
+              <div className="flex flex-col gap-2 lg:flex-row lg:items-start lg:gap-6">
+                <p className="font-body text-base font-semibold text-black lg:w-[342px] lg:shrink-0 lg:text-[16px] lg:leading-[20px]">
+                  A 100% digital platform allowing clients to quickly book a
+                  carrier and track their goods.
                 </p>
-                <p className="text-base leading-relaxed text-ink/80">
+                <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:max-w-[700px] lg:text-[16px] lg:leading-[20px]">
                   The solution envisioned by the founders of Truxweb was to
-                  create a 100% digitized platform allowing the client to
+                  create a fully digital platform that enables clients to
                   book a carrier directly without going through an
-                  intermediary, and to easily track their merchandise.
+                  intermediary and easily track their goods.
                 </p>
               </div>
-              <div>
-                <p className="mb-2 text-base font-semibold text-ink">
+              <div className="flex flex-col gap-2 lg:flex-row lg:items-start lg:gap-6">
+                <p className="font-body text-base font-semibold text-black lg:w-[342px] lg:shrink-0 lg:text-[16px] lg:leading-[20px]">
                   A platform where carriers can display their delivery areas
-                  and attract more clients
+                  and attract more clients.
                 </p>
-                <p className="text-base leading-relaxed text-ink/80">
+                <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:max-w-[700px] lg:text-[16px] lg:leading-[20px]">
                   The platform also simplifies processes for carriers,
                   allowing them to set up their various delivery routes
-                  (e.g. the route from Montreal to Toronto) with the
-                  corresponding price, and then be visible in the search
-                  results for clients. This provides them with better
-                  market visibility, subsequently enabling them to generate
-                  more revenue.
+                  (e.g., the route from Montreal to Toronto) with the
+                  corresponding price and subsequently become visible in
+                  client search results. This provides them with better
+                  market visibility, enabling them to generate more revenue.
                 </p>
               </div>
             </div>
@@ -362,30 +334,31 @@ export default function TruxwebPage() {
       </section>
 
       {/* 03 — The process */}
-      <section className="py-16" style={{ backgroundColor: TEAL }}>
-        <div className="mx-auto max-w-5xl px-6 md:px-12">
+      <section
+        className="overflow-x-clip px-6 py-16 md:px-12 lg:px-[104px] lg:py-10"
+        style={{ backgroundColor: TEAL }}
+      >
+        <div className="mx-auto max-w-5xl">
           <AnimatedSection>
             <SectionIntro index="03" title="The process" dark />
-            <p className="mb-10 max-w-2xl text-base leading-relaxed text-white/85">
-              The process at Truxweb was based on the Agile method and
-              improved as the startup grew. I worked closely with my senior
-              designer and a team of developers, as well as the company&apos;s
-              founders. This allowed us to better understand user needs and
-              industry technicalities in order to create the best possible
-              solution, both aesthetically and user-friendly.
-            </p>
+            <div className="mb-14 flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-6">
+              <p className="font-body text-base font-semibold text-white lg:w-[342px] lg:shrink-0 lg:text-[16px] lg:leading-[20px]">
+                A process based on the Agile method and far from being a
+                smooth journey.
+              </p>
+              <p className="font-body text-sm leading-relaxed text-white lg:max-w-[700px] lg:text-[16px] lg:leading-[20px]">
+                The process at Truxweb was based on the Agile method and
+                improved as the start-up grew. I collaborated with my senior
+                designer and a team of developers, not to mention the
+                company&apos;s founders. This allowed us to better understand
+                user needs and industry specifics to create the best
+                possible solution that is both aesthetically pleasing and
+                easy to use.
+              </p>
+            </div>
           </AnimatedSection>
           <AnimatedSection delay={0.05}>
-            <div className="flex gap-4 overflow-x-auto pb-4">
-              {process.map((step) => (
-                <ProcessCard
-                  key={step.index}
-                  index={step.index}
-                  title={step.title}
-                  description={step.description}
-                />
-              ))}
-            </div>
+            <ProcessCarousel steps={process} />
           </AnimatedSection>
         </div>
       </section>
@@ -460,7 +433,7 @@ export default function TruxwebPage() {
       </section>
 
       {/* Prototype showcase */}
-      <section className="mt-16 py-16" style={{ backgroundColor: TEAL }}>
+      <section id="prototype" className="mt-16 py-16" style={{ backgroundColor: TEAL }}>
         <AnimatedSection className="mx-auto flex max-w-4xl flex-col items-center px-6">
           <p className="mb-8 text-sm font-bold uppercase tracking-[0.3em] text-white">
             Prototype
