@@ -364,22 +364,25 @@ export default function TruxwebPage() {
       </section>
 
       {/* 04 — The results */}
-      <section className="px-6 py-16 md:px-12">
-        <div className="mx-auto max-w-4xl">
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <div className="mx-auto max-w-5xl">
           <AnimatedSection>
-            <SectionIntro index="04" title="The results" />
-            <p className="mb-2 text-base font-semibold text-ink">
-              A search engine platform that simplifies the booking of a
-              carrier
-            </p>
-            <p className="mb-10 max-w-2xl text-base leading-relaxed text-ink/80">
-              After taking into account the founders&apos; ideas and reworking
-              the existing lo-fis, my senior and I wanted to recreate a
-              reservation process similar to Google Flights / Expedia to put
-              users in a familiar environment while considering the various
-              technical needs related to the logistics industry. You can
-              see below a preview of the platform on the shipper side.
-            </p>
+            <SectionIntro index="04" title="The Results" />
+            <div className="mb-14 flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-6">
+              <p className="font-body text-base font-semibold text-black lg:w-[342px] lg:shrink-0 lg:text-[16px] lg:leading-[20px]">
+                A search engine-like platform simplifying the booking of a
+                carrier.
+              </p>
+              <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:max-w-[700px] lg:text-[16px] lg:leading-[20px]">
+                After considering the founders&apos; ideas and reworking the
+                existing lo-fi designs, my senior designer and I aimed to
+                recreate a booking process similar to Google Flights /
+                Expedia to place users in a familiar environment while
+                addressing the various technical needs related to the
+                logistics industry. Below is a preview of the platform from
+                the shipper&apos;s perspective.
+              </p>
+            </div>
           </AnimatedSection>
 
           <AnimatedSection delay={0.05}>
