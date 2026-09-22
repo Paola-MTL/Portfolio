@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { REVEALED_KEY } from "./Hero";
 
 const NAV_LINK_CLASS =
-  "font-display opacity-80 transition-opacity duration-200 hover:opacity-100";
+  "font-body opacity-100 transition-opacity duration-200 hover:opacity-80";
 
 export default function Nav() {
   const pathname = usePathname();
@@ -62,9 +62,9 @@ export default function Nav() {
           priority
         />
       </Link>
-      <nav className="flex items-center gap-6 text-sm font-medium uppercase tracking-[0.1em]">
+      <nav className="flex items-center gap-6 text-base font-semibold">
         <Link href="/projects" className={NAV_LINK_CLASS}>
-          My Projects
+          My projects
         </Link>
         <Link href="/about" className={NAV_LINK_CLASS}>
           About me
