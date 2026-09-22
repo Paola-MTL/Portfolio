@@ -6,6 +6,8 @@ import ContactCTA from "@/components/ContactCTA";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import MockupsSection from "./MockupsSection";
 import ScrollDownHint from "./ScrollDownHint";
+import ProcessCarousel, { type ProcessStep } from "./ProcessCarousel";
+import ResearchSection from "./ResearchSection";
 
 const RED = "#D6021E";
 const CORAL = "#F03241";
@@ -14,6 +16,77 @@ export const metadata: Metadata = {
   title: "VF Immigration — Paola Cejoco",
   description: "Redesigning an immigration consultation website.",
 };
+
+function SectionIntro({
+  index,
+  title,
+  dark = false,
+  titleColor,
+}: {
+  index: string;
+  title: string;
+  dark?: boolean;
+  titleColor?: string;
+}) {
+  return (
+    <div className="mb-8 flex max-w-[700px] flex-col gap-1">
+      <p
+        className={`font-body text-base font-medium tracking-tight lg:text-[20px] lg:tracking-[-0.2px] ${dark ? "text-white" : "text-black"}`}
+      >
+        {index}
+      </p>
+      <h2
+        className="font-display text-4xl font-bold tracking-tightest text-balance sm:text-5xl lg:text-[56px] lg:tracking-[-0.84px]"
+        style={{ color: titleColor ?? (dark ? "#fff" : "#0f172a") }}
+      >
+        {title}
+      </h2>
+    </div>
+  );
+}
+
+const process: ProcessStep[] = [
+  {
+    index: "01",
+    title: "Discovery phase",
+    description:
+      "Existing content analysis, business needs and goals, user needs, competitive analysis and personas.",
+  },
+  {
+    index: "02",
+    title: "Information architecture",
+    description:
+      "Sorting and organizing information, content accessibility and simplifying the user flow.",
+  },
+  {
+    index: "03",
+    title: "Low-fidelity designs",
+    description:
+      "Wireframe creation and validation with the client of the technical aspects of the content.",
+  },
+  {
+    index: "04",
+    title: "High-fidelity designs & staging",
+    description: "Typography, color palette and responsive designs.",
+  },
+  {
+    index: "05",
+    title: "Usability testing",
+    description:
+      "In-person tests using the \u201cthinking aloud\u201d method, annotating results and pain points.",
+  },
+  {
+    index: "06",
+    title: "Iteration",
+    description: "Adjusting the designs based on the feedback received.",
+  },
+  {
+    index: "07",
+    title: "Final designs & hand-off to the client",
+    description:
+      "Finalizing the designs, putting the site online and explaining the Wix software to the client.",
+  },
+];
 
 function SectionHeading({ index, title }: { index: string; title: string }) {
   return (
@@ -168,6 +241,35 @@ export default function VfImmigrationPage() {
 
       <MockupsSection />
 
+      {/* 01 — The process */}
+      <section
+        className="overflow-x-clip px-6 py-16 md:px-12 lg:px-[104px] lg:py-10"
+        style={{ backgroundColor: CORAL }}
+      >
+        <div className="mx-auto max-w-5xl">
+          <AnimatedSection>
+            <SectionIntro index="01" title="The process" dark />
+            <p className="mb-14 max-w-[460px] font-body text-base font-semibold text-white lg:text-[16px] lg:leading-[20px]">
+              General process followed throughout the website redesign. The
+              designs were first created in French.
+            </p>
+          </AnimatedSection>
+          <AnimatedSection delay={0.05}>
+            <ProcessCarousel steps={process} />
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* 02 — Research */}
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <div className="mx-auto max-w-5xl">
+          <AnimatedSection>
+            <SectionIntro index="02" title="Research" titleColor={CORAL} />
+          </AnimatedSection>
+          <ResearchSection />
+        </div>
+      </section>
+
       {/* Stat bar */}
       <section className="px-6 py-16 md:px-12">
         <AnimatedSection className="mx-auto grid max-w-4xl grid-cols-1 gap-8 sm:grid-cols-3">
@@ -177,11 +279,31 @@ export default function VfImmigrationPage() {
         </AnimatedSection>
       </section>
 
-      {/* Narrative: 01–04 */}
+      {/* Narrative: 03–05 */}
       <section className="px-6 pb-8 md:px-12">
         <div className="mx-auto flex max-w-3xl flex-col gap-16">
           <AnimatedSection>
-            <SectionHeading index="01" title="Visual identity" />
+            <SectionHeading index="03" title="Information architecture" />
+            <p className="text-base leading-relaxed text-ink/80">
+              The content was rewritten using simple, accessible vocabulary,
+              better-defined categories by user profile, and a clearer
+              information hierarchy — a real challenge given how complex
+              immigration processes are.
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection>
+            <SectionHeading index="04" title="Wireframes" />
+            <p className="text-base leading-relaxed text-ink/80">
+              A first wireframing round incorporated VF Immigration&apos;s
+              desired content. Information density remained a friction
+              point, so hierarchy and structure were revised — for example,
+              using accordions for definitions.
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection>
+            <SectionHeading index="05" title="Visual identity" />
             <p className="text-base leading-relaxed text-ink/80">
               The two most dominant primary colors at VF Immigration were
               dark red and dark gray. To enhance contrast throughout the
@@ -209,53 +331,14 @@ export default function VfImmigrationPage() {
               </span>
             </div>
           </AnimatedSection>
-
-          <AnimatedSection>
-            <SectionHeading index="02" title="The research phase" />
-            <div className="flex flex-col gap-4 text-base leading-relaxed text-ink/80">
-              <p>
-                An audit of the existing site was conducted against Bastien
-                &amp; Scapin&apos;s heuristic criteria and Nielsen&apos;s 10
-                heuristics, revealing cognitive overload, a lack of visual
-                content, and an unclear value proposition.
-              </p>
-              <p>
-                Quantitative research showed a bounce rate over 60% on the
-                homepage and that 80% of traffic was direct. User interviews
-                with 5 profiles (Thinking Out Loud method) revealed
-                confusion booking a consultation and difficulty comparing
-                services.
-              </p>
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection>
-            <SectionHeading index="03" title="Information architecture" />
-            <p className="text-base leading-relaxed text-ink/80">
-              The content was rewritten using simple, accessible vocabulary,
-              better-defined categories by user profile, and a clearer
-              information hierarchy — a real challenge given how complex
-              immigration processes are.
-            </p>
-          </AnimatedSection>
-
-          <AnimatedSection>
-            <SectionHeading index="04" title="Wireframes" />
-            <p className="text-base leading-relaxed text-ink/80">
-              A first wireframing round incorporated VF Immigration&apos;s
-              desired content. Information density remained a friction
-              point, so hierarchy and structure were revised — for example,
-              using accordions for definitions.
-            </p>
-          </AnimatedSection>
         </div>
       </section>
 
-      {/* 05 — The modernized web version */}
+      {/* 06 — The modernized web version */}
       <section className="px-6 py-16 md:px-12">
         <div className="mx-auto max-w-4xl">
           <AnimatedSection>
-            <SectionHeading index="05" title="The modernized web version" />
+            <SectionHeading index="06" title="The modernized web version" />
             <p className="max-w-2xl text-base leading-relaxed text-ink/80">
               Four pages carried the redesign. Drag each slider to compare
               the original site against the rebuild.
@@ -337,7 +420,7 @@ export default function VfImmigrationPage() {
         </div>
       </section>
 
-      {/* 06 — Mobile, reconsidered */}
+      {/* 07 — Mobile, reconsidered */}
       <section className="px-6 py-16 md:px-12" style={{ backgroundColor: "#F5F3F0" }}>
         <AnimatedSection className="mx-auto flex max-w-4xl flex-col items-start gap-8 sm:flex-row sm:items-center">
           <span
