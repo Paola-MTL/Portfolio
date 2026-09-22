@@ -77,7 +77,7 @@ const SCROLL_DOWN_EASE = [0.65, 0, 0.35, 1] as const;
 // Once the deck has been drawn, remember it for the rest of the session so
 // returning from the Projects page (browser back, or the scroll-up gesture)
 // lands straight on the three cards instead of resetting to the deck.
-const REVEALED_KEY = "hero:revealed";
+export const REVEALED_KEY = "hero:revealed";
 
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
@@ -128,22 +128,29 @@ export default function Hero() {
     return () => cancelAnimationFrame(id);
   }, [returning]);
 
-  const goToProjects = useCallback(() => {
-    if (leavingRef.current) return;
-    leavingRef.current = true;
-    if (reduceMotion) {
-      router.push("/projects");
-      return;
-    }
-    setLeavingToProjects(true);
-    window.setTimeout(() => router.push("/projects"), SCROLL_DOWN_MS);
-  }, [reduceMotion, router]);
+  // Both side cards leave through the same curtain wipe: the About page's
+  // hero is the same #0f0c21 as the curtain, so the seam is invisible there too.
+  const leaveWithCurtain = useCallback(
+    (href: string) => {
+      if (leavingRef.current) return;
+      leavingRef.current = true;
+      if (reduceMotion) {
+        router.push(href);
+        return;
+      }
+      setLeavingToProjects(true);
+      window.setTimeout(() => router.push(href), SCROLL_DOWN_MS);
+    },
+    [reduceMotion, router],
+  );
 
-  const handleProjectsCardClick = (event: React.MouseEvent) => {
+  const goToProjects = useCallback(() => leaveWithCurtain("/projects"), [leaveWithCurtain]);
+
+  const handleSideCardClick = (href: string) => (event: React.MouseEvent) => {
     // Let modified clicks (new tab, etc.) behave normally.
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
-    goToProjects();
+    leaveWithCurtain(href);
   };
 
   // Once the three cards are settled, a downward scroll / upward swipe at the
@@ -247,6 +254,7 @@ export default function Hero() {
               >
                 <Link
                   href="/about"
+                  onClick={handleSideCardClick("/about")}
                   className="flex size-full items-center justify-center p-[14.286px] text-center font-display text-[20px] font-bold tracking-[-0.3px] text-white"
                 >
                   About me
@@ -386,7 +394,7 @@ export default function Hero() {
               >
                 <Link
                   href="/projects"
-                  onClick={handleProjectsCardClick}
+                  onClick={handleSideCardClick("/projects")}
                   className="flex size-full items-center justify-center p-[14.286px] text-center font-display text-[20px] font-bold tracking-[-0.3px] text-white"
                 >
                   Projects

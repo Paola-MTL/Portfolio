@@ -12,6 +12,6 @@ const CASE_STUDY_PATHS = [
 
 export default function ConditionalNav() {
   const pathname = usePathname();
-  if (CASE_STUDY_PATHS.includes(pathname) || pathname === "/about") return null;
+  if (CASE_STUDY_PATHS.includes(pathname) || pathname === "/about" || pathname === "/elia-unlock") return null;
   return <Nav />;
 }
