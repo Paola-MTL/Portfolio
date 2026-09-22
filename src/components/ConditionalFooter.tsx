@@ -9,6 +9,7 @@ export default function ConditionalFooter() {
     pathname === "/" ||
     pathname === "/projects" ||
     pathname === "/projects/elia" ||
+    pathname === "/projects/truxweb" ||
     pathname === "/about"
   )
     return null;
