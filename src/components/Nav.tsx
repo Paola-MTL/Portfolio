@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { REVEALED_KEY } from "./Hero";
+import { HERO_RESET_EVENT, REVEALED_KEY } from "./Hero";
 
 const NAV_LINK_CLASS =
   "font-body opacity-100 transition-opacity duration-200 hover:opacity-80";
@@ -44,12 +44,11 @@ export default function Nav() {
           try {
             sessionStorage.removeItem(REVEALED_KEY);
           } catch {}
-          // Already on "/": reload instead of resetting in place, since swapping
-          // the ID card back to the deck makes Framer run the shared-layout
-          // morph in reverse and the card gets stuck mid-tilt.
+          // Already on "/": put the cards back on the deck in place — the
+          // hero plays the reveal in reverse instead of reloading the page.
           if (pathname === "/") {
             event.preventDefault();
-            window.location.reload();
+            window.dispatchEvent(new Event(HERO_RESET_EVENT));
           }
         }}
       >
