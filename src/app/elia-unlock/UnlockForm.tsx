@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export default function UnlockForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -15,16 +14,28 @@ export default function UnlockForm() {
     setLoading(true);
     setError(false);
 
-    const res = await fetch("/api/elia-auth", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
-    });
+    let res: Response;
+    try {
+      res = await fetch("/api/elia-auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+    } catch {
+      setError(true);
+      setLoading(false);
+      return;
+    }
 
     if (res.ok) {
-      const destination = searchParams.get("from") || "/projects/elia";
-      router.push(destination);
-      router.refresh();
+      const from = searchParams.get("from");
+      const destination =
+        from && from.startsWith("/") && !from.startsWith("//")
+          ? from
+          : "/projects/elia";
+      // Full page load so the new cookie is sent and the middleware re-runs.
+      // router.push would reuse the cached redirect back to this page.
+      window.location.assign(destination);
     } else {
       setError(true);
       setLoading(false);

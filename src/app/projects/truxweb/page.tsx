@@ -500,7 +500,7 @@ export default function TruxwebPage() {
           <div className="content-stretch flex flex-wrap gap-[31px] items-center justify-center relative shrink-0">
             <a
               href="mailto:cejoco.paola@gmail.com"
-              className="content-stretch flex items-center justify-center px-[32px] py-[12px] relative rounded-[30px] shrink-0"
+              className="content-stretch flex items-center justify-center px-[32px] py-[12px] relative rounded-[30px] shrink-0 transition-opacity hover:opacity-80"
               style={{ backgroundColor: TEAL }}
             >
               <p className="font-body font-semibold leading-[20px] relative shrink-0 text-white text-[16px] whitespace-nowrap">
@@ -511,13 +511,10 @@ export default function TruxwebPage() {
               href="https://www.linkedin.com/in/paola-cejoco/"
               target="_blank"
               rel="noopener noreferrer"
-              className="border border-solid content-stretch flex items-center justify-center px-[32px] py-[12px] relative rounded-[30px] shrink-0"
-              style={{ borderColor: TEAL }}
+              className="group border border-solid content-stretch flex items-center justify-center px-[32px] py-[12px] relative rounded-[30px] shrink-0 transition-colors hover:bg-[var(--truxweb-teal)]"
+              style={{ borderColor: TEAL, color: TEAL, "--truxweb-teal": TEAL } as React.CSSProperties}
             >
-              <p
-                className="font-body font-semibold leading-[20px] relative shrink-0 text-[16px] whitespace-nowrap"
-                style={{ color: TEAL }}
-              >
+              <p className="font-body font-semibold leading-[20px] relative shrink-0 text-[16px] whitespace-nowrap transition-colors group-hover:text-white">
                 My LinkedIn
               </p>
             </a>
