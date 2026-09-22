@@ -90,7 +90,16 @@ function ShapeGlow({
   );
 }
 
-export default function ProjectsIndex() {
+export default function ProjectsIndex({
+  id,
+  // The standalone /projects route owns the "scroll up at the top goes back
+  // to the Hero" gesture; the homepage's inline section doesn't need it
+  // since scrolling up there just scrolls back into the Hero naturally.
+  enableHomeGesture = true,
+}: {
+  id?: string;
+  enableHomeGesture?: boolean;
+} = {}) {
   const router = useRouter();
   const reduceMotion = useReducedMotion();
   const [leavingUp, setLeavingUp] = useState(false);
@@ -112,6 +121,7 @@ export default function ProjectsIndex() {
   };
 
   useEffect(() => {
+    if (!enableHomeGesture) return;
     const goHome = () => {
       if (leavingRef.current) return;
       leavingRef.current = true;
@@ -144,10 +154,13 @@ export default function ProjectsIndex() {
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
     };
-  }, [reduceMotion, router]);
+  }, [enableHomeGesture, reduceMotion, router]);
 
   return (
-    <section className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#0f0c21] py-24">
+    <section
+      id={id}
+      className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#0f0c21] py-24"
+    >
       <motion.div
         animate={{
           y: reduceMotion
@@ -188,7 +201,8 @@ export default function ProjectsIndex() {
 
         <motion.div
           initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, ease: EASE_OUT }}
           className="relative mx-auto grid w-full max-w-[732px] grid-cols-1 gap-5 px-6 sm:grid-cols-2 md:px-12"
         >
@@ -196,7 +210,8 @@ export default function ProjectsIndex() {
             <motion.div
               key={project.slug}
               initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.5, delay: 0.1 + i * 0.08, ease: EASE_OUT }}
             >
               <Link
@@ -247,14 +262,18 @@ export default function ProjectsIndex() {
         Dark curtain for the scroll-up return: starts just above the viewport
         and drops down to cover, matching Hero's #0f0c21 so the hand-off to the
         Hero (which paints its own curtain covering, then lifts it) is seamless.
+        Only the standalone /projects route needs this — the homepage's inline
+        section scrolls back into the Hero on its own.
       */}
-      <motion.div
-        aria-hidden
-        initial={false}
-        animate={{ y: leavingUp ? "0%" : "-100%" }}
-        transition={{ duration: WIPE_MS / 1000, ease: WIPE_EASE }}
-        className="pointer-events-none fixed inset-0 z-50 bg-[#0f0c21]"
-      />
+      {enableHomeGesture && (
+        <motion.div
+          aria-hidden
+          initial={false}
+          animate={{ y: leavingUp ? "0%" : "-100%" }}
+          transition={{ duration: WIPE_MS / 1000, ease: WIPE_EASE }}
+          className="pointer-events-none fixed inset-0 z-50 bg-[#0f0c21]"
+        />
+      )}
 
       {/*
         Curtain for going deeper into a case study: parked just below the
