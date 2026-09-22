@@ -10,6 +10,7 @@ export default function ConditionalFooter() {
     pathname === "/projects" ||
     pathname === "/projects/elia" ||
     pathname === "/projects/truxweb" ||
+    pathname === "/projects/vf-immigration" ||
     pathname === "/about" ||
     pathname === "/elia-unlock"
   )

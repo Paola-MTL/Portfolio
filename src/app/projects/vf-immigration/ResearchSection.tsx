@@ -95,7 +95,7 @@ const violationGroups: { title: string; items: Badge[]; labels: string[] }[] = [
 /* ---------- Text blocks ---------- */
 
 const bodyText =
-  "font-body text-sm leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]";
+  "max-w-[700px] font-body text-sm leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]";
 
 function Block({
   title,
@@ -109,7 +109,7 @@ function Block({
   bullets?: string[];
 }) {
   return (
-    <div className="flex max-w-[890px] flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <h3 className="font-body text-base font-semibold text-black lg:text-[16px] lg:leading-[20px]">
         {title}
       </h3>

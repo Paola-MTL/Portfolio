@@ -491,7 +491,7 @@ export default function TruxwebPage() {
             style={{ color: TEAL }}
           >
             <div className="font-display font-bold flex flex-col justify-center relative shrink-0 text-[56px] tracking-[-0.84px] w-[550px] max-w-full">
-              <p className="leading-[normal]">Do you like what you see?</p>
+              <p className="leading-[normal]">Like what you see?</p>
             </div>
             <div className="font-body font-medium flex flex-col justify-center min-w-full relative shrink-0 text-[24px] tracking-[-0.24px] w-[min-content]">
               <p className="leading-[30px]">We may be a match</p>

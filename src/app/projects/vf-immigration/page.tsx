@@ -2,14 +2,16 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import AnimatedSection from "@/components/AnimatedSection";
 import BackButton from "@/components/BackButton";
-import ContactCTA from "@/components/ContactCTA";
-import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import MockupsSection from "./MockupsSection";
 import ScrollDownHint from "./ScrollDownHint";
 import ProcessCarousel, { type ProcessStep } from "./ProcessCarousel";
 import ResearchSection from "./ResearchSection";
+import InformationArchitectureSection from "./InformationArchitectureSection";
+import WireframesSection from "./WireframesSection";
+import VisualIdentitySection from "./VisualIdentitySection";
+import WebVersionSection from "./WebVersionSection";
+import MobileVersionSection from "./MobileVersionSection";
 
-const RED = "#D6021E";
 const CORAL = "#F03241";
 
 export const metadata: Metadata = {
@@ -88,32 +90,54 @@ const process: ProcessStep[] = [
   },
 ];
 
-function SectionHeading({ index, title }: { index: string; title: string }) {
+type TitledRow = { title: string; body: string };
+
+// Bold title on the left, paragraph on the right; stacks on mobile.
+function TitledRows({ items }: { items: TitledRow[] }) {
   return (
-    <div className="mb-6 flex items-center gap-4">
-      <span
-        className="flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold text-white"
-        style={{ backgroundColor: RED }}
-      >
-        {index}
-      </span>
-      <h2 className="font-display text-2xl font-normal italic tracking-tightest sm:text-3xl">
-        {title}
-      </h2>
+    <div className="flex flex-col gap-8">
+      {items.map((item) => (
+        <AnimatedSection
+          key={item.title}
+          className="flex flex-col gap-4 md:flex-row md:gap-6"
+        >
+          <h3 className="font-body text-base font-semibold text-black md:w-[342px] md:shrink-0 lg:text-[16px] lg:leading-[20px]">
+            {item.title}
+          </h3>
+          <p className="max-w-[700px] font-body text-sm leading-relaxed text-[#1e1e1e] md:flex-1 lg:text-[16px] lg:leading-[20px]">
+            {item.body}
+          </p>
+        </AnimatedSection>
+      ))}
     </div>
   );
 }
 
-function Stat({ value, label }: { value: string; label: string }) {
-  return (
-    <div className="flex flex-col gap-1 border-t border-ink/10 pt-5">
-      <span className="font-display text-4xl italic tracking-tightest sm:text-5xl" style={{ color: RED }}>
-        {value}
-      </span>
-      <span className="text-sm text-muted">{label}</span>
-    </div>
-  );
-}
+const challenges: TitledRow[] = [
+  {
+    title: "Organize complex information and make it accessible for everyone",
+    body: "One of the biggest challenges in redesigning VF Immigration was to simplify and organize complex information. The goal was to cater to a wide range of users who have different levels of familiarity with the immigration processes.",
+  },
+  {
+    title: "Create a flexible layout that would suit the client and industry's needs",
+    body: "Another challenge was to create a website that could adapt to the constant changes in the industry. It was necessary to create components that were flexible and that Valérie could reuse (editable in the CMS). Immigration processes sometimes change names and evolve over time, which had to be taken into account in the designs. For example, an update to an immigration program would be highlighted with an alert banner. This also legitimizes VF immigration and shows that Valérie is always aware of the latest developments.",
+  },
+];
+
+const learnings: TitledRow[] = [
+  {
+    title: "Working with certain constraints",
+    body: "One of the challenges as a UI designer was working with the Wix platform, which limited my ability to customize designs. Unfortunately, some effects were not available (for example, adding a shadow effect to the navigation bar to improve contrast on certain pages). This platform was already used by VF Immigration, and due to time and simplicity concerns, it was preferable to stick with this platform.",
+  },
+  {
+    title: "Working independently",
+    body: "I was given free rein over the artistic direction of the site, which also pushed me to set deadlines and reassess my working methods to avoid spreading myself too thin.",
+  },
+  {
+    title: "Working in a family context",
+    body: "Throughout this project, I worked for my mother-in-law as well as my partner, which can sometimes be challenging in terms of decision-making. With everyone wanting to add their input, it was sometimes necessary to objectively steer each person's opinions to prioritize the user.",
+  },
+];
 
 export default function VfImmigrationPage() {
   return (
@@ -135,7 +159,7 @@ export default function VfImmigrationPage() {
             </AnimatedSection>
           </div>
 
-          <div className="w-full max-w-xl lg:absolute lg:left-[378px] lg:top-1/2 lg:w-[571px] lg:max-w-none lg:-translate-y-1/2">
+          <div className="w-full max-w-xl lg:absolute lg:left-1/2 lg:top-1/2 lg:w-[571px] lg:max-w-none lg:-translate-x-1/2 lg:-translate-y-1/2">
             <AnimatedSection delay={0.1}>
               <div className="relative aspect-[524/328] w-full overflow-hidden rounded-lg">
                 <Image
@@ -270,211 +294,114 @@ export default function VfImmigrationPage() {
         </div>
       </section>
 
-      {/* Stat bar */}
-      <section className="px-6 py-16 md:px-12">
-        <AnimatedSection className="mx-auto grid max-w-4xl grid-cols-1 gap-8 sm:grid-cols-3">
-          <Stat value="60%+" label="bounce rate on the old homepage" />
-          <Stat value="80%" label="of traffic arrived direct — no clear path in" />
-          <Stat value="60%" label="of sessions happened on mobile" />
-        </AnimatedSection>
+      {/* 03 — Information Architecture */}
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <div className="mx-auto max-w-5xl">
+          <AnimatedSection>
+            <SectionIntro
+              index="03"
+              title="Information Architecture"
+              titleColor={CORAL}
+            />
+          </AnimatedSection>
+          <InformationArchitectureSection />
+        </div>
       </section>
 
-      {/* Narrative: 03–05 */}
-      <section className="px-6 pb-8 md:px-12">
-        <div className="mx-auto flex max-w-3xl flex-col gap-16">
+      {/* 04 — Wireframes */}
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <div className="mx-auto max-w-5xl">
           <AnimatedSection>
-            <SectionHeading index="03" title="Information architecture" />
-            <p className="text-base leading-relaxed text-ink/80">
-              The content was rewritten using simple, accessible vocabulary,
-              better-defined categories by user profile, and a clearer
-              information hierarchy — a real challenge given how complex
-              immigration processes are.
-            </p>
+            <SectionIntro index="04" title="Wireframes" titleColor={CORAL} />
           </AnimatedSection>
+          <WireframesSection />
+        </div>
+      </section>
 
+      {/* 05 — Visual Identity */}
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <div className="mx-auto max-w-5xl">
           <AnimatedSection>
-            <SectionHeading index="04" title="Wireframes" />
-            <p className="text-base leading-relaxed text-ink/80">
-              A first wireframing round incorporated VF Immigration&apos;s
-              desired content. Information density remained a friction
-              point, so hierarchy and structure were revised — for example,
-              using accordions for definitions.
-            </p>
+            <SectionIntro index="05" title="Visual Identity" titleColor={CORAL} />
           </AnimatedSection>
-
-          <AnimatedSection>
-            <SectionHeading index="05" title="Visual identity" />
-            <p className="text-base leading-relaxed text-ink/80">
-              The two most dominant primary colors at VF Immigration were
-              dark red and dark gray. To enhance contrast throughout the
-              site, I expanded the palette starting from these two primary
-              colors. Typography: Avenir Heavy and Avenir Light.
-            </p>
-            <div className="mt-6 flex items-center gap-3">
-              <span
-                className="size-10 rounded-full border border-ink/10 shadow-sm"
-                style={{ backgroundColor: RED }}
-                aria-label="Dark red"
-              />
-              <span
-                className="size-10 rounded-full border border-ink/10 shadow-sm"
-                style={{ backgroundColor: "#2B2B2B" }}
-                aria-label="Dark gray"
-              />
-              <span
-                className="size-10 rounded-full border border-ink/10 shadow-sm"
-                style={{ backgroundColor: "#F5F3F0" }}
-                aria-label="Off-white"
-              />
-              <span className="ml-2 text-sm text-muted">
-                Expanded from VF Immigration&apos;s original red &amp; gray
-              </span>
-            </div>
-          </AnimatedSection>
+          <VisualIdentitySection />
         </div>
       </section>
 
       {/* 06 — The modernized web version */}
-      <section className="px-6 py-16 md:px-12">
-        <div className="mx-auto max-w-4xl">
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <AnimatedSection className="mx-auto max-w-5xl">
+          <SectionIntro
+            index="06"
+            title="The modernized web version"
+            titleColor={CORAL}
+          />
+        </AnimatedSection>
+        <WebVersionSection />
+      </section>
+
+      {/* 07 — The redesigned mobile version */}
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:pb-0 lg:pt-28">
+        <AnimatedSection className="mx-auto max-w-5xl">
+          <SectionIntro
+            index="07"
+            title="The Redesigned Mobile Version"
+            titleColor={CORAL}
+          />
+        </AnimatedSection>
+        <MobileVersionSection />
+      </section>
+
+      {/* 08 — The challenges */}
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <div className="mx-auto max-w-5xl">
           <AnimatedSection>
-            <SectionHeading index="06" title="The modernized web version" />
-            <p className="max-w-2xl text-base leading-relaxed text-ink/80">
-              Four pages carried the redesign. Drag each slider to compare
-              the original site against the rebuild.
-            </p>
+            <SectionIntro index="08" title="The challenges" titleColor={CORAL} />
           </AnimatedSection>
-
-          <div className="mt-10 flex flex-col gap-16">
-            <AnimatedSection delay={0.05}>
-              <h3 className="text-lg font-semibold">The homepage</h3>
-              <p className="mt-2 max-w-2xl text-base leading-relaxed text-ink/70">
-                A page in the image of Valérie, more streamlined, where
-                information is prioritized and the services offered are
-                highlighted.
-              </p>
-              <div className="mt-6">
-                <BeforeAfterSlider
-                  before="/images/vf-immigration/before-homepage.jpg"
-                  after="/images/vf-immigration/after-homepage.jpg"
-                  beforeAlt="VF Immigration homepage before redesign"
-                  afterAlt="VF Immigration homepage after redesign"
-                />
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.05}>
-              <h3 className="text-lg font-semibold">The consultations</h3>
-              <p className="mt-2 max-w-2xl text-base leading-relaxed text-ink/70">
-                Services were reorganized according to their price and
-                duration. The goal was to visually compare the services
-                offered and let users choose the most suitable option for
-                their needs.
-              </p>
-              <div className="mt-6">
-                <BeforeAfterSlider
-                  before="/images/vf-immigration/before-consultations.jpg"
-                  after="/images/vf-immigration/after-consultations.jpg"
-                  beforeAlt="VF Immigration consultations page before redesign"
-                  afterAlt="VF Immigration consultations page after redesign"
-                />
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.05}>
-              <h3 className="text-lg font-semibold">The contact page</h3>
-              <p className="mt-2 max-w-2xl text-base leading-relaxed text-ink/70">
-                The goal was to reduce the number of users filling out a
-                form for simple questions — an economic loss for Valérie.
-                Her Facebook Lives were better highlighted to redirect these
-                users, while genuine prospects still had the full
-                representation form.
-              </p>
-              <div className="mt-6">
-                <BeforeAfterSlider
-                  before="/images/vf-immigration/before-contact.jpg"
-                  after="/images/vf-immigration/after-contact.jpg"
-                  beforeAlt="VF Immigration contact page before redesign"
-                  afterAlt="VF Immigration contact page after redesign"
-                />
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.05}>
-              <h3 className="text-lg font-semibold">Come to Canada</h3>
-              <p className="mt-2 max-w-2xl text-base leading-relaxed text-ink/70">
-                The redesign of this page aimed to improve navigation so
-                users can more easily and quickly recognize themselves in a
-                given category.
-              </p>
-              <div className="mt-6">
-                <BeforeAfterSlider
-                  before="/images/vf-immigration/before-canada.jpg"
-                  after="/images/vf-immigration/after-canada.jpg"
-                  beforeAlt="VF Immigration Come to Canada page before redesign"
-                  afterAlt="VF Immigration Come to Canada page after redesign"
-                />
-              </div>
-            </AnimatedSection>
-          </div>
+          <TitledRows items={challenges} />
         </div>
       </section>
 
-      {/* 07 — Mobile, reconsidered */}
-      <section className="px-6 py-16 md:px-12" style={{ backgroundColor: "#F5F3F0" }}>
-        <AnimatedSection className="mx-auto flex max-w-4xl flex-col items-start gap-8 sm:flex-row sm:items-center">
-          <span
-            className="font-display text-6xl italic tracking-tightest sm:text-7xl"
-            style={{ color: RED }}
-          >
-            60%
-          </span>
-          <div>
-            <h2 className="font-display text-2xl font-normal italic tracking-tightest sm:text-3xl">
-              Mobile, reconsidered
+      {/* 09 — My learnings */}
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <div className="mx-auto max-w-5xl">
+          <AnimatedSection>
+            <SectionIntro index="09" title="My Learnings" titleColor={CORAL} />
+          </AnimatedSection>
+          <TitledRows items={learnings} />
+        </div>
+      </section>
+
+      {/* Contact — Elia's layout in the hero coral */}
+      <section style={{ backgroundColor: CORAL }}>
+        <AnimatedSection className="relative mx-auto flex w-full max-w-[1280px] flex-col items-center gap-[56px] px-6 py-[112px]">
+          <div className="flex w-full flex-col items-center gap-[4px] text-center text-white">
+            <h2 className="w-[550px] max-w-full font-display text-[56px] font-bold leading-[normal] tracking-[-0.84px]">
+              Like what you see?
             </h2>
-            <p className="mt-3 max-w-xl text-base leading-relaxed text-ink/80">
-              60% of user sessions occurred on mobile, making a
-              mobile-friendly redesign essential to converting more visitors
-              into clients.
+            <p className="font-body text-[24px] font-medium leading-[30px] tracking-[-0.24px]">
+              We may be a match
             </p>
           </div>
-        </AnimatedSection>
-      </section>
-
-      {/* Learnings */}
-      <section className="px-6 py-16 md:px-12">
-        <AnimatedSection className="mx-auto max-w-4xl">
-          <h2 className="font-display text-2xl font-normal italic tracking-tightest sm:text-3xl">
-            My learnings
-          </h2>
-          <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
-            <div>
-              <h3 className="text-sm font-semibold">
-                Working with constraints
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink/70">
-                Designing within Wix limited customization — some effects,
-                like a navbar shadow, simply weren&apos;t available. Given
-                time and simplicity constraints, sticking with the existing
-                platform was the right call.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold">
-                Working independently
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink/70">
-                Having carte blanche on the artistic direction pushed me to
-                set my own deadlines and refine how I manage a solo project
-                end-to-end.
-              </p>
-            </div>
+          <div className="flex flex-wrap items-center justify-center gap-[31px]">
+            <a
+              href="mailto:cejoco.paola@gmail.com"
+              className="flex items-center justify-center rounded-[30px] bg-white px-[32px] py-[12px] font-body text-[16px] font-semibold leading-[20px] whitespace-nowrap transition-opacity hover:opacity-80"
+              style={{ color: CORAL }}
+            >
+              Shoot me a message
+            </a>
+            <a
+              href="https://www.linkedin.com/in/paola-cejoco/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center rounded-[30px] border border-solid border-white px-[32px] py-[12px] font-body text-[16px] font-semibold leading-[20px] whitespace-nowrap text-white transition-colors hover:bg-white hover:text-[#F03241]"
+            >
+              My LinkedIn
+            </a>
           </div>
         </AnimatedSection>
       </section>
-
-      <ContactCTA />
     </>
   );
 }
