@@ -5,6 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import { REVEALED_KEY } from "./Hero";
+
+const NAV_LINK_CLASS =
+  "font-display opacity-80 transition-opacity duration-200 hover:opacity-100";
 
 export default function Nav() {
   const pathname = usePathname();
@@ -19,8 +23,6 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [alwaysTransparent]);
 
-  const isProjects = pathname === "/" || pathname.startsWith("/projects");
-  const isAbout = pathname === "/about";
   const showScrolledState = scrolled && !alwaysTransparent;
 
   return (
@@ -34,7 +36,23 @@ export default function Nav() {
           : "py-5 text-paper"
       }`}
     >
-      <Link href="/" aria-label="Paola Cejoco — home">
+      <Link
+        href="/"
+        aria-label="Paola Cejoco — home"
+        onClick={(event) => {
+          // Always land on the "Draw a card" deck, not the revealed cards.
+          try {
+            sessionStorage.removeItem(REVEALED_KEY);
+          } catch {}
+          // Already on "/": reload instead of resetting in place, since swapping
+          // the ID card back to the deck makes Framer run the shared-layout
+          // morph in reverse and the card gets stuck mid-tilt.
+          if (pathname === "/") {
+            event.preventDefault();
+            window.location.reload();
+          }
+        }}
+      >
         <Image
           src={showScrolledState ? "/images/logo/pc-violet.svg" : "/images/logo/pc-white.svg"}
           alt="PC"
@@ -45,17 +63,11 @@ export default function Nav() {
         />
       </Link>
       <nav className="flex items-center gap-6 text-sm font-medium uppercase tracking-[0.1em]">
-        <Link
-          href="/projects"
-          className={`transition-opacity hover:opacity-60 ${isProjects ? "opacity-100" : "opacity-70"}`}
-        >
+        <Link href="/projects" className={NAV_LINK_CLASS}>
           My Projects
         </Link>
-        <Link
-          href="/about"
-          className={`transition-opacity hover:opacity-60 ${isAbout ? "opacity-100" : "opacity-70"}`}
-        >
-          About
+        <Link href="/about" className={NAV_LINK_CLASS}>
+          About me
         </Link>
       </nav>
     </motion.header>
