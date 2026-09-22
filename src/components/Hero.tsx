@@ -51,6 +51,16 @@ const GLOW_DRIFT = 1.8;
 const TILT_MAX = 9;
 const SIDE_HOVER_SCALE = 1.4;
 const HOVER_DIM = "brightness(0.62) saturate(0.8)";
+// Side-card hover hand-off. Grow/shrink share one duration and curve so the
+// hovered card, the ID card and the other card move as one. Leaving a card
+// waits a beat before letting go, so sweeping across to the other side card
+// hands the hover straight over instead of bouncing everything back to rest
+// in between, and a card that was just left stays above the ID card until
+// it has finished shrinking instead of popping behind it.
+const SIDE_HOVER_S = 0.55;
+const SIDE_HOVER_CSS_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+const SIDE_LEAVE_GRACE_MS = 140;
+const SIDE_LINGER_MS = SIDE_HOVER_S * 1000;
 const NO_DIM = "brightness(1) saturate(1)";
 // When the whole reveal has come to rest, so the ID card's hover tilt
 // can't fight the flip.
@@ -162,6 +172,7 @@ function SideCard({
   glowRgb,
   revealed,
   hovered,
+  lingering,
   dimmed,
   reduceMotion,
   onHoverChange,
@@ -174,6 +185,8 @@ function SideCard({
   glowRgb: string;
   revealed: boolean;
   hovered: boolean;
+  // Just left and still shrinking: keep it above the ID card until it's done.
+  lingering: boolean;
   dimmed: boolean;
   reduceMotion: boolean;
   onHoverChange: (hovered: boolean) => void;
@@ -208,7 +221,7 @@ function SideCard({
       }
       aria-hidden={!revealed}
       style={{ transformOrigin: "50% 80%", pointerEvents: revealed ? "auto" : "none" }}
-      className={`relative shrink-0 ${hovered ? "z-10" : "z-[1]"} ${side === "about" ? "mr-[-40px]" : "ml-[-40px]"}`}
+      className={`relative shrink-0 ${hovered ? "z-20" : lingering ? "z-10" : "z-[1]"} ${side === "about" ? "mr-[-40px]" : "ml-[-40px]"}`}
     >
       {/*
         Hover (Figma node 94:11354): the card grows from 214.286×300 to
@@ -225,7 +238,7 @@ function SideCard({
             ? `0 36px 64px -20px rgba(${glowRgb},0.6), 0 18px 30px -12px rgba(9,6,26,0.55)`
             : `0 0 0 0 rgba(${glowRgb},0), 0 0 0 0 rgba(9,6,26,0)`,
         }}
-        transition={{ duration: 0.55, ease: EASE_OUT, filter: { duration: 0.35, ease: "easeOut" } }}
+        transition={{ duration: SIDE_HOVER_S, ease: EASE_OUT, filter: { duration: SIDE_HOVER_S, ease: EASE_OUT } }}
         style={{ rotateX, rotateY, transformPerspective: 900 }}
         onMouseEnter={() => onHoverChange(true)}
         onMouseMove={pointer.onMove}
@@ -257,7 +270,8 @@ function SideCard({
 
 // The overlay wipe and the hero's parallax lift share this timing, so the
 // dark curtain rising from the bottom and the hero sliding up read as one
-// continuous downward scroll into the Projects page.
+// continuous gesture — whether navigating away (to About) or, once the card
+// is drawn, scrolling down into the inline Projects section.
 const SCROLL_DOWN_MS = 620;
 const SCROLL_DOWN_EASE = [0.65, 0, 0.35, 1] as const;
 
@@ -294,7 +308,22 @@ export default function Hero() {
   // Which side card is hovered, if any — drives both the centre-stack shrink and
   // the edge it shrinks toward, so Frame 13's -40 About↔ID overlap is preserved.
   const [hoveredSide, setHoveredSide] = useState<"about" | "projects" | null>(null);
-  const [leavingToProjects, setLeavingToProjects] = useState(false);
+  const [lingeringSide, setLingeringSide] = useState<"about" | "projects" | null>(null);
+  const hoveredSideRef = useRef<"about" | "projects" | null>(null);
+  const leaveTimer = useRef<ReturnType<typeof setTimeout>>();
+  const lingerTimer = useRef<ReturnType<typeof setTimeout>>();
+
+  const setSideHover = useCallback((side: "about" | "projects" | null) => {
+    const prev = hoveredSideRef.current;
+    hoveredSideRef.current = side;
+    setHoveredSide(side);
+    if (prev && prev !== side) {
+      clearTimeout(lingerTimer.current);
+      setLingeringSide(prev);
+      lingerTimer.current = setTimeout(() => setLingeringSide(null), SIDE_LINGER_MS);
+    }
+  }, []);
+  const [leavingViaCurtain, setLeavingViaCurtain] = useState(false);
   // `returning` = mounted already-revealed (came back from Projects); it drives
   // the reverse wipe — a dark curtain that starts covering the viewport and
   // lifts away while the cards settle down from above, mirroring the scroll.
@@ -331,7 +360,8 @@ export default function Hero() {
         sessionStorage.removeItem(REVEALED_KEY);
       } catch {}
       window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
-      setHoveredSide(null);
+      clearTimeout(leaveTimer.current);
+      setSideHover(null);
       setDeckHover(false);
       setDrawn(false);
       setSettled(false);
@@ -340,7 +370,7 @@ export default function Hero() {
     };
     window.addEventListener(HERO_RESET_EVENT, onReset);
     return () => window.removeEventListener(HERO_RESET_EVENT, onReset);
-  }, [reduceMotion]);
+  }, [reduceMotion, setSideHover]);
 
   useEffect(() => {
     if (!unwinding) return;
@@ -362,8 +392,8 @@ export default function Hero() {
     return () => cancelAnimationFrame(id);
   }, [returning]);
 
-  // Both side cards leave through the same curtain wipe: the About page's
-  // hero is the same #0f0c21 as the curtain, so the seam is invisible there too.
+  // The About card leaves through the curtain wipe: the About page's hero is
+  // the same #0f0c21 as the curtain, so the seam is invisible there too.
   const leaveWithCurtain = useCallback(
     (href: string) => {
       if (leavingRef.current) return;
@@ -372,13 +402,91 @@ export default function Hero() {
         router.push(href);
         return;
       }
-      setLeavingToProjects(true);
+      setLeavingViaCurtain(true);
       window.setTimeout(() => router.push(href), SCROLL_DOWN_MS);
     },
     [reduceMotion, router],
   );
 
-  const goToProjects = useCallback(() => leaveWithCurtain("/projects"), [leaveWithCurtain]);
+  // The Projects card scrolls to the inline Projects section that now lives
+  // right below the Hero on the homepage, instead of navigating away.
+  const scrollToProjects = useCallback(() => {
+    document
+      .getElementById("projects")
+      ?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+  }, [reduceMotion]);
+
+  // Once the card is drawn, a downward scroll / upward swipe at the top plays
+  // the same curtain wipe as the About card: it rises to cover, the page
+  // jumps to the Projects section while hidden underneath, then it sinks
+  // back down to reveal it. Before that, on the plain "Draw a card" deck,
+  // scrolling is left as a plain native scroll.
+  const curtainScrollToProjects = useCallback(() => {
+    if (leavingRef.current) return;
+    leavingRef.current = true;
+    if (reduceMotion) {
+      scrollToProjects();
+      leavingRef.current = false;
+      return;
+    }
+    setLeavingViaCurtain(true);
+    window.setTimeout(() => {
+      document.getElementById("projects")?.scrollIntoView({ behavior: "auto", block: "start" });
+      setLeavingViaCurtain(false);
+      window.setTimeout(() => {
+        leavingRef.current = false;
+      }, SCROLL_DOWN_MS);
+    }, SCROLL_DOWN_MS);
+  }, [reduceMotion, scrollToProjects]);
+
+  useEffect(() => {
+    if (!revealed || (returning && !curtainRetracted)) return;
+
+    const onWheel = (event: WheelEvent) => {
+      if (window.scrollY > 0 || event.deltaY <= 0) return;
+      event.preventDefault();
+      if (event.deltaY > 8) curtainScrollToProjects();
+    };
+    let touchStartY = 0;
+    const onTouchStart = (event: TouchEvent) => {
+      touchStartY = event.touches[0]?.clientY ?? 0;
+    };
+    const onTouchMove = (event: TouchEvent) => {
+      const y = event.touches[0]?.clientY ?? 0;
+      const dy = touchStartY - y;
+      if (window.scrollY > 0 || dy <= 0) return;
+      event.preventDefault();
+      if (dy > 64) curtainScrollToProjects();
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+    };
+  }, [revealed, returning, curtainRetracted, curtainScrollToProjects]);
+
+  const handleSideHover = (side: "about" | "projects") => (on: boolean) => {
+    clearTimeout(leaveTimer.current);
+    if (on) {
+      setSideHover(side);
+      return;
+    }
+    leaveTimer.current = setTimeout(() => {
+      if (hoveredSideRef.current === side) setSideHover(null);
+    }, SIDE_LEAVE_GRACE_MS);
+  };
+
+  useEffect(
+    () => () => {
+      clearTimeout(leaveTimer.current);
+      clearTimeout(lingerTimer.current);
+    },
+    [],
+  );
 
   const handleSideCardClick = (href: string) => (event: React.MouseEvent) => {
     // Let modified clicks (new tab, etc.) behave normally.
@@ -387,34 +495,12 @@ export default function Hero() {
     leaveWithCurtain(href);
   };
 
-  // Once the three cards are settled, a downward scroll / upward swipe at the
-  // top of the page runs the same wipe as clicking the Projects card — the
-  // mirror of the scroll-up gesture on the Projects page.
-  useEffect(() => {
-    if (!revealed) return;
-    if (returning && !curtainRetracted) return;
-
-    const onWheel = (event: WheelEvent) => {
-      if (window.scrollY <= 0 && event.deltaY > 8) goToProjects();
-    };
-    let touchStartY = 0;
-    const onTouchStart = (event: TouchEvent) => {
-      touchStartY = event.touches[0]?.clientY ?? 0;
-    };
-    const onTouchMove = (event: TouchEvent) => {
-      const y = event.touches[0]?.clientY ?? 0;
-      if (window.scrollY <= 0 && touchStartY - y > 64) goToProjects();
-    };
-
-    window.addEventListener("wheel", onWheel, { passive: true });
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
-    return () => {
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-    };
-  }, [revealed, returning, curtainRetracted, goToProjects]);
+  const handleProjectsCardClick = (event: React.MouseEvent) => {
+    // Let modified clicks (new tab, etc.) still go to the standalone /projects page.
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    scrollToProjects();
+  };
 
   // Hover on the drawn card. Before the reveal it follows the pointer a few
   // px and lifts; once the ID card has settled it tilts toward the pointer.
@@ -475,9 +561,9 @@ export default function Hero() {
   const deckHoverOn = !revealed && deckHover;
   const fan = deckHoverOn && !reduceMotion ? DECK_FAN : 1;
 
-  // Curtain: parked below (100%), rising to cover on the way down to Projects,
+  // Curtain: parked below (100%), rising to cover on the way to About,
   // painted covering (0%) on a returning mount, then lifting away (-100%).
-  const curtainY = leavingToProjects
+  const curtainY = leavingViaCurtain
     ? "0%"
     : returning
       ? curtainRetracted
@@ -488,7 +574,7 @@ export default function Hero() {
   // Hero content lifts up as we leave; on a returning mount it starts lifted
   // and settles back down as the curtain clears.
   const contentLifted =
-    !reduceMotion && (leavingToProjects || (returning && !curtainRetracted));
+    !reduceMotion && (leavingViaCurtain || (returning && !curtainRetracted));
 
   return (
     <section className="relative flex min-h-screen w-full overflow-hidden bg-[#0f0c21]">
@@ -528,9 +614,10 @@ export default function Hero() {
             glowRgb="93,173,244"
             revealed={revealed}
             hovered={hoveredSide === "about"}
+            lingering={lingeringSide === "about"}
             dimmed={hoveredSide === "projects"}
             reduceMotion={reduceMotion}
-            onHoverChange={(on) => setHoveredSide(on ? "about" : null)}
+            onHoverChange={handleSideHover("about")}
             onClick={handleSideCardClick("/about")}
           />
 
@@ -541,23 +628,21 @@ export default function Hero() {
             It shrinks toward the OPPOSITE edge from the hovered card, so the
             edge that overlaps the untouched side card holds its Frame 13 gap
             of -40 (otherwise the centred shrink would open a ~3px gap there).
-            It also dims with the untouched side card.
+            That edge-anchored shrink is written as a centred scale plus a
+            shift rather than by switching transform-origin, which can't
+            animate — so moving straight from About to Projects slides the
+            card across instead of jumping. It also dims with the other card.
           */}
           <div
             className="relative z-[2] shrink-0"
             style={{
               width: ID_W,
               height: ID_H,
-              transform: hoveredSide ? `scale(${1 / SIDE_HOVER_SCALE})` : "scale(1)",
-              transformOrigin:
-                hoveredSide === "projects"
-                  ? "left center"
-                  : hoveredSide === "about"
-                    ? "right center"
-                    : "center",
+              transform: hoveredSide
+                ? `translateX(${((hoveredSide === "about" ? 1 : -1) * ID_W * (1 - 1 / SIDE_HOVER_SCALE)) / 2}px) scale(${1 / SIDE_HOVER_SCALE})`
+                : "translateX(0px) scale(1)",
               filter: hoveredSide ? HOVER_DIM : NO_DIM,
-              transition:
-                "transform 300ms cubic-bezier(0.22, 1, 0.36, 1), filter 350ms ease-out",
+              transition: `transform ${SIDE_HOVER_S}s ${SIDE_HOVER_CSS_EASE}, filter ${SIDE_HOVER_S}s ${SIDE_HOVER_CSS_EASE}`,
             }}
           >
             <motion.div
@@ -825,10 +910,11 @@ export default function Hero() {
             glowRgb="191,93,244"
             revealed={revealed}
             hovered={hoveredSide === "projects"}
+            lingering={lingeringSide === "projects"}
             dimmed={hoveredSide === "about"}
             reduceMotion={reduceMotion}
-            onHoverChange={(on) => setHoveredSide(on ? "projects" : null)}
-            onClick={handleSideCardClick("/projects")}
+            onHoverChange={handleSideHover("projects")}
+            onClick={handleProjectsCardClick}
           />
         </div>
 
@@ -855,10 +941,13 @@ export default function Hero() {
       </motion.div>
 
       {/*
-        Dark curtain shared by both directions: it rises from the bottom edge
-        when the Projects card is clicked (scroll down), and on the way back it
-        starts covering the viewport and lifts off the top edge (scroll up).
-        It's the same #0f0c21 as the Projects page, so the seam is invisible.
+        Dark curtain shared by all three cases: it rises from the bottom edge
+        when the About card is clicked or when scrolling down into the inline
+        Projects section (once the card is drawn), sinking back down once the
+        jump is done in the latter case; on the way back from the standalone
+        /projects page it starts covering the viewport and lifts off the top
+        edge (scroll up). It's the same #0f0c21 as the About and Projects
+        pages, so the seam is invisible.
       */}
       <motion.div
         key={returning ? "curtain-up" : "curtain-down"}
