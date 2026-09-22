@@ -10,17 +10,27 @@ export type ProcessStep = {
   description: string;
 };
 
+const maxScroll = (track: HTMLElement) => track.scrollWidth - track.clientWidth;
+const isAtEnd = (track: HTMLElement) => track.scrollLeft >= maxScroll(track) - 2;
+
 export default function ProcessCarousel({ steps }: { steps: ProcessStep[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const endSpacerRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  // One dot per distinct scroll position, not per card: on wide viewports the
+  // last few cards are already visible when the track is fully scrolled.
+  const [pageCount, setPageCount] = useState(steps.length);
 
   const cardStep = () => {
     const card = trackRef.current?.querySelector<HTMLElement>("[data-card]");
     return card ? card.offsetWidth + 24 : 342 + 24; // gap-6 = 24px
   };
 
-  const scrollToIndex = (index: number) => {
-    trackRef.current?.scrollTo({ left: index * cardStep(), behavior: "smooth" });
+  const scrollToPage = (page: number) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const left = page === pageCount - 1 ? maxScroll(track) : page * cardStep();
+    track.scrollTo({ left, behavior: "smooth" });
   };
 
   const scrollByCard = (direction: 1 | -1) => {
@@ -30,12 +40,28 @@ export default function ProcessCarousel({ steps }: { steps: ProcessStep[] }) {
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
-    const onScroll = () => {
-      const index = Math.round(track.scrollLeft / cardStep());
-      setActive(Math.min(Math.max(index, 0), steps.length - 1));
+    const update = () => {
+      // The track is w-screen but starts at the content column's left edge, so it
+      // overhangs the viewport on the right by that same offset. Pad its end by the
+      // overhang plus a matching right margin so the last card lands in view.
+      if (endSpacerRef.current) {
+        const left = track.getBoundingClientRect().left;
+        const inset = Math.max(2 * left - 24, 0); // minus gap-6
+        endSpacerRef.current.style.width = `${inset}px`;
+      }
+      const pages = Math.min(Math.round(maxScroll(track) / cardStep()) + 1, steps.length);
+      setPageCount(pages);
+      const page = isAtEnd(track) ? pages - 1 : Math.round(track.scrollLeft / cardStep());
+      setActive(Math.min(Math.max(page, 0), pages - 1));
     };
-    track.addEventListener("scroll", onScroll, { passive: true });
-    return () => track.removeEventListener("scroll", onScroll);
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(track);
+    track.addEventListener("scroll", update, { passive: true });
+    return () => {
+      observer.disconnect();
+      track.removeEventListener("scroll", update);
+    };
   }, [steps.length]);
 
   return (
@@ -72,16 +98,17 @@ export default function ProcessCarousel({ steps }: { steps: ProcessStep[] }) {
             </div>
           </div>
         ))}
+        <div ref={endSpacerRef} aria-hidden className="shrink-0" />
       </div>
 
       <div className="relative mt-10 flex items-center justify-end">
         <div className="absolute left-1/2 flex -translate-x-1/2 items-center gap-2">
-          {steps.map((step, i) => (
+          {Array.from({ length: pageCount > 1 ? pageCount : 0 }, (_, i) => (
             <button
-              key={step.index}
+              key={i}
               type="button"
-              aria-label={`Scroll to step ${i + 1}`}
-              onClick={() => scrollToIndex(i)}
+              aria-label={`Scroll to page ${i + 1} of ${pageCount}`}
+              onClick={() => scrollToPage(i)}
               className="size-2.5 shrink-0 rounded-full bg-white transition-opacity"
               style={{ opacity: i === active ? 1 : 0.5 }}
             />
