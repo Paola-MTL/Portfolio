@@ -4,8 +4,10 @@ import AnimatedSection from "@/components/AnimatedSection";
 import BackButton from "@/components/BackButton";
 import ContactCTA from "@/components/ContactCTA";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import ScrollDownHint from "./ScrollDownHint";
 
 const RED = "#D6021E";
+const CORAL = "#F03241";
 
 export const metadata: Metadata = {
   title: "VF Immigration — Paola Cejoco",
@@ -45,62 +47,121 @@ export default function VfImmigrationPage() {
       <BackButton href="/#projects" />
 
       {/* Hero */}
-      <section id="hero" className="relative overflow-hidden bg-ink text-white">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/vf-immigration/after-homepage.jpg"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-[75%_15%] opacity-40"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/95 to-ink/60" />
+      <section
+        id="hero"
+        className="relative overflow-hidden text-white"
+        style={{ backgroundColor: CORAL }}
+      >
+        <div className="relative mx-auto flex min-h-screen max-w-[1280px] flex-col items-center justify-center gap-12 px-6 py-24 text-center lg:px-0 lg:py-0 lg:text-left">
+          <div className="lg:absolute lg:left-12 lg:top-1/2 lg:z-10 lg:w-[798px] lg:-translate-y-1/2">
+            <AnimatedSection>
+              <h1 className="font-display text-6xl font-bold tracking-tightest sm:text-7xl lg:text-[96px] lg:leading-none lg:tracking-[-1.92px]">
+                VF Immigration
+              </h1>
+            </AnimatedSection>
+          </div>
+
+          <div className="w-full max-w-xl lg:absolute lg:left-[378px] lg:top-1/2 lg:w-[571px] lg:max-w-none lg:-translate-y-1/2">
+            <AnimatedSection delay={0.1}>
+              <div className="relative aspect-[524/328] w-full overflow-hidden rounded-lg">
+                <Image
+                  src="/images/vf-immigration/hero-collage.png"
+                  alt="Collage of the redesigned VF Immigration website pages"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 1142px, 576px"
+                  className="object-contain"
+                />
+                <div aria-hidden className="absolute inset-0 bg-black/20" />
+              </div>
+            </AnimatedSection>
+          </div>
+
+          <ScrollDownHint arrowSrc="/images/vf-immigration/scroll-arrow.svg" />
         </div>
+      </section>
 
-        <div className="relative px-6 pb-20 pt-32 md:px-12 md:pt-40">
-          <AnimatedSection>
-            <p
-              className="mb-4 text-sm font-semibold uppercase tracking-[0.25em]"
-              style={{ color: RED }}
-            >
-              VF Immigration · 2024
+      {/* About the project */}
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <div className="mx-auto flex max-w-5xl flex-col gap-8">
+          <AnimatedSection className="flex max-w-[700px] flex-col gap-1 lg:max-w-[760px]">
+            <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
+              About the project
             </p>
-            <h1 className="max-w-3xl font-display text-4xl font-normal italic tracking-tightest text-balance sm:text-6xl">
-              Modernizing trust, without losing the brand
-            </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70">
-              VF Immigration is an immigration consulting agency established
-              since 2016 in Montreal. Valérie, the president, needed to
-              modernize her site without changing the logo, so both new and
-              old clients could still recognize the brand — and to improve
-              her productivity by automating processes that generated
-              unnecessary emails.
-            </p>
-
-            <dl className="mt-12 grid grid-cols-2 gap-8 border-t border-white/15 pt-8 sm:grid-cols-3 sm:max-w-xl">
-              <div>
-                <dt className="text-xs uppercase tracking-[0.15em] text-white/50">
-                  Role
-                </dt>
-                <dd className="mt-1 text-sm">
-                  UX Researcher / Product Designer
-                </dd>
-              </div>
-              <div>
-                <dt className="text-xs uppercase tracking-[0.15em] text-white/50">
-                  Duration
-                </dt>
-                <dd className="mt-1 text-sm">4 months</dd>
-              </div>
-              <div>
-                <dt className="text-xs uppercase tracking-[0.15em] text-white/50">
-                  Collaboration
-                </dt>
-                <dd className="mt-1 text-sm">Web Design · Mobile Design</dd>
-              </div>
-            </dl>
+            <h2 className="font-display text-4xl font-bold tracking-tightest text-balance text-[#0f172a] sm:text-5xl lg:text-[56px] lg:tracking-[-0.84px]">
+              Redesigning an immigration consultation website
+            </h2>
           </AnimatedSection>
+
+          <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
+            <AnimatedSection className="flex max-w-[700px] flex-col gap-8">
+              <div className="flex flex-col gap-5 font-body text-sm font-normal leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+                <p>
+                  VF Immigration is an immigration consulting agency
+                  established since 2016 in Montreal. Valérie, the president
+                  of VF Immigration, needed not only to modernize her site but
+                  also to direct her clients to the most suitable service for
+                  them.
+                </p>
+                <p>
+                  The first challenge was to find a new visual identity,
+                  without updating the logo, so that both new and old clients
+                  could still recognize VF Immigration.
+                </p>
+                <p>
+                  A second challenge was to improve Valérie&apos;s
+                  productivity, on the one hand by highlighting the different
+                  channels of information and services offered, and on the
+                  other hand, automating certain processes to reduce the
+                  number of unnecessary emails Valérie received daily.
+                </p>
+              </div>
+              <a
+                href="https://www.vfimmigration.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-fit items-center gap-2 font-body text-sm font-medium transition-opacity hover:opacity-70 lg:text-[18.09px] lg:tracking-[-0.1809px]"
+                style={{ color: CORAL }}
+              >
+                Visit the site
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  alt=""
+                  src="/images/vf-immigration/arrow-right.svg"
+                  className="h-[16px] w-[20px]"
+                />
+              </a>
+            </AnimatedSection>
+
+            <AnimatedSection delay={0.1} className="flex w-full flex-col gap-6 sm:w-56 lg:gap-[24px]">
+              <div>
+                <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
+                  Role
+                </p>
+                <p className="mt-1 font-body text-sm leading-relaxed text-black lg:text-[14px]">
+                  UI/UX designer
+                  <br />
+                  Web designer
+                </p>
+              </div>
+              <div>
+                <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
+                  Duration
+                </p>
+                <p className="mt-1 font-body text-sm text-black lg:text-[16px]">4 months</p>
+              </div>
+              <div>
+                <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
+                  Project type
+                </p>
+                <p className="mt-1 font-body text-sm leading-relaxed text-black lg:text-[14px]">
+                  Web design
+                  <br />
+                  Mobile design
+                </p>
+              </div>
+            </AnimatedSection>
+          </div>
         </div>
       </section>
 
