@@ -270,7 +270,8 @@ function SideCard({
 
 // The overlay wipe and the hero's parallax lift share this timing, so the
 // dark curtain rising from the bottom and the hero sliding up read as one
-// continuous gesture when navigating away (e.g. to About).
+// continuous gesture — whether navigating away (to About) or, once the card
+// is drawn, scrolling down into the inline Projects section.
 const SCROLL_DOWN_MS = 620;
 const SCROLL_DOWN_EASE = [0.65, 0, 0.35, 1] as const;
 
@@ -414,6 +415,59 @@ export default function Hero() {
       .getElementById("projects")
       ?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
   }, [reduceMotion]);
+
+  // Once the card is drawn, a downward scroll / upward swipe at the top plays
+  // the same curtain wipe as the About card: it rises to cover, the page
+  // jumps to the Projects section while hidden underneath, then it sinks
+  // back down to reveal it. Before that, on the plain "Draw a card" deck,
+  // scrolling is left as a plain native scroll.
+  const curtainScrollToProjects = useCallback(() => {
+    if (leavingRef.current) return;
+    leavingRef.current = true;
+    if (reduceMotion) {
+      scrollToProjects();
+      leavingRef.current = false;
+      return;
+    }
+    setLeavingViaCurtain(true);
+    window.setTimeout(() => {
+      document.getElementById("projects")?.scrollIntoView({ behavior: "auto", block: "start" });
+      setLeavingViaCurtain(false);
+      window.setTimeout(() => {
+        leavingRef.current = false;
+      }, SCROLL_DOWN_MS);
+    }, SCROLL_DOWN_MS);
+  }, [reduceMotion, scrollToProjects]);
+
+  useEffect(() => {
+    if (!revealed || (returning && !curtainRetracted)) return;
+
+    const onWheel = (event: WheelEvent) => {
+      if (window.scrollY > 0 || event.deltaY <= 0) return;
+      event.preventDefault();
+      if (event.deltaY > 8) curtainScrollToProjects();
+    };
+    let touchStartY = 0;
+    const onTouchStart = (event: TouchEvent) => {
+      touchStartY = event.touches[0]?.clientY ?? 0;
+    };
+    const onTouchMove = (event: TouchEvent) => {
+      const y = event.touches[0]?.clientY ?? 0;
+      const dy = touchStartY - y;
+      if (window.scrollY > 0 || dy <= 0) return;
+      event.preventDefault();
+      if (dy > 64) curtainScrollToProjects();
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+    };
+  }, [revealed, returning, curtainRetracted, curtainScrollToProjects]);
 
   const handleSideHover = (side: "about" | "projects") => (on: boolean) => {
     clearTimeout(leaveTimer.current);
@@ -887,11 +941,13 @@ export default function Hero() {
       </motion.div>
 
       {/*
-        Dark curtain shared by both directions: it rises from the bottom edge
-        when the About card is clicked, and on the way back from the
-        standalone /projects page it starts covering the viewport and lifts
-        off the top edge (scroll up). It's the same #0f0c21 as the About and
-        Projects pages, so the seam is invisible.
+        Dark curtain shared by all three cases: it rises from the bottom edge
+        when the About card is clicked or when scrolling down into the inline
+        Projects section (once the card is drawn), sinking back down once the
+        jump is done in the latter case; on the way back from the standalone
+        /projects page it starts covering the viewport and lifts off the top
+        edge (scroll up). It's the same #0f0c21 as the About and Projects
+        pages, so the seam is invisible.
       */}
       <motion.div
         key={returning ? "curtain-up" : "curtain-down"}

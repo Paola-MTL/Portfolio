@@ -108,6 +108,14 @@ export default function ProjectsIndex({
   >(null);
   const leavingRef = useRef(false);
 
+  // On the standalone /projects route these glows are meant to bleed above
+  // this section's own top edge — harmless there, since nothing renders
+  // above the page's top. Embedded on the homepage right below the Hero,
+  // that same bleed gets clipped by this section's overflow-hidden and shows
+  // up as a hard edge against the Hero's darker background, so pull every
+  // shape fully inside the section there instead.
+  const glowTop = (px: number) => (enableHomeGesture ? px : Math.max(px, 0));
+
   const handleProjectClick = (
     event: React.MouseEvent<HTMLAnchorElement>,
     project: (typeof PROJECTS)[number],
@@ -177,7 +185,7 @@ export default function ProjectsIndex({
         <ShapeGlow
           src="/images/projects-hub/shape-2.svg"
           left="42.81%"
-          top="-65px"
+          top={`${glowTop(-65)}px`}
           width="63.97%"
           imgWidth={1342}
           imgHeight={1098}
@@ -193,7 +201,7 @@ export default function ProjectsIndex({
         <ShapeGlow
           src="/images/projects-hub/shape-1.svg"
           left="-33.44%"
-          top="-345px"
+          top={`${glowTop(-345)}px`}
           width="96.85%"
           imgWidth={2032}
           imgHeight={1662}
