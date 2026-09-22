@@ -4,6 +4,7 @@ import AnimatedSection from "@/components/AnimatedSection";
 import BackButton from "@/components/BackButton";
 import ContactCTA from "@/components/ContactCTA";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import MockupsSection from "./MockupsSection";
 import ScrollDownHint from "./ScrollDownHint";
 
 const RED = "#D6021E";
@@ -164,6 +165,8 @@ export default function VfImmigrationPage() {
           </div>
         </div>
       </section>
+
+      <MockupsSection />
 
       {/* Stat bar */}
       <section className="px-6 py-16 md:px-12">
