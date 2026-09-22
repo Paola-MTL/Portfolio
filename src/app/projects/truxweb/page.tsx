@@ -4,12 +4,12 @@ import Image from "next/image";
 import AnimatedSection from "@/components/AnimatedSection";
 import BackButton from "@/components/BackButton";
 import ResultsShowcase from "./ResultsShowcase";
+import FinalDesignShowcase from "./FinalDesignShowcase";
 import ScrollDownHint from "./ScrollDownHint";
 import MockupsSection from "./MockupsSection";
 import ProcessCarousel from "./ProcessCarousel";
 
 const TEAL = "#74AEB2";
-const TEAL_LIGHT = "#A3CCD3";
 
 export const metadata: Metadata = {
   title: "Truxweb — Paola Cejoco",
@@ -391,100 +391,139 @@ export default function TruxwebPage() {
         </div>
       </section>
 
-      {/* 05 — Test and feedback */}
-      <section className="px-6 py-16 md:px-12" style={{ backgroundColor: "#F2F5F8" }}>
-        <AnimatedSection className="mx-auto max-w-3xl">
-          <SectionIntro index="05" title="Test and feedback" />
-          <p className="mb-2 text-base font-semibold text-ink">
-            A smooth search experience but difficult access to various
-            bookings
-          </p>
-          <div className="flex flex-col gap-4 text-base leading-relaxed text-ink/80">
-            <p>
-              After testing the platform with the initial users, we found
-              that the booking process was rather smooth but the dashboard
-              experience was not satisfactory.
-            </p>
-            <p>
-              Indeed, it was difficult to navigate quickly through the
-              different bookings because each item took up a considerable
-              amount of space on the screen, leading to significant
-              scrolling and consecutive pages. It was necessary to
-              reconsider the space occupied by each booking in order to
-              have a better overview and to easily find a booking.
-            </p>
-          </div>
-        </AnimatedSection>
+      {/* 05 — Testing and feedback */}
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <div className="mx-auto max-w-5xl">
+          <AnimatedSection>
+            <SectionIntro index="05" title="Testing and feedback" />
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-6">
+              <p className="font-body text-base font-semibold text-black lg:w-[342px] lg:shrink-0 lg:text-[16px] lg:leading-[20px]">
+                A smooth search experience but difficult access to various
+                bookings.
+              </p>
+              <div className="flex flex-col gap-4 lg:max-w-[700px]">
+                <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+                  After testing the platform with initial users, we found
+                  that the booking process was relatively smooth, but the
+                  experience regarding the dashboard was unsatisfactory.
+                </p>
+                <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+                  Indeed, it was challenging to navigate quickly through the
+                  various bookings as each item took up considerable space
+                  on the screen, leading to significant scrolling and
+                  lengthy pages. We needed to reassess the space each
+                  booking occupied to provide a better overview and make it
+                  easier to locate a booking.
+                </p>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
       </section>
 
       {/* 06 — The final design */}
-      <section className="px-6 pt-16 md:px-12">
-        <AnimatedSection className="mx-auto max-w-3xl">
-          <SectionIntro index="06" title="The final design" />
-          <p className="mb-2 text-base font-semibold text-ink">
-            A web app allowing for an overview of reservations and easier
-            navigation on the platform
-          </p>
-          <p className="max-w-2xl text-base leading-relaxed text-ink/80">
-            After much deliberation between the DEV and Design teams, the
-            platform took a whole new direction by becoming a true web app.
-            This format was the solution to many puzzles concerning the
-            overall flow of the platform, as well as a more modern
-            environment in line with the vision of Truxweb.
-          </p>
-        </AnimatedSection>
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <div className="mx-auto max-w-5xl">
+          <AnimatedSection>
+            <SectionIntro index="06" title="The final design" />
+            <div className="mb-14 flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-6">
+              <p className="font-body text-base font-semibold text-black lg:w-[342px] lg:shrink-0 lg:text-[16px] lg:leading-[20px]">
+                A web app providing an overview of bookings and easier
+                navigation on the platform.
+              </p>
+              <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:max-w-[700px] lg:text-[16px] lg:leading-[20px]">
+                After extensive discussions between the DEV and Design
+                teams, the platform took a completely different turn by
+                becoming a true web app. This format addressed many
+                challenges regarding the overall flow of the platform and
+                also created a more modern environment in line with
+                Truxweb&apos;s vision.
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.05}>
+            <FinalDesignShowcase />
+          </AnimatedSection>
+        </div>
       </section>
 
       {/* Prototype showcase */}
-      <section id="prototype" className="mt-16 py-16" style={{ backgroundColor: TEAL }}>
+      <section
+        id="prototype"
+        className="flex min-h-screen items-center py-16"
+        style={{ backgroundColor: TEAL }}
+      >
         <AnimatedSection className="mx-auto flex max-w-4xl flex-col items-center px-6">
-          <p className="mb-8 text-sm font-bold uppercase tracking-[0.3em] text-white">
-            Prototype
+          <p className="font-body mb-8 text-[32px] font-semibold leading-[36px] tracking-[-0.32px] text-white">
+            PROTOTYPE
           </p>
-          <div className="relative aspect-[3075/1905] w-full max-w-2xl">
+          <div className="relative aspect-[3075/1905] w-full min-w-[1025px]">
             <Image
               src="/images/truxweb/prototype-imac.png"
               alt="Truxweb dashboard shown on an iMac"
               fill
-              sizes="(min-width: 768px) 672px, 100vw"
+              sizes="1025px"
               className="object-contain"
+            />
+            <div
+              className="absolute bg-white"
+              style={{ top: "4%", left: "20.49%", width: "58.92%", height: "55.89%" }}
+            />
+            <video
+              src="/videos/truxweb/prototype.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute max-w-none object-contain"
+              style={{ top: "4%", left: "20.49%", width: "58.92%", height: "55.89%" }}
             />
           </div>
         </AnimatedSection>
       </section>
 
-      {/* Contact CTA */}
-      <section className="px-6 py-24 md:px-12">
-        <AnimatedSection className="mx-auto flex max-w-2xl flex-col items-center gap-3 text-center">
-          <h2
-            className="font-display text-4xl font-bold tracking-tightest sm:text-5xl"
+      {/* Contact CTA — full-bleed like Elia's, recolored to white bg / turquoise accent */}
+      <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen bg-white">
+        <AnimatedSection className="content-stretch mx-auto flex max-w-[1280px] flex-col items-center gap-[56px] py-[112px] relative w-full px-6">
+          <div
+            className="content-stretch flex flex-col gap-[4px] items-center leading-[0] relative shrink-0 text-center w-full"
             style={{ color: TEAL }}
           >
-            Do you like what you see?
-          </h2>
-          <p className="text-lg" style={{ color: TEAL_LIGHT }}>
-            We may be a match
-          </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <div className="font-display font-bold flex flex-col justify-center relative shrink-0 text-[56px] tracking-[-0.84px] w-[550px] max-w-full">
+              <p className="leading-[normal]">Do you like what you see?</p>
+            </div>
+            <div className="font-body font-medium flex flex-col justify-center min-w-full relative shrink-0 text-[24px] tracking-[-0.24px] w-[min-content]">
+              <p className="leading-[30px]">We may be a match</p>
+            </div>
+          </div>
+          <div className="content-stretch flex flex-wrap gap-[31px] items-center justify-center relative shrink-0">
             <a
               href="mailto:cejoco.paola@gmail.com"
-              className="rounded-full px-8 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              className="content-stretch flex items-center justify-center px-[32px] py-[12px] relative rounded-[30px] shrink-0"
               style={{ backgroundColor: TEAL }}
             >
-              Shoot me a message
+              <p className="font-body font-semibold leading-[20px] relative shrink-0 text-white text-[16px] whitespace-nowrap">
+                Shoot me a message
+              </p>
             </a>
             <a
               href="https://www.linkedin.com/in/paola-cejoco/"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full border px-8 py-3 text-sm font-semibold transition-colors hover:bg-black/[0.03]"
-              style={{ borderColor: TEAL, color: TEAL }}
+              className="border border-solid content-stretch flex items-center justify-center px-[32px] py-[12px] relative rounded-[30px] shrink-0"
+              style={{ borderColor: TEAL }}
             >
-              My LinkedIn
+              <p
+                className="font-body font-semibold leading-[20px] relative shrink-0 text-[16px] whitespace-nowrap"
+                style={{ color: TEAL }}
+              >
+                My LinkedIn
+              </p>
             </a>
           </div>
         </AnimatedSection>
-      </section>
+      </div>
     </>
   );
 }
