@@ -4,13 +4,89 @@ import AnimatedSection from "@/components/AnimatedSection";
 import BackButton from "@/components/BackButton";
 import ContactCTA from "@/components/ContactCTA";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import MockupsSection from "./MockupsSection";
+import ScrollDownHint from "./ScrollDownHint";
+import ProcessCarousel, { type ProcessStep } from "./ProcessCarousel";
+import ResearchSection from "./ResearchSection";
 
 const RED = "#D6021E";
+const CORAL = "#F03241";
 
 export const metadata: Metadata = {
   title: "VF Immigration — Paola Cejoco",
   description: "Redesigning an immigration consultation website.",
 };
+
+function SectionIntro({
+  index,
+  title,
+  dark = false,
+  titleColor,
+}: {
+  index: string;
+  title: string;
+  dark?: boolean;
+  titleColor?: string;
+}) {
+  return (
+    <div className="mb-8 flex max-w-[700px] flex-col gap-1">
+      <p
+        className={`font-body text-base font-medium tracking-tight lg:text-[20px] lg:tracking-[-0.2px] ${dark ? "text-white" : "text-black"}`}
+      >
+        {index}
+      </p>
+      <h2
+        className="font-display text-4xl font-bold tracking-tightest text-balance sm:text-5xl lg:text-[56px] lg:tracking-[-0.84px]"
+        style={{ color: titleColor ?? (dark ? "#fff" : "#0f172a") }}
+      >
+        {title}
+      </h2>
+    </div>
+  );
+}
+
+const process: ProcessStep[] = [
+  {
+    index: "01",
+    title: "Discovery phase",
+    description:
+      "Existing content analysis, business needs and goals, user needs, competitive analysis and personas.",
+  },
+  {
+    index: "02",
+    title: "Information architecture",
+    description:
+      "Sorting and organizing information, content accessibility and simplifying the user flow.",
+  },
+  {
+    index: "03",
+    title: "Low-fidelity designs",
+    description:
+      "Wireframe creation and validation with the client of the technical aspects of the content.",
+  },
+  {
+    index: "04",
+    title: "High-fidelity designs & staging",
+    description: "Typography, color palette and responsive designs.",
+  },
+  {
+    index: "05",
+    title: "Usability testing",
+    description:
+      "In-person tests using the \u201cthinking aloud\u201d method, annotating results and pain points.",
+  },
+  {
+    index: "06",
+    title: "Iteration",
+    description: "Adjusting the designs based on the feedback received.",
+  },
+  {
+    index: "07",
+    title: "Final designs & hand-off to the client",
+    description:
+      "Finalizing the designs, putting the site online and explaining the Wix software to the client.",
+  },
+];
 
 function SectionHeading({ index, title }: { index: string; title: string }) {
   return (
@@ -45,62 +121,152 @@ export default function VfImmigrationPage() {
       <BackButton href="/#projects" />
 
       {/* Hero */}
-      <section id="hero" className="relative overflow-hidden bg-ink text-white">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/vf-immigration/after-homepage.jpg"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-[75%_15%] opacity-40"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/95 to-ink/60" />
+      <section
+        id="hero"
+        className="relative overflow-hidden text-white"
+        style={{ backgroundColor: CORAL }}
+      >
+        <div className="relative mx-auto flex min-h-screen max-w-[1280px] flex-col items-center justify-center gap-12 px-6 py-24 text-center lg:px-0 lg:py-0 lg:text-left">
+          <div className="lg:absolute lg:left-12 lg:top-1/2 lg:z-10 lg:w-[798px] lg:-translate-y-1/2">
+            <AnimatedSection>
+              <h1 className="font-display text-6xl font-bold tracking-tightest sm:text-7xl lg:text-[96px] lg:leading-none lg:tracking-[-1.92px]">
+                VF Immigration
+              </h1>
+            </AnimatedSection>
+          </div>
+
+          <div className="w-full max-w-xl lg:absolute lg:left-[378px] lg:top-1/2 lg:w-[571px] lg:max-w-none lg:-translate-y-1/2">
+            <AnimatedSection delay={0.1}>
+              <div className="relative aspect-[524/328] w-full overflow-hidden rounded-lg">
+                <Image
+                  src="/images/vf-immigration/hero-collage.png"
+                  alt="Collage of the redesigned VF Immigration website pages"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 1142px, 576px"
+                  className="object-contain"
+                />
+                <div aria-hidden className="absolute inset-0 bg-black/20" />
+              </div>
+            </AnimatedSection>
+          </div>
+
+          <ScrollDownHint arrowSrc="/images/vf-immigration/scroll-arrow.svg" />
         </div>
+      </section>
 
-        <div className="relative px-6 pb-20 pt-32 md:px-12 md:pt-40">
-          <AnimatedSection>
-            <p
-              className="mb-4 text-sm font-semibold uppercase tracking-[0.25em]"
-              style={{ color: RED }}
-            >
-              VF Immigration · 2024
+      {/* About the project */}
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <div className="mx-auto flex max-w-5xl flex-col gap-8">
+          <AnimatedSection className="flex max-w-[700px] flex-col gap-1 lg:max-w-[760px]">
+            <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
+              About the project
             </p>
-            <h1 className="max-w-3xl font-display text-4xl font-normal italic tracking-tightest text-balance sm:text-6xl">
-              Modernizing trust, without losing the brand
-            </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70">
-              VF Immigration is an immigration consulting agency established
-              since 2016 in Montreal. Valérie, the president, needed to
-              modernize her site without changing the logo, so both new and
-              old clients could still recognize the brand — and to improve
-              her productivity by automating processes that generated
-              unnecessary emails.
-            </p>
-
-            <dl className="mt-12 grid grid-cols-2 gap-8 border-t border-white/15 pt-8 sm:grid-cols-3 sm:max-w-xl">
-              <div>
-                <dt className="text-xs uppercase tracking-[0.15em] text-white/50">
-                  Role
-                </dt>
-                <dd className="mt-1 text-sm">
-                  UX Researcher / Product Designer
-                </dd>
-              </div>
-              <div>
-                <dt className="text-xs uppercase tracking-[0.15em] text-white/50">
-                  Duration
-                </dt>
-                <dd className="mt-1 text-sm">4 months</dd>
-              </div>
-              <div>
-                <dt className="text-xs uppercase tracking-[0.15em] text-white/50">
-                  Collaboration
-                </dt>
-                <dd className="mt-1 text-sm">Web Design · Mobile Design</dd>
-              </div>
-            </dl>
+            <h2 className="font-display text-4xl font-bold tracking-tightest text-balance text-[#0f172a] sm:text-5xl lg:text-[56px] lg:tracking-[-0.84px]">
+              Redesigning an immigration consultation website
+            </h2>
           </AnimatedSection>
+
+          <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
+            <AnimatedSection className="flex max-w-[700px] flex-col gap-8">
+              <div className="flex flex-col gap-5 font-body text-sm font-normal leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+                <p>
+                  VF Immigration is an immigration consulting agency
+                  established since 2016 in Montreal. Valérie, the president
+                  of VF Immigration, needed not only to modernize her site but
+                  also to direct her clients to the most suitable service for
+                  them.
+                </p>
+                <p>
+                  The first challenge was to find a new visual identity,
+                  without updating the logo, so that both new and old clients
+                  could still recognize VF Immigration.
+                </p>
+                <p>
+                  A second challenge was to improve Valérie&apos;s
+                  productivity, on the one hand by highlighting the different
+                  channels of information and services offered, and on the
+                  other hand, automating certain processes to reduce the
+                  number of unnecessary emails Valérie received daily.
+                </p>
+              </div>
+              <a
+                href="https://www.vfimmigration.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-fit items-center gap-2 font-body text-sm font-medium transition-opacity hover:opacity-70 lg:text-[18.09px] lg:tracking-[-0.1809px]"
+                style={{ color: CORAL }}
+              >
+                Visit the site
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  alt=""
+                  src="/images/vf-immigration/arrow-right.svg"
+                  className="h-[16px] w-[20px]"
+                />
+              </a>
+            </AnimatedSection>
+
+            <AnimatedSection delay={0.1} className="flex w-full flex-col gap-6 sm:w-56 lg:gap-[24px]">
+              <div>
+                <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
+                  Role
+                </p>
+                <p className="mt-1 font-body text-sm leading-relaxed text-black lg:text-[14px]">
+                  UI/UX designer
+                  <br />
+                  Web designer
+                </p>
+              </div>
+              <div>
+                <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
+                  Duration
+                </p>
+                <p className="mt-1 font-body text-sm text-black lg:text-[16px]">4 months</p>
+              </div>
+              <div>
+                <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
+                  Project type
+                </p>
+                <p className="mt-1 font-body text-sm leading-relaxed text-black lg:text-[14px]">
+                  Web design
+                  <br />
+                  Mobile design
+                </p>
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      <MockupsSection />
+
+      {/* 01 — The process */}
+      <section
+        className="overflow-x-clip px-6 py-16 md:px-12 lg:px-[104px] lg:py-10"
+        style={{ backgroundColor: CORAL }}
+      >
+        <div className="mx-auto max-w-5xl">
+          <AnimatedSection>
+            <SectionIntro index="01" title="The process" dark />
+            <p className="mb-14 max-w-[460px] font-body text-base font-semibold text-white lg:text-[16px] lg:leading-[20px]">
+              General process followed throughout the website redesign. The
+              designs were first created in French.
+            </p>
+          </AnimatedSection>
+          <AnimatedSection delay={0.05}>
+            <ProcessCarousel steps={process} />
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* 02 — Research */}
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <div className="mx-auto max-w-5xl">
+          <AnimatedSection>
+            <SectionIntro index="02" title="Research" titleColor={CORAL} />
+          </AnimatedSection>
+          <ResearchSection />
         </div>
       </section>
 
@@ -113,11 +279,31 @@ export default function VfImmigrationPage() {
         </AnimatedSection>
       </section>
 
-      {/* Narrative: 01–04 */}
+      {/* Narrative: 03–05 */}
       <section className="px-6 pb-8 md:px-12">
         <div className="mx-auto flex max-w-3xl flex-col gap-16">
           <AnimatedSection>
-            <SectionHeading index="01" title="Visual identity" />
+            <SectionHeading index="03" title="Information architecture" />
+            <p className="text-base leading-relaxed text-ink/80">
+              The content was rewritten using simple, accessible vocabulary,
+              better-defined categories by user profile, and a clearer
+              information hierarchy — a real challenge given how complex
+              immigration processes are.
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection>
+            <SectionHeading index="04" title="Wireframes" />
+            <p className="text-base leading-relaxed text-ink/80">
+              A first wireframing round incorporated VF Immigration&apos;s
+              desired content. Information density remained a friction
+              point, so hierarchy and structure were revised — for example,
+              using accordions for definitions.
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection>
+            <SectionHeading index="05" title="Visual identity" />
             <p className="text-base leading-relaxed text-ink/80">
               The two most dominant primary colors at VF Immigration were
               dark red and dark gray. To enhance contrast throughout the
@@ -145,53 +331,14 @@ export default function VfImmigrationPage() {
               </span>
             </div>
           </AnimatedSection>
-
-          <AnimatedSection>
-            <SectionHeading index="02" title="The research phase" />
-            <div className="flex flex-col gap-4 text-base leading-relaxed text-ink/80">
-              <p>
-                An audit of the existing site was conducted against Bastien
-                &amp; Scapin&apos;s heuristic criteria and Nielsen&apos;s 10
-                heuristics, revealing cognitive overload, a lack of visual
-                content, and an unclear value proposition.
-              </p>
-              <p>
-                Quantitative research showed a bounce rate over 60% on the
-                homepage and that 80% of traffic was direct. User interviews
-                with 5 profiles (Thinking Out Loud method) revealed
-                confusion booking a consultation and difficulty comparing
-                services.
-              </p>
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection>
-            <SectionHeading index="03" title="Information architecture" />
-            <p className="text-base leading-relaxed text-ink/80">
-              The content was rewritten using simple, accessible vocabulary,
-              better-defined categories by user profile, and a clearer
-              information hierarchy — a real challenge given how complex
-              immigration processes are.
-            </p>
-          </AnimatedSection>
-
-          <AnimatedSection>
-            <SectionHeading index="04" title="Wireframes" />
-            <p className="text-base leading-relaxed text-ink/80">
-              A first wireframing round incorporated VF Immigration&apos;s
-              desired content. Information density remained a friction
-              point, so hierarchy and structure were revised — for example,
-              using accordions for definitions.
-            </p>
-          </AnimatedSection>
         </div>
       </section>
 
-      {/* 05 — The modernized web version */}
+      {/* 06 — The modernized web version */}
       <section className="px-6 py-16 md:px-12">
         <div className="mx-auto max-w-4xl">
           <AnimatedSection>
-            <SectionHeading index="05" title="The modernized web version" />
+            <SectionHeading index="06" title="The modernized web version" />
             <p className="max-w-2xl text-base leading-relaxed text-ink/80">
               Four pages carried the redesign. Drag each slider to compare
               the original site against the rebuild.
@@ -273,7 +420,7 @@ export default function VfImmigrationPage() {
         </div>
       </section>
 
-      {/* 06 — Mobile, reconsidered */}
+      {/* 07 — Mobile, reconsidered */}
       <section className="px-6 py-16 md:px-12" style={{ backgroundColor: "#F5F3F0" }}>
         <AnimatedSection className="mx-auto flex max-w-4xl flex-col items-start gap-8 sm:flex-row sm:items-center">
           <span

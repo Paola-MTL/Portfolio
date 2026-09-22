@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const TEAL = "#74AEB2";
+const CORAL = "#F03241";
 
 export type ProcessStep = {
   index: string;
@@ -78,20 +78,20 @@ export default function ProcessCarousel({ steps }: { steps: ProcessStep[] }) {
           >
             <p
               className="font-body text-3xl font-semibold tracking-tight lg:text-[32px] lg:leading-[36px] lg:tracking-[-0.32px]"
-              style={{ color: TEAL }}
+              style={{ color: CORAL }}
             >
               {step.index}
             </p>
             <div className="flex flex-col gap-1">
               <p
-                className="font-body text-xl font-medium uppercase tracking-tight lg:text-[24px] lg:tracking-[-0.24px]"
-                style={{ color: TEAL }}
+                className="font-body text-lg font-medium uppercase tracking-tight lg:text-[18px] lg:tracking-[-0.18px]"
+                style={{ color: CORAL }}
               >
                 {step.title}
               </p>
               <p
                 className="font-body text-sm leading-relaxed lg:text-[16px] lg:leading-[20px]"
-                style={{ color: TEAL }}
+                style={{ color: CORAL }}
               >
                 {step.description}
               </p>
