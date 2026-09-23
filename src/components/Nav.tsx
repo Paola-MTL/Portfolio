@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { HERO_RESET_EVENT, REVEALED_KEY } from "./Hero";
+import { PAGE_CURTAIN_EVENT } from "./PageCurtain";
 
 const NAV_LINK_CLASS =
   "font-body opacity-100 transition-opacity duration-200 hover:opacity-80";
@@ -22,6 +23,25 @@ export default function Nav() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [alwaysTransparent]);
+
+  // Wipe through the shared dark curtain (see PageCurtain) instead of a hard cut.
+  const navigateWithCurtain = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    if (
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      event.button !== 0 ||
+      pathname === href
+    ) {
+      return;
+    }
+    event.preventDefault();
+    window.dispatchEvent(new CustomEvent(PAGE_CURTAIN_EVENT, { detail: href }));
+  };
 
   const showScrolledState = scrolled && !alwaysTransparent;
 
@@ -62,10 +82,18 @@ export default function Nav() {
         />
       </Link>
       <nav className="flex items-center gap-6 text-base font-semibold">
-        <Link href="/projects" className={NAV_LINK_CLASS}>
+        <Link
+          href="/projects"
+          className={NAV_LINK_CLASS}
+          onClick={(event) => navigateWithCurtain(event, "/projects")}
+        >
           My projects
         </Link>
-        <Link href="/about" className={NAV_LINK_CLASS}>
+        <Link
+          href="/about"
+          className={NAV_LINK_CLASS}
+          onClick={(event) => navigateWithCurtain(event, "/about")}
+        >
           About me
         </Link>
       </nav>
