@@ -591,6 +591,17 @@ export default function Hero() {
         moved={revealed}
       />
 
+      {/* The deck-state glow's box runs past the section's bottom edge and
+          gets hard-clipped by overflow-hidden, showing as a seam against the
+          inline Projects section's flat background right below it. Fading
+          the last stretch of Hero back to its own base color — behind the
+          content, so the headline stays crisp — closes it before the clip
+          line, so the handoff into Projects reads as one continuous bg. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[180px] bg-gradient-to-b from-transparent to-[#0f0c21]"
+      />
+
       <motion.div
         key={returning ? "hero-content-return" : "hero-content"}
         initial={{ y: returning && !reduceMotion ? -80 : 0 }}
