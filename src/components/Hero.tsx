@@ -272,8 +272,8 @@ function SideCard({
 // dark curtain rising from the bottom and the hero sliding up read as one
 // continuous gesture — whether navigating away (to About) or, once the card
 // is drawn, scrolling down into the inline Projects section.
-const SCROLL_DOWN_MS = 620;
-const SCROLL_DOWN_EASE = [0.65, 0, 0.35, 1] as const;
+export const SCROLL_DOWN_MS = 620;
+export const SCROLL_DOWN_EASE = [0.65, 0, 0.35, 1] as const;
 
 // Once the deck has been drawn, remember it for the rest of the session so
 // returning from the Projects page (browser back, or the scroll-up gesture)

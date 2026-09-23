@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import ConditionalNav from "@/components/ConditionalNav";
+import PageCurtain from "@/components/PageCurtain";
 import ConditionalFooter from "@/components/ConditionalFooter";
 
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-body" });
@@ -36,6 +37,7 @@ export default function RootLayout({
         <ConditionalNav />
         <main>{children}</main>
         <ConditionalFooter />
+        <PageCurtain />
       </body>
     </html>
   );
