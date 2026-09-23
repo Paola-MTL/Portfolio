@@ -3,7 +3,6 @@ import { Cabin, Noto_Serif } from "next/font/google";
 import Image from "next/image";
 import AnimatedSection from "@/components/AnimatedSection";
 import BackButton from "@/components/BackButton";
-import ContactCTA from "@/components/ContactCTA";
 import MockupsSection from "./MockupsSection";
 import ScrollDownHint from "./ScrollDownHint";
 
@@ -429,7 +428,6 @@ export default function KcRentalsPage() {
               src="/images/kc-rentals/web/legitimacy.png"
               alt="A KC Rentals customer testimonial and partner logos section"
             />
-            <Caption>After</Caption>
           </AnimatedSection>
         </div>
       </section>
@@ -480,7 +478,36 @@ export default function KcRentalsPage() {
         </div>
       </section>
 
-      <ContactCTA />
+      {/* Contact — same layout as the other case studies, in KC teal */}
+      <section style={{ backgroundColor: TEAL }}>
+        <AnimatedSection className="relative mx-auto flex w-full max-w-[1280px] flex-col items-center gap-[56px] px-6 py-[112px]">
+          <div className="flex w-full flex-col items-center gap-[4px] text-center text-white">
+            <h2 className="w-[550px] max-w-full font-display text-[56px] font-bold leading-[normal] tracking-[-0.84px]">
+              Like what you see?
+            </h2>
+            <p className="font-body text-[24px] font-medium leading-[30px] tracking-[-0.24px]">
+              We may be a match
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-[31px]">
+            <a
+              href="mailto:cejoco.paola@gmail.com"
+              className="flex items-center justify-center rounded-[30px] bg-white px-[32px] py-[12px] font-body text-[16px] font-semibold leading-[20px] whitespace-nowrap transition-opacity hover:opacity-80"
+              style={{ color: TEAL }}
+            >
+              Shoot me a message
+            </a>
+            <a
+              href="https://www.linkedin.com/in/paola-cejoco/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center rounded-[30px] border border-solid border-white px-[32px] py-[12px] font-body text-[16px] font-semibold leading-[20px] whitespace-nowrap text-white transition-colors hover:bg-white hover:text-[#74AEB2]"
+            >
+              My LinkedIn
+            </a>
+          </div>
+        </AnimatedSection>
+      </section>
     </>
   );
 }

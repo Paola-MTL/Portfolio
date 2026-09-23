@@ -18,6 +18,7 @@ const WIPE_EASE = [0.65, 0, 0.35, 1] as const;
 const PROJECTS = [
   {
     slug: "elia",
+    year: "2026",
     name: "elia",
     tagline: "Reimagining enterprise visitor management, from paper to digital",
     image: "/images/projects-hub/elia-mockup.png",
@@ -26,6 +27,7 @@ const PROJECTS = [
   },
   {
     slug: "truxweb",
+    year: "2022",
     name: "Truxweb",
     tagline: "Cutting the middleman out of B2B freight booking",
     image: "/images/projects-hub/truxweb-mockup.png",
@@ -34,6 +36,7 @@ const PROJECTS = [
   },
   {
     slug: "vf-immigration",
+    year: "2024",
     name: "VF Immigration",
     tagline:
       "Redesigning a trusted brand for clarity, conversion, and less inbox overload",
@@ -43,11 +46,12 @@ const PROJECTS = [
   },
   {
     slug: "kc-rentals",
+    year: "2023",
     name: "KC Rentals",
     tagline:
       "Rebranding a local agency for trust, without losing what clients already knew",
     image: "/images/projects-hub/kc-rentals-mockup.png",
-    imageInset: "-11.34% 0.68% -11.5% 0.68%",
+    imageInset: "-11.34% 6.2% -11.5% -4.84%",
     heroBg: "#242322",
   },
 ];
@@ -225,12 +229,15 @@ export default function ProjectsIndex({
               <Link
                 href={`/projects/${project.slug}`}
                 onClick={(event) => handleProjectClick(event, project)}
-                className="isolate flex w-full max-w-[308px] flex-col overflow-hidden rounded-[20px] transition-transform duration-300 ease-out hover:-translate-y-1 active:scale-[0.98]"
+                className="relative isolate flex w-full max-w-[308px] flex-col overflow-hidden rounded-[20px] transition-transform duration-300 ease-out hover:-translate-y-1 active:scale-[0.98]"
               >
                 <div
                   className="glass glass--clear glass--caption-top relative z-[2] flex w-full shrink-0 items-center justify-center overflow-hidden p-5"
                   style={{ "--glass-radius": "12px" } as React.CSSProperties}
                 >
+                  <span className="!absolute right-4 top-4 !z-10 rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 font-display text-[12px] font-medium leading-4 tracking-[-0.12px] text-white backdrop-blur-md">
+                    {project.year}
+                  </span>
                   <div className="relative aspect-[268/201] w-full max-w-[268px] shrink-0 overflow-hidden">
                     <div className="absolute" style={{ inset: project.imageInset }}>
                       <Image
