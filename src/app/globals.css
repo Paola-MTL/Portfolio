@@ -99,6 +99,35 @@ body {
   }
 }
 
+/* KC Rentals mockups marquee — same continuous-scroll technique as the Elia
+   mockups marquee above, kept as its own keyframes since the two tracks'
+   REPEAT counts are set independently.
+   Keep the -25% in sync with REPEAT in projects/kc-rentals/MockupsSection.tsx
+   (-100% / REPEAT). */
+@keyframes kc-rentals-marquee-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-25%, 0, 0);
+  }
+}
+
+@keyframes kc-rentals-marquee-right {
+  from {
+    transform: translate3d(-25%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kc-rentals-marquee-track {
+    animation: none !important;
+  }
+}
+
 /* VF Immigration mockups marquee — same continuous-scroll technique as the
    Elia mockups marquee above, kept as its own keyframes since the two
    tracks' REPEAT counts are set independently.
