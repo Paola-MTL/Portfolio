@@ -4,8 +4,11 @@ import AnimatedSection from "@/components/AnimatedSection";
 import BackButton from "@/components/BackButton";
 import ContactCTA from "@/components/ContactCTA";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import MockupsSection from "./MockupsSection";
+import ScrollDownHint from "./ScrollDownHint";
 
 const GREEN = "#0C2925";
+const TEAL = "#74AEB2";
 
 export const metadata: Metadata = {
   title: "KC Rentals — Paola Cejoco",
@@ -34,66 +37,118 @@ export default function KcRentalsPage() {
       <BackButton href="/#projects" />
 
       {/* Hero */}
-      <section id="hero" className="relative overflow-hidden bg-ink text-white">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/kc-rentals/after-1.jpg"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-[60%_50%] opacity-50"
-          />
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to right, #0C2925 0%, rgba(12,41,37,0.95) 40%, rgba(12,41,37,0.55) 100%)",
-            }}
-          />
-        </div>
+      <section
+        id="hero"
+        className="relative overflow-hidden text-white"
+        style={{ backgroundColor: TEAL }}
+      >
+        <div className="relative mx-auto flex min-h-screen max-w-[1280px] flex-col items-center justify-center gap-12 px-6 py-24 text-center lg:px-0 lg:py-0 lg:text-left">
+          <div className="lg:absolute lg:left-[104px] lg:top-1/2 lg:z-10 lg:w-[798px] lg:-translate-y-1/2">
+            <AnimatedSection>
+              <h1 className="font-display text-6xl font-bold tracking-tightest sm:text-7xl lg:text-[80px] lg:leading-[84px] lg:tracking-[-1.6px]">
+                KC Rentals
+              </h1>
+            </AnimatedSection>
+          </div>
 
-        <div className="relative px-6 pb-20 pt-32 md:px-12 md:pt-40">
-          <AnimatedSection>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-[#e0a458]">
-              KC Rentals · 2023
-            </p>
-            <h1 className="max-w-3xl font-display text-4xl font-normal italic tracking-tightest text-balance sm:text-6xl">
-              A brand that finally matches the properties
-            </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70">
-              KC Rentals is a real estate agency established since 2016 in
-              Mandelieu, in the South of France. Katia, the founder, needed
-              to modernize her site and improve its SEO, since it no longer
-              felt credible to clients and wasn&apos;t converting visitors.
-              The challenge: keep the domain, email, and logo intact for
-              recurring clients while improving legitimacy and
-              discoverability.
-            </p>
+          <div className="w-full max-w-xl lg:absolute lg:left-[378px] lg:top-1/2 lg:w-[571px] lg:max-w-none lg:-translate-y-1/2">
+            <AnimatedSection delay={0.1}>
+              <div className="relative aspect-[1636/1024] w-full overflow-hidden rounded-lg drop-shadow-2xl">
+                <Image
+                  src="/images/kc-rentals/hero-collage.png"
+                  alt="Collage of KC Rentals website screens"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 890px, 640px"
+                  className="object-contain"
+                />
+              </div>
+            </AnimatedSection>
+          </div>
 
-            <dl className="mt-12 grid grid-cols-2 gap-8 border-t border-white/15 pt-8 sm:max-w-xl sm:grid-cols-3">
-              <div>
-                <dt className="text-xs uppercase tracking-[0.15em] text-white/50">
-                  Role
-                </dt>
-                <dd className="mt-1 text-sm">Web Designer</dd>
-              </div>
-              <div>
-                <dt className="text-xs uppercase tracking-[0.15em] text-white/50">
-                  Duration
-                </dt>
-                <dd className="mt-1 text-sm">2 months</dd>
-              </div>
-              <div>
-                <dt className="text-xs uppercase tracking-[0.15em] text-white/50">
-                  Collaboration
-                </dt>
-                <dd className="mt-1 text-sm">Web Design</dd>
-              </div>
-            </dl>
-          </AnimatedSection>
+          <ScrollDownHint arrowSrc="/images/kc-rentals/scroll-arrow.svg" />
         </div>
       </section>
+
+      {/* About the project */}
+      <section className="px-6 py-16 md:px-12 lg:px-[104px] lg:py-28">
+        <div className="mx-auto flex max-w-5xl flex-col gap-8">
+          <AnimatedSection className="flex max-w-[700px] flex-col gap-1">
+            <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
+              About the project
+            </p>
+            <h2
+              className="font-display text-4xl font-bold tracking-tightest text-balance sm:text-5xl lg:text-[56px] lg:tracking-[-0.84px]"
+              style={{ color: TEAL }}
+            >
+              Redesigning the website of a real estate agency
+            </h2>
+          </AnimatedSection>
+
+          <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
+            <AnimatedSection className="flex max-w-[700px] flex-col gap-8">
+              <div className="flex flex-col gap-5 font-body text-sm font-normal leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+                <p>
+                  KC Rentals is a real estate agency established since 2016 in
+                  Mandelieu, in the South of France. Katia, the founder, needed
+                  to modernize her site and also improve its SEO as it did not
+                  seem legitimate to clients and did not convert any users.
+                </p>
+                <p>
+                  The first challenge was to retain certain attributes of the
+                  site, including its domain with its email box and the KC
+                  Rentals logo, so that returning clients could still contact
+                  Katia and easily identify her.
+                </p>
+                <p>
+                  The second challenge was to improve the site&apos;s SEO to
+                  attract new clients and better showcase the products
+                  offered, in order to convert visitors into actual clients.
+                </p>
+              </div>
+              <a
+                href="https://www.kc-cannes-rentals.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-fit items-center gap-2 font-body text-sm font-medium transition-opacity hover:opacity-70 lg:text-[18.09px] lg:tracking-[-0.1809px]"
+                style={{ color: TEAL }}
+              >
+                Visit the site
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  alt=""
+                  src="/images/kc-rentals/arrow-right.svg"
+                  className="h-[16px] w-[20px]"
+                />
+              </a>
+            </AnimatedSection>
+
+            <AnimatedSection delay={0.1} className="flex w-full flex-col gap-6 sm:w-56 lg:gap-[24px]">
+              <div>
+                <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
+                  Role
+                </p>
+                <p className="mt-1 font-body text-sm text-black lg:text-[16px]">Web Designer</p>
+              </div>
+              <div>
+                <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
+                  Duration
+                </p>
+                <p className="mt-1 font-body text-sm text-black lg:text-[16px]">2 months</p>
+              </div>
+              <div>
+                <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
+                  Project type
+                </p>
+                <p className="mt-1 font-body text-sm leading-relaxed text-black lg:text-[14px]">Web Design</p>
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* Mockups */}
+      <MockupsSection />
 
       {/* 01 — Visual identity */}
       <section className="px-6 py-16 md:px-12">
