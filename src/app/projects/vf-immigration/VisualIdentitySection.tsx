@@ -7,7 +7,7 @@ const nunito = Nunito_Sans({ subsets: ["latin"], weight: ["300", "800"] });
 const avenir = `Avenir, "Avenir Next", ${nunito.style.fontFamily}`;
 
 const bodyText =
-  "max-w-[700px] font-body text-sm leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]";
+  "max-w-[700px] font-body text-base leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]";
 const label =
   "font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:leading-[24px] lg:tracking-[-0.2px]";
 

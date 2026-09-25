@@ -95,7 +95,7 @@ const violationGroups: { title: string; items: Badge[]; labels: string[] }[] = [
 /* ---------- Text blocks ---------- */
 
 const bodyText =
-  "max-w-[700px] font-body text-sm leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]";
+  "max-w-[700px] font-body text-base leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]";
 
 function Block({
   title,

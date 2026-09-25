@@ -126,7 +126,7 @@ export default function UnlockForm() {
 
       <a
         href="/projects"
-        className="group absolute left-5 top-6 flex items-center gap-2 text-[15px] text-white/60 transition-colors duration-200 hover:text-white md:left-10"
+        className="group absolute left-[max(1.25rem,env(safe-area-inset-left))] top-[max(1rem,env(safe-area-inset-top))] flex min-h-11 items-center gap-2 pr-3 text-[15px] text-white/60 transition-colors duration-200 hover:text-white md:left-10"
       >
         <svg
           viewBox="0 0 24 24"

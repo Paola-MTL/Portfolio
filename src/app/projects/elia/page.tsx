@@ -74,7 +74,7 @@ function TimelineTrack({
         {steps.map((step, idx) => (
           <div
             key={step.label}
-            className="content-stretch flex flex-col gap-[4px] items-center relative shrink-0 w-[180px]"
+            className="content-stretch flex flex-col gap-[4px] items-center relative shrink-0 w-[100px] sm:w-[180px]"
           >
             <div className="content-stretch flex items-center justify-end relative shrink-0 w-full">
               <div
@@ -108,7 +108,7 @@ export default function EliaProjectPage() {
       {/* Top / Hero — background bleeds full viewport width, content stays
           centered to the 1280px canvas */}
       <div
-        className="relative left-1/2 right-1/2 -mx-[50vw] h-[720px] w-screen overflow-hidden bg-[#6c65ff]"
+        className="relative left-1/2 right-1/2 -mx-[50vw] h-[600px] w-screen overflow-hidden bg-[#6c65ff] md:h-[760px] lg:h-[720px]"
         data-node-id="25:741"
         data-name="Top"
       >
@@ -116,7 +116,7 @@ export default function EliaProjectPage() {
           <BackButton />
 
           <div
-            className="absolute h-[327px] left-[354.42px] top-[197px] w-[571.163px]"
+            className="absolute inset-x-6 bottom-[96px] mx-auto aspect-[571.163/327] max-w-[571.163px] lg:inset-x-auto lg:bottom-auto lg:mx-0 lg:aspect-auto lg:h-[327px] lg:left-[354.42px] lg:top-[197px] lg:w-[571.163px] lg:max-w-none"
             data-node-id="25:9100"
             data-name="diagonal screens 1"
           >
@@ -130,8 +130,8 @@ export default function EliaProjectPage() {
 
           <ScrollDownHint arrowSrc={imgArrowDown} />
 
-          <div className="-translate-y-1/2 absolute content-stretch flex flex-col h-[116px] items-start left-[104px] top-1/2 w-[798px]">
-            <div className="font-display font-bold flex flex-1 flex-col justify-center leading-[0] lowercase min-h-px relative text-[96px] text-white tracking-[-1.92px] w-full">
+          <div className="-translate-y-1/2 absolute content-stretch flex flex-col h-[116px] items-start left-6 top-[30%] w-[calc(100%-48px)] md:left-[104px] md:w-[calc(100%-208px)] lg:top-1/2 lg:w-[798px]">
+            <div className="font-display font-bold flex flex-1 flex-col justify-center leading-[0] lowercase min-h-px relative text-[72px] text-white md:text-[96px] tracking-[-1.92px] w-full">
               <p className="leading-[normal]">elia</p>
             </div>
           </div>
@@ -141,20 +141,20 @@ export default function EliaProjectPage() {
       {/* Everything below the hero */}
       <div className="flex flex-col items-start w-full">
         {/* About */}
-        <div className="content-stretch flex flex-col h-[720px] items-start px-[195px] py-[112px] relative shrink-0 w-[1280px]">
-          <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-[890px]">
-            <div className="content-stretch flex flex-col gap-[4px] items-start leading-[0] relative shrink-0 w-[731px]">
+        <div className="content-stretch flex flex-col md:h-[720px] items-start px-6 md:px-12 xl:px-[195px] py-16 md:py-[112px] relative shrink-0 w-full">
+          <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-full max-w-[890px] mx-auto">
+            <div className="content-stretch flex flex-col gap-[4px] items-start leading-[0] relative shrink-0 w-full max-w-[731px]">
               <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] text-black tracking-[-0.2px] whitespace-nowrap">
                 <p className="leading-[24px]">About the project</p>
               </div>
-              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
+              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[36px] md:text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">
                   Streamline company visitor management
                 </p>
               </div>
             </div>
-            <div className="content-stretch flex gap-[116px] items-start relative shrink-0 w-[890px]">
-              <div className="content-stretch flex flex-col gap-[32px] items-start relative self-stretch shrink-0 w-[615px]">
+            <div className="content-stretch flex flex-col gap-10 lg:flex-row lg:gap-[116px] items-start relative shrink-0 w-full max-w-[890px]">
+              <div className="content-stretch flex flex-col gap-[32px] items-start relative self-stretch shrink-0 w-full lg:w-[615px]">
                 <div className="font-body font-normal flex flex-col justify-center leading-[0] min-w-full relative shrink-0 text-[#1e1e1e] text-[16px] w-[min-content] whitespace-pre-wrap">
                   <p className="leading-[20px] mb-4">
                     elia is an all-in-one management platform designed for
@@ -175,7 +175,7 @@ export default function EliaProjectPage() {
                 </div>
                 <a
                   href="#prototype"
-                  className="content-stretch flex gap-[7.539px] items-center justify-center relative shrink-0 transition-opacity hover:opacity-70"
+                  className="content-stretch flex min-h-11 gap-[7.539px] items-center justify-center relative shrink-0 transition-opacity hover:opacity-70"
                 >
                   <div className="content-stretch flex items-center justify-center py-[6.031px] relative shrink-0">
                     <div className="font-body font-medium flex flex-col justify-center leading-[0] relative shrink-0 text-[#6c65ff] text-[18.09px] text-center tracking-[-0.1809px] whitespace-nowrap">
@@ -192,7 +192,7 @@ export default function EliaProjectPage() {
                   </div>
                 </a>
               </div>
-              <div className="content-stretch flex flex-1 flex-col gap-[24.124px] items-start leading-[0] min-w-px relative self-stretch text-black">
+              <div className="content-stretch flex flex-1 flex-col gap-[24.124px] items-start leading-[0] min-w-px relative self-stretch text-black w-full">
                 <div className="content-stretch flex flex-col gap-[4px] items-start relative shrink-0 w-full">
                   <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] tracking-[-0.2px] w-[195.252px]">
                     <p className="leading-[24px]">Role</p>
@@ -245,13 +245,13 @@ export default function EliaProjectPage() {
         <MockupsSection />
 
         {/* 01 — The problem */}
-        <div className="content-stretch flex flex-col items-start px-[195px] py-[112px] relative shrink-0 w-[1280px]">
-          <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-[890px]">
-            <div className="content-stretch flex flex-col gap-[4px] items-start leading-[0] relative shrink-0 w-[731px]">
+        <div className="content-stretch flex flex-col items-start px-6 md:px-12 xl:px-[195px] py-16 md:py-[112px] relative shrink-0 w-full">
+          <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-full max-w-[890px] mx-auto">
+            <div className="content-stretch flex flex-col gap-[4px] items-start leading-[0] relative shrink-0 w-full max-w-[731px]">
               <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] text-black tracking-[-0.2px] whitespace-nowrap">
                 <p className="leading-[24px]">01</p>
               </div>
-              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
+              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[36px] md:text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">The problem</p>
               </div>
             </div>
@@ -290,13 +290,13 @@ export default function EliaProjectPage() {
         {/* 02 — Target users — background bleeds full viewport width, content
             stays centered to the 1280px canvas */}
         <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen overflow-clip bg-[#e9e8ff]">
-          <div className="content-stretch mx-auto flex max-w-[1280px] flex-col items-start px-[195px] py-[40px] relative w-full">
+          <div className="content-stretch mx-auto flex max-w-[1280px] flex-col items-start px-6 md:px-12 xl:px-[195px] py-10 relative w-full">
             <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-full">
               <div className="content-stretch flex flex-col gap-[8px] items-start leading-[0] relative shrink-0 w-full">
                 <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[#1e1e1e] text-[24px] tracking-[-0.24px] whitespace-nowrap">
                   <p className="leading-[30px]">02</p>
                 </div>
-                <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
+                <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[36px] md:text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                   <p className="leading-[normal]">Target users</p>
                 </div>
               </div>
@@ -311,7 +311,7 @@ export default function EliaProjectPage() {
                   </div>
                 </div>
               </div>
-              <div className="gap-x-[20px] gap-y-[20px] grid grid-cols-3 relative shrink-0 w-full">
+              <div className="gap-x-[20px] gap-y-[20px] grid grid-cols-1 md:grid-cols-3 relative shrink-0 w-full">
                 <Persona
                   label="Visitor"
                   pillBg="#f4ebff"
@@ -339,13 +339,13 @@ export default function EliaProjectPage() {
         </div>
 
         {/* 03 — Discovery phase */}
-        <div className="content-stretch flex flex-col items-start pt-[112px] px-[195px] relative shrink-0 w-[1280px]">
-          <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-[890px]">
-            <div className="content-stretch flex flex-col gap-[4px] items-start leading-[0] relative shrink-0 w-[731px]">
+        <div className="content-stretch flex flex-col items-start pt-16 md:pt-[112px] px-6 md:px-12 xl:px-[195px] relative shrink-0 w-full">
+          <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-full max-w-[890px] mx-auto">
+            <div className="content-stretch flex flex-col gap-[4px] items-start leading-[0] relative shrink-0 w-full max-w-[731px]">
               <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] text-black tracking-[-0.2px] whitespace-nowrap">
                 <p className="leading-[24px]">03</p>
               </div>
-              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
+              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[36px] md:text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">
                   Discovery phase: pain points
                 </p>
@@ -359,9 +359,9 @@ export default function EliaProjectPage() {
                 src={imgDiscovery}
               />
             </div>
-            <div className="content-stretch flex flex-col gap-[24px] items-start leading-[0] relative shrink-0 text-[16px] w-[890px]">
+            <div className="content-stretch flex flex-col gap-[24px] items-start leading-[0] relative shrink-0 text-[16px] w-full max-w-[890px]">
               <div className="content-stretch flex flex-col gap-[16px] items-start relative shrink-0 w-full">
-                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-black w-[342px]">
+                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-black w-full max-w-[342px]">
                   <p className="leading-[20px]">Operational frictions</p>
                 </div>
                 <div className="font-body font-normal flex flex-col justify-center min-w-full relative shrink-0 text-[#1e1e1e] w-[min-content]">
@@ -383,7 +383,7 @@ export default function EliaProjectPage() {
                 </div>
               </div>
               <div className="content-stretch flex flex-col gap-[16px] items-start relative shrink-0 w-full">
-                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-black w-[342px]">
+                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-black w-full max-w-[342px]">
                   <p className="leading-[20px]">Visitor experience</p>
                 </div>
                 <div className="font-body font-normal flex flex-col justify-center min-w-full relative shrink-0 text-[#1e1e1e] w-[min-content]">
@@ -399,7 +399,7 @@ export default function EliaProjectPage() {
                 </div>
               </div>
               <div className="content-stretch flex flex-col gap-[16px] items-start relative shrink-0 w-full">
-                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-black w-[342px]">
+                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-black w-full max-w-[342px]">
                   <p className="leading-[20px]">Security and tracking</p>
                 </div>
                 <div className="font-body font-normal flex flex-col justify-center min-w-full relative shrink-0 text-[#1e1e1e] w-[min-content]">
@@ -419,19 +419,19 @@ export default function EliaProjectPage() {
         </div>
 
         {/* 04 — Scope definition and prioritization */}
-        <div className="content-stretch flex flex-col items-start px-[195px] py-[112px] relative shrink-0 w-[1280px]">
-          <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-[890px]">
-            <div className="content-stretch flex flex-col gap-[4px] items-start leading-[0] relative shrink-0 w-[731px]">
+        <div className="content-stretch flex flex-col items-start px-6 md:px-12 xl:px-[195px] py-16 md:py-[112px] relative shrink-0 w-full">
+          <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-full max-w-[890px] mx-auto">
+            <div className="content-stretch flex flex-col gap-[4px] items-start leading-[0] relative shrink-0 w-full max-w-[731px]">
               <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] text-black tracking-[-0.2px] whitespace-nowrap">
                 <p className="leading-[24px]">04</p>
               </div>
-              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
+              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[36px] md:text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">
                   Definition of scope and prioritization
                 </p>
               </div>
             </div>
-            <div className="relative shrink-0 w-[890px] overflow-hidden rounded-md">
+            <div className="relative shrink-0 w-full max-w-[890px] overflow-hidden rounded-md">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 alt="Scope prioritization board"
@@ -439,9 +439,9 @@ export default function EliaProjectPage() {
                 src={imgScope}
               />
             </div>
-            <div className="content-stretch flex flex-col gap-[24px] items-start relative shrink-0 w-[890px]">
+            <div className="content-stretch flex flex-col gap-[24px] items-start relative shrink-0 w-full max-w-[890px]">
               <div className="content-stretch flex flex-col gap-[16px] items-start leading-[0] relative shrink-0 text-[16px] w-full">
-                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-black w-[342px]">
+                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-black w-full max-w-[342px]">
                   <p className="leading-[20px]">
                     Must-Haves (Essential for the MVP)
                   </p>
@@ -491,7 +491,7 @@ export default function EliaProjectPage() {
                 </div>
               </div>
               <div className="content-stretch flex flex-col gap-[16px] items-start leading-[0] relative shrink-0 text-[16px] w-full">
-                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-black w-[342px]">
+                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-black w-full max-w-[342px]">
                   <p className="leading-[20px]">
                     Nice-to-Haves (Future enhancements)
                   </p>
@@ -534,7 +534,7 @@ export default function EliaProjectPage() {
                 <div className="font-body font-semibold flex flex-col justify-center leading-[0] min-w-full relative shrink-0 text-[32px] text-[#0f172a] tracking-[-0.32px] w-[min-content]">
                   <p className="leading-[36px]">Timeline</p>
                 </div>
-                <div className="content-stretch flex items-start justify-center relative shrink-0 gap-x-16">
+                <div className="content-stretch flex flex-col items-center justify-center relative shrink-0 gap-x-16 gap-y-8 xl:flex-row xl:items-start">
                   <TimelineTrack
                     name="V1 - Must-Haves"
                     steps={[
@@ -558,17 +558,17 @@ export default function EliaProjectPage() {
         </div>
 
         {/* 05 — First iterations */}
-        <div className="content-stretch flex flex-col items-start px-[195px] pt-[112px] relative shrink-0 w-[1280px]">
-          <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-[890px]">
-            <div className="content-stretch flex flex-col gap-[4px] items-start leading-[0] relative shrink-0 w-[731px]">
+        <div className="content-stretch flex flex-col items-start px-6 md:px-12 xl:px-[195px] pt-16 md:pt-[112px] relative shrink-0 w-full">
+          <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-full max-w-[890px] mx-auto">
+            <div className="content-stretch flex flex-col gap-[4px] items-start leading-[0] relative shrink-0 w-full max-w-[731px]">
               <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] text-black tracking-[-0.2px] whitespace-nowrap">
                 <p className="leading-[24px]">05</p>
               </div>
-              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
+              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[36px] md:text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">First iterations</p>
               </div>
             </div>
-            <div className="content-stretch flex flex-col items-start relative shrink-0 w-[890px]">
+            <div className="content-stretch flex flex-col items-start relative shrink-0 w-full max-w-[890px]">
               <div className="content-stretch flex flex-col gap-[20px] items-start relative shrink-0 w-full">
                 <div className="font-body font-semibold flex flex-col justify-center leading-[0] relative shrink-0 text-[16px] text-black whitespace-nowrap">
                   <p className="leading-[20px]">Web app</p>
@@ -655,7 +655,7 @@ export default function EliaProjectPage() {
                     </p>
                   </div>
                   <div className="relative left-1/2 right-1/2 -mx-[50vw] mt-2 w-screen">
-                    <div className="flex items-start gap-5 px-[50px]">
+                    <div className="flex items-start gap-2 px-6 md:gap-5 md:px-[50px]">
                       <div className="min-w-0 flex-1 overflow-hidden rounded-md">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
@@ -688,7 +688,7 @@ export default function EliaProjectPage() {
                 </div>
               </div>
             </div>
-            <div className="content-stretch flex flex-col items-start relative shrink-0 w-[890px]">
+            <div className="content-stretch flex flex-col items-start relative shrink-0 w-full max-w-[890px]">
               <div className="content-stretch flex flex-col gap-[20px] items-start relative shrink-0 w-full">
                 <div className="font-body font-semibold flex flex-col justify-center leading-[0] relative shrink-0 text-[16px] text-black whitespace-nowrap">
                   <p className="leading-[20px]">Tablet</p>
@@ -728,17 +728,17 @@ export default function EliaProjectPage() {
         </div>
 
         {/* 06 — Feedback and improvements */}
-        <div className="content-stretch flex flex-col items-start px-[195px] py-[112px] relative shrink-0 w-[1280px]">
-          <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-[890px]">
-            <div className="content-stretch flex flex-col gap-[4px] items-start leading-[0] relative shrink-0 w-[731px]">
+        <div className="content-stretch flex flex-col items-start px-6 md:px-12 xl:px-[195px] py-16 md:py-[112px] relative shrink-0 w-full">
+          <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-full max-w-[890px] mx-auto">
+            <div className="content-stretch flex flex-col gap-[4px] items-start leading-[0] relative shrink-0 w-full max-w-[731px]">
               <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] text-black tracking-[-0.2px] whitespace-nowrap">
                 <p className="leading-[24px]">06</p>
               </div>
-              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
+              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[36px] md:text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">Feedback and improvements</p>
               </div>
             </div>
-            <div className="content-stretch flex flex-col items-start relative shrink-0 w-[890px]">
+            <div className="content-stretch flex flex-col items-start relative shrink-0 w-full max-w-[890px]">
               <div className="content-stretch flex flex-col gap-[16px] items-start leading-[0] relative shrink-0 w-full">
                 <div className="font-body font-normal flex flex-col justify-center min-w-full relative shrink-0 text-[#1e1e1e] text-[16px] w-[min-content]">
                   <p className="leading-[20px] mb-0 whitespace-pre-wrap">
@@ -746,7 +746,7 @@ export default function EliaProjectPage() {
                     been made by our users:
                   </p>
                 </div>
-                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-[16px] text-black w-[342px]">
+                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-[16px] text-black w-full max-w-[342px]">
                   <p className="leading-[20px]">Web Application</p>
                 </div>
                 <div className="font-body font-normal flex flex-col justify-center min-w-full relative shrink-0 text-[#1e1e1e] text-[16px] w-[min-content]">
@@ -774,7 +774,7 @@ export default function EliaProjectPage() {
                     </li>
                   </ul>
                 </div>
-                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-[16px] text-black w-[342px]">
+                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-[16px] text-black w-full max-w-[342px]">
                   <p className="leading-[20px]">Tablet</p>
                 </div>
                 <div className="font-body font-normal flex flex-col justify-center min-w-full relative shrink-0 text-[#1e1e1e] text-[16px] w-[min-content]">
@@ -805,9 +805,9 @@ export default function EliaProjectPage() {
                 </div>
               </div>
             </div>
-            <div className="content-stretch flex flex-col items-start relative shrink-0 w-[890px]">
+            <div className="content-stretch flex flex-col items-start relative shrink-0 w-full max-w-[890px]">
               <div className="content-stretch flex flex-col gap-[16px] items-start leading-[0] relative shrink-0 text-[16px] w-full">
-                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-black w-[342px]">
+                <div className="font-body font-semibold flex flex-col justify-center relative shrink-0 text-black w-full max-w-[342px]">
                   <p className="leading-[20px]">Mobile</p>
                 </div>
                 <div className="font-body font-normal flex flex-col justify-center min-w-full relative shrink-0 text-[#1e1e1e] w-[min-content]">
@@ -825,19 +825,19 @@ export default function EliaProjectPage() {
         </div>
 
         {/* My learnings */}
-        <div className="content-stretch flex flex-col items-start px-[195px] py-[112px] relative shrink-0 w-[1280px]">
-          <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-[890px]">
-            <div className="content-stretch flex flex-col gap-[4px] items-start leading-[0] relative shrink-0 w-[731px]">
+        <div className="content-stretch flex flex-col items-start px-6 md:px-12 xl:px-[195px] py-16 md:py-[112px] relative shrink-0 w-full">
+          <div className="content-stretch flex flex-col gap-[32px] items-start relative shrink-0 w-full max-w-[890px] mx-auto">
+            <div className="content-stretch flex flex-col gap-[4px] items-start leading-[0] relative shrink-0 w-full max-w-[731px]">
               <div className="font-body font-medium flex flex-col justify-center relative shrink-0 text-[20px] text-black tracking-[-0.2px] whitespace-nowrap">
                 <p className="leading-[24px]">07</p>
               </div>
-              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
+              <div className="font-display font-bold flex flex-col justify-center min-w-full relative shrink-0 text-[36px] md:text-[56px] text-[#0f172a] tracking-[-0.84px] w-[min-content]">
                 <p className="leading-[normal]">My learnings</p>
               </div>
             </div>
-            <div className="content-stretch flex flex-col items-start relative shrink-0 w-[890px] gap-[32px]">
-              <div className="content-stretch flex gap-[24px] items-start relative shrink-0 w-full">
-                <div className="content-stretch flex items-center justify-center relative shrink-0 w-[342px]">
+            <div className="content-stretch flex flex-col items-start relative shrink-0 w-full max-w-[890px] gap-[32px]">
+              <div className="content-stretch flex flex-col gap-2 md:flex-row md:gap-[24px] items-start relative shrink-0 w-full">
+                <div className="content-stretch flex items-center justify-center relative shrink-0 w-full md:max-w-[342px] md:w-[342px]">
                   <div className="font-body font-semibold flex flex-1 flex-col justify-center leading-[0] min-w-px relative text-[16px] text-black">
                     <p className="leading-[20px]">
                       The importance of testing in real conditions
@@ -857,8 +857,8 @@ export default function EliaProjectPage() {
                   </p>
                 </div>
               </div>
-              <div className="content-stretch flex gap-[24px] items-start relative shrink-0 w-full">
-                <div className="content-stretch flex items-center justify-center relative shrink-0 w-[342px]">
+              <div className="content-stretch flex flex-col gap-2 md:flex-row md:gap-[24px] items-start relative shrink-0 w-full">
+                <div className="content-stretch flex items-center justify-center relative shrink-0 w-full md:max-w-[342px] md:w-[342px]">
                   <div className="font-body font-semibold flex flex-1 flex-col justify-center leading-[0] min-w-px relative text-[16px] text-black">
                     <p className="leading-[20px]">We are not our users</p>
                   </div>
@@ -874,8 +874,8 @@ export default function EliaProjectPage() {
                   </p>
                 </div>
               </div>
-              <div className="content-stretch flex gap-[24px] items-start relative shrink-0 w-full">
-                <div className="content-stretch flex items-center justify-center relative shrink-0 w-[342px]">
+              <div className="content-stretch flex flex-col gap-2 md:flex-row md:gap-[24px] items-start relative shrink-0 w-full">
+                <div className="content-stretch flex items-center justify-center relative shrink-0 w-full md:max-w-[342px] md:w-[342px]">
                   <div className="font-body font-semibold flex flex-1 flex-col justify-center leading-[0] min-w-px relative text-[#1e1e1e] text-[16px]">
                     <p className="leading-[20px]">
                       Validate earlier across all platforms
@@ -899,16 +899,16 @@ export default function EliaProjectPage() {
         {/* Contact — background bleeds full viewport width, content stays
             centered to the 1280px canvas */}
         <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen bg-[#6c65ff]">
-          <div className="content-stretch mx-auto flex max-w-[1280px] flex-col gap-[56px] items-center py-[112px] relative w-full">
+          <div className="content-stretch mx-auto flex max-w-[1280px] flex-col gap-[56px] items-center px-6 py-16 md:py-[112px] relative w-full">
             <div className="content-stretch flex flex-col gap-[4px] items-center leading-[0] relative shrink-0 text-center text-white w-full">
-              <div className="font-display font-bold flex flex-col justify-center relative shrink-0 text-[56px] tracking-[-0.84px] w-[550px]">
+              <div className="font-display font-bold flex flex-col justify-center relative shrink-0 text-[36px] md:text-[56px] tracking-[-0.84px] w-[550px] max-w-full">
                 <p className="leading-[normal]">Like what you see? </p>
               </div>
               <div className="font-body font-medium flex flex-col justify-center min-w-full relative shrink-0 text-[24px] tracking-[-0.24px] w-[min-content]">
                 <p className="leading-[30px]">We may be a match</p>
               </div>
             </div>
-            <div className="content-stretch flex gap-[31px] items-center justify-center relative shrink-0 w-[404px]">
+            <div className="content-stretch flex flex-wrap gap-[31px] items-center justify-center relative shrink-0 max-w-full">
               <a
                 href="mailto:cejoco.paola@gmail.com"
                 className="bg-white content-stretch flex items-center justify-center px-[32px] py-[12px] relative rounded-[30px] shrink-0"

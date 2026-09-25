@@ -23,14 +23,14 @@ export default function SocialButtons() {
 
   return (
     <div
-      className={`fixed top-[34px] right-6 z-50 flex items-center gap-[16px] transition-colors duration-300 md:right-12 ${colorClass}`}
+      className={`fixed top-[max(34px,calc(env(safe-area-inset-top)+10px))] right-[max(1.5rem,env(safe-area-inset-right))] z-50 flex items-center gap-[24px] transition-colors duration-300 md:right-12 ${colorClass}`}
     >
       <a
         href="https://www.linkedin.com/in/paola-cejoco/"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="LinkedIn"
-        className={`flex size-[24px] items-center justify-center rounded-[4px] transition-colors duration-150 ${hoverClass}`}
+        className={`relative flex size-[24px] items-center justify-center rounded-[4px] before:absolute before:-inset-2.5 before:content-[''] transition-colors duration-150 ${hoverClass}`}
       >
         <svg viewBox="0 0 24 24" className="size-full" fill="currentColor" aria-hidden>
           <path d="M18.8156 4H5.18125C4.52812 4 4 4.51563 4 5.15313V18.8438C4 19.4813 4.52812 20 5.18125 20H18.8156C19.4688 20 20 19.4813 20 18.8469V5.15313C20 4.51563 19.4688 4 18.8156 4ZM8.74687 17.6344H6.37188V9.99687H8.74687V17.6344ZM7.55938 8.95625C6.79688 8.95625 6.18125 8.34062 6.18125 7.58125C6.18125 6.82188 6.79688 6.20625 7.55938 6.20625C8.31875 6.20625 8.93437 6.82188 8.93437 7.58125C8.93437 8.3375 8.31875 8.95625 7.55938 8.95625ZM17.6344 17.6344H15.2625V13.9219C15.2625 13.0375 15.2469 11.8969 14.0281 11.8969C12.7937 11.8969 12.6062 12.8625 12.6062 13.8594V17.6344H10.2375V9.99687H12.5125V11.0406H12.5437C12.8594 10.4406 13.6344 9.80625 14.7875 9.80625C17.1906 9.80625 17.6344 11.3875 17.6344 13.4438V17.6344V17.6344Z" />
@@ -39,7 +39,7 @@ export default function SocialButtons() {
       <a
         href="mailto:cejoco.paola@gmail.com"
         aria-label="Email"
-        className={`flex size-[24px] items-center justify-center rounded-[4px] p-[4px] transition-colors duration-150 ${hoverClass}`}
+        className={`relative flex size-[24px] items-center justify-center rounded-[4px] before:absolute before:-inset-2.5 before:content-[''] p-[4px] transition-colors duration-150 ${hoverClass}`}
       >
         <svg
           viewBox="0 0 19.9708 14.1152"

@@ -4,6 +4,31 @@
 
 html {
   scroll-behavior: smooth;
+  /* Don't let iOS inflate text on rotation; users scale via system text size. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Apple HIG: no tap delay / accidental double-tap zoom on controls, and a
+   clear focus indicator for keyboard and assistive-tech users. */
+a,
+button,
+[role="button"],
+summary {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid #6c65ff;
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 body {

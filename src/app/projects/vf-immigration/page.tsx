@@ -104,7 +104,7 @@ function TitledRows({ items }: { items: TitledRow[] }) {
           <h3 className="font-body text-base font-semibold text-black md:w-[342px] md:shrink-0 lg:text-[16px] lg:leading-[20px]">
             {item.title}
           </h3>
-          <p className="max-w-[700px] font-body text-sm leading-relaxed text-[#1e1e1e] md:flex-1 lg:text-[16px] lg:leading-[20px]">
+          <p className="max-w-[700px] font-body text-base leading-relaxed text-[#1e1e1e] md:flex-1 lg:text-[16px] lg:leading-[20px]">
             {item.body}
           </p>
         </AnimatedSection>
@@ -193,7 +193,7 @@ export default function VfImmigrationPage() {
 
           <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
             <AnimatedSection className="flex max-w-[700px] flex-col gap-8">
-              <div className="flex flex-col gap-5 font-body text-sm font-normal leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+              <div className="flex flex-col gap-5 font-body text-base font-normal leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
                 <p>
                   VF Immigration is an immigration consulting agency
                   established since 2016 in Montreal. Valérie, the president
@@ -218,7 +218,7 @@ export default function VfImmigrationPage() {
                 href="https://www.vfimmigration.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-fit items-center gap-2 font-body text-sm font-medium transition-opacity hover:opacity-70 lg:text-[18.09px] lg:tracking-[-0.1809px]"
+                className="inline-flex min-h-11 w-fit items-center gap-2 font-body text-base font-medium transition-opacity hover:opacity-70 lg:text-[18.09px] lg:tracking-[-0.1809px]"
                 style={{ color: CORAL }}
               >
                 Visit the site
@@ -236,7 +236,7 @@ export default function VfImmigrationPage() {
                 <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
                   Role
                 </p>
-                <p className="mt-1 font-body text-sm leading-relaxed text-black lg:text-[14px]">
+                <p className="mt-1 font-body text-base leading-relaxed text-black lg:text-[14px]">
                   UI/UX designer
                   <br />
                   Web designer
@@ -246,13 +246,13 @@ export default function VfImmigrationPage() {
                 <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
                   Duration
                 </p>
-                <p className="mt-1 font-body text-sm text-black lg:text-[16px]">4 months</p>
+                <p className="mt-1 font-body text-base text-black lg:text-[16px]">4 months</p>
               </div>
               <div>
                 <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
                   Project type
                 </p>
-                <p className="mt-1 font-body text-sm leading-relaxed text-black lg:text-[14px]">
+                <p className="mt-1 font-body text-base leading-relaxed text-black lg:text-[14px]">
                   Web design
                   <br />
                   Mobile design

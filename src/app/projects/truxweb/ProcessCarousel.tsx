@@ -90,7 +90,7 @@ export default function ProcessCarousel({ steps }: { steps: ProcessStep[] }) {
                 {step.title}
               </p>
               <p
-                className="font-body text-sm leading-relaxed lg:text-[16px] lg:leading-[20px]"
+                className="font-body text-base leading-relaxed lg:text-[16px] lg:leading-[20px]"
                 style={{ color: TEAL }}
               >
                 {step.description}
@@ -109,7 +109,7 @@ export default function ProcessCarousel({ steps }: { steps: ProcessStep[] }) {
               type="button"
               aria-label={`Scroll to page ${i + 1} of ${pageCount}`}
               onClick={() => scrollToPage(i)}
-              className="size-2.5 shrink-0 rounded-full bg-white transition-opacity"
+              className="relative size-2.5 shrink-0 rounded-full bg-white transition-opacity before:absolute before:-inset-x-1 before:-inset-y-[17px] before:content-['']"
               style={{ opacity: i === active ? 1 : 0.5 }}
             />
           ))}
@@ -120,7 +120,7 @@ export default function ProcessCarousel({ steps }: { steps: ProcessStep[] }) {
             type="button"
             aria-label="Previous step"
             onClick={() => scrollByCard(-1)}
-            className="flex size-10 items-center justify-center rounded-full bg-white/20 transition-colors hover:bg-white/30"
+            className="flex size-11 items-center justify-center rounded-full bg-white/20 transition-colors hover:bg-white/30"
           >
             <svg
               viewBox="0 0 24 24"
@@ -139,7 +139,7 @@ export default function ProcessCarousel({ steps }: { steps: ProcessStep[] }) {
             type="button"
             aria-label="Next step"
             onClick={() => scrollByCard(1)}
-            className="flex size-10 items-center justify-center rounded-full bg-white/20 transition-colors hover:bg-white/30"
+            className="flex size-11 items-center justify-center rounded-full bg-white/20 transition-colors hover:bg-white/30"
           >
             <svg
               viewBox="0 0 24 24"

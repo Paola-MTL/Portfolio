@@ -23,13 +23,13 @@ export default function TabbedShowcase({ tabs }: { tabs: readonly ShowcaseTab[] 
 
   return (
     <div>
-      <div className="mx-auto mb-8 flex w-fit gap-1 rounded-full bg-ink/5 p-1.5">
+      <div className="mx-auto mb-8 flex w-fit max-w-full gap-1 rounded-full bg-ink/5 p-1.5">
         {tabs.map((t, i) => (
           <button
             key={t.key}
             type="button"
             onClick={() => setActive(i)}
-            className={`rounded-full px-5 py-2 text-sm font-medium transition-colors ${
+            className={`rounded-full px-3 py-3 text-sm font-medium transition-colors min-[360px]:px-5 ${
               i === active ? "" : "hover:bg-ink/10"
             }`}
             style={

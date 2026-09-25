@@ -14,7 +14,7 @@ export default function ScrollDownHint({ arrowSrc }: { arrowSrc: string }) {
 
   return (
     <div
-      className={`-translate-x-1/2 absolute flex items-center justify-center left-1/2 size-[48px] top-[598px] transition-opacity duration-300 ${
+      className={`-translate-x-1/2 absolute flex items-center justify-center left-1/2 size-[48px] bottom-6 lg:bottom-auto lg:top-[598px] transition-opacity duration-300 ${
         visible ? "opacity-100" : "pointer-events-none opacity-0"
       }`}
     >

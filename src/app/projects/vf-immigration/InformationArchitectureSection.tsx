@@ -4,7 +4,7 @@ import AnimatedSection from "@/components/AnimatedSection";
 const ASSETS = "/images/vf-immigration/ia";
 
 const bodyText =
-  "max-w-[700px] font-body text-sm leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]";
+  "max-w-[700px] font-body text-base leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]";
 const subheading =
   "font-body text-base font-semibold text-black lg:text-[16px] lg:leading-[20px]";
 
