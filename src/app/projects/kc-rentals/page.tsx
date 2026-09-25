@@ -54,7 +54,7 @@ function WebRow({ title, body }: { title: string; body: string }) {
       <h3 className="font-body text-base font-semibold text-black md:w-[342px] md:shrink-0 lg:leading-[20px]">
         {title}
       </h3>
-      <p className="font-body text-sm text-[#1e1e1e] md:flex-1 lg:text-[16px] lg:leading-[20px]">
+      <p className="font-body text-base text-[#1e1e1e] md:flex-1 lg:text-[16px] lg:leading-[20px]">
         {body}
       </p>
     </div>
@@ -168,7 +168,7 @@ export default function KcRentalsPage() {
 
           <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
             <AnimatedSection className="flex max-w-[700px] flex-col gap-8">
-              <div className="flex flex-col gap-5 font-body text-sm font-normal leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+              <div className="flex flex-col gap-5 font-body text-base font-normal leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
                 <p>
                   KC Rentals is a real estate agency established since 2016 in
                   Mandelieu, in the South of France. Katia, the founder, needed
@@ -191,7 +191,7 @@ export default function KcRentalsPage() {
                 href="https://www.kc-cannes-rentals.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-fit items-center gap-2 font-body text-sm font-medium transition-opacity hover:opacity-70 lg:text-[18.09px] lg:tracking-[-0.1809px]"
+                className="inline-flex min-h-11 w-fit items-center gap-2 font-body text-base font-medium transition-opacity hover:opacity-70 lg:text-[18.09px] lg:tracking-[-0.1809px]"
                 style={{ color: TEAL }}
               >
                 Visit the site
@@ -212,7 +212,7 @@ export default function KcRentalsPage() {
                 <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
                   Role
                 </p>
-                <p className="mt-1 font-body text-sm text-black lg:text-[16px]">
+                <p className="mt-1 font-body text-base text-black lg:text-[16px]">
                   Web Designer
                 </p>
               </div>
@@ -220,7 +220,7 @@ export default function KcRentalsPage() {
                 <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
                   Duration
                 </p>
-                <p className="mt-1 font-body text-sm text-black lg:text-[16px]">
+                <p className="mt-1 font-body text-base text-black lg:text-[16px]">
                   2 months
                 </p>
               </div>
@@ -228,7 +228,7 @@ export default function KcRentalsPage() {
                 <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
                   Project type
                 </p>
-                <p className="mt-1 font-body text-sm leading-relaxed text-black lg:text-[14px]">
+                <p className="mt-1 font-body text-base leading-relaxed text-black lg:text-[14px]">
                   Web Design
                 </p>
               </div>
@@ -260,7 +260,7 @@ export default function KcRentalsPage() {
               <h3 className="font-body text-base font-semibold text-black md:w-[342px] md:shrink-0 lg:text-[16px] lg:leading-[20px]">
                 Revamping the branding while keeping the original logo
               </h3>
-              <div className="flex max-w-[700px] flex-col gap-5 font-body text-sm leading-relaxed text-[#1e1e1e] md:flex-1 lg:text-[16px] lg:leading-[20px]">
+              <div className="flex max-w-[700px] flex-col gap-5 font-body text-base leading-relaxed text-[#1e1e1e] md:flex-1 lg:text-[16px] lg:leading-[20px]">
                 <p>
                   The original colors of KC Rentals evoked more of a chocolate
                   shop than a real estate agency and were also outdated.

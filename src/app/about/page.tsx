@@ -143,16 +143,16 @@ export default function AboutPage() {
       {/* Contact — background bleeds full viewport width, content stays
           centered to the 1280px canvas */}
       <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen bg-[#6c65ff]">
-        <div className="content-stretch mx-auto flex max-w-[1280px] flex-col gap-[56px] items-center py-[112px] relative w-full">
+        <div className="content-stretch mx-auto flex max-w-[1280px] flex-col gap-[56px] items-center px-6 py-[112px] relative w-full">
           <div className="content-stretch flex flex-col gap-[4px] items-center leading-[0] relative shrink-0 text-center text-white w-full">
-            <div className="font-display font-bold flex flex-col justify-center relative shrink-0 text-[56px] tracking-[-0.84px] w-[550px]">
+            <div className="font-display font-bold flex flex-col justify-center relative shrink-0 text-[56px] tracking-[-0.84px] w-[550px] max-w-full">
               <p className="leading-[normal]">Like what you see? </p>
             </div>
             <div className="font-body font-medium flex flex-col justify-center min-w-full relative shrink-0 text-[24px] tracking-[-0.24px] w-[min-content]">
               <p className="leading-[30px]">We may be a match</p>
             </div>
           </div>
-          <div className="content-stretch flex gap-[31px] items-center justify-center relative shrink-0 w-[404px]">
+          <div className="content-stretch flex flex-wrap gap-[31px] items-center justify-center relative shrink-0 max-w-full">
             <a
               href="mailto:cejoco.paola@gmail.com"
               className="bg-white content-stretch flex items-center justify-center px-[32px] py-[12px] relative rounded-[30px] shrink-0"

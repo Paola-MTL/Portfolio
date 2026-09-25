@@ -229,7 +229,7 @@ export default function ProjectsIndex({
               <Link
                 href={`/projects/${project.slug}`}
                 onClick={(event) => handleProjectClick(event, project)}
-                className="relative isolate flex w-full max-w-[308px] flex-col overflow-hidden rounded-[20px] transition-transform duration-300 ease-out hover:-translate-y-1 active:scale-[0.98]"
+                className="relative isolate mx-auto flex w-full max-w-[308px] flex-col sm:mx-0 overflow-hidden rounded-[20px] transition-transform duration-300 ease-out hover:-translate-y-1 active:scale-[0.98]"
               >
                 <div
                   className="glass glass--clear glass--caption-top relative z-[2] flex w-full shrink-0 items-center justify-center overflow-hidden p-5"

@@ -109,7 +109,7 @@ function PersonaCard({
       <p className="font-body text-lg font-medium tracking-tight lg:text-[20px] lg:tracking-[-0.2px]">
         {label}
       </p>
-      <p className="font-body text-sm leading-relaxed lg:text-[14px]">{quote}</p>
+      <p className="font-body text-base leading-relaxed lg:text-[14px]">{quote}</p>
     </div>
   );
 }
@@ -167,7 +167,7 @@ export default function TruxwebPage() {
 
           <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
             <AnimatedSection className="flex max-w-[700px] flex-col gap-8">
-              <p className="font-body text-sm font-normal leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+              <p className="font-body text-base font-normal leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
                 Truxweb is a Quebec-based start-up that aims to simplify the
                 trucking transportation management process. It specializes in
                 B2B freight logistics. My role was to help them develop an
@@ -178,7 +178,7 @@ export default function TruxwebPage() {
               </p>
               <a
                 href="#prototype"
-                className="inline-flex w-fit items-center gap-2 font-body text-sm font-medium transition-opacity hover:opacity-70 lg:text-[18.09px] lg:tracking-[-0.1809px]"
+                className="inline-flex min-h-11 w-fit items-center gap-2 font-body text-base font-medium transition-opacity hover:opacity-70 lg:text-[18.09px] lg:tracking-[-0.1809px]"
                 style={{ color: TEAL }}
               >
                 Jump to prototype
@@ -196,19 +196,19 @@ export default function TruxwebPage() {
                 <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
                   Role
                 </p>
-                <p className="mt-1 font-body text-sm text-black lg:text-[16px]">UI/UX Designer</p>
+                <p className="mt-1 font-body text-base text-black lg:text-[16px]">UI/UX Designer</p>
               </div>
               <div>
                 <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
                   Duration
                 </p>
-                <p className="mt-1 font-body text-sm text-black lg:text-[16px]">2 years</p>
+                <p className="mt-1 font-body text-base text-black lg:text-[16px]">2 years</p>
               </div>
               <div>
                 <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
                   Collaboration
                 </p>
-                <p className="mt-1 font-body text-sm leading-relaxed text-black lg:text-[14px]">
+                <p className="mt-1 font-body text-base leading-relaxed text-black lg:text-[14px]">
                   1 Sr. designer
                   <br />4 developers
                   <br />1 PM
@@ -219,7 +219,7 @@ export default function TruxwebPage() {
                 <p className="font-body text-base font-medium tracking-tight text-black lg:text-[20px] lg:tracking-[-0.2px]">
                   Project type
                 </p>
-                <p className="mt-1 font-body text-sm text-black lg:text-[14px]">Web App</p>
+                <p className="mt-1 font-body text-base text-black lg:text-[14px]">Web App</p>
               </div>
             </AnimatedSection>
           </div>
@@ -241,7 +241,7 @@ export default function TruxwebPage() {
                 profiting at the expense of carriers.
               </p>
               <div className="flex flex-col gap-4 lg:max-w-[700px]">
-                <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+                <p className="font-body text-base leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
                   The logistics sector, particularly in B2B transportation,
                   seems to have stagnated over the past 40 years. Processes
                   remain complex, administrative systems are still largely
@@ -249,13 +249,13 @@ export default function TruxwebPage() {
                   hindered by the lack of a centralized platform that meets
                   their needs.
                 </p>
-                <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+                <p className="font-body text-base leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
                   Moreover, the increasing number of intermediaries between
                   carriers and clients, often in the form of freight
                   brokers, leads to additional costs that cut into carriers&apos;
                   revenues.
                 </p>
-                <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+                <p className="font-body text-base leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
                   Another major challenge is that after delivering a load
                   from A to B, trucks usually return empty from B to A,
                   representing a significant waste of resources.
@@ -307,7 +307,7 @@ export default function TruxwebPage() {
                   A 100% digital platform allowing clients to quickly book a
                   carrier and track their goods.
                 </p>
-                <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:max-w-[700px] lg:text-[16px] lg:leading-[20px]">
+                <p className="font-body text-base leading-relaxed text-[#1e1e1e] lg:max-w-[700px] lg:text-[16px] lg:leading-[20px]">
                   The solution envisioned by the founders of Truxweb was to
                   create a fully digital platform that enables clients to
                   book a carrier directly without going through an
@@ -319,7 +319,7 @@ export default function TruxwebPage() {
                   A platform where carriers can display their delivery areas
                   and attract more clients.
                 </p>
-                <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:max-w-[700px] lg:text-[16px] lg:leading-[20px]">
+                <p className="font-body text-base leading-relaxed text-[#1e1e1e] lg:max-w-[700px] lg:text-[16px] lg:leading-[20px]">
                   The platform also simplifies processes for carriers,
                   allowing them to set up their various delivery routes
                   (e.g., the route from Montreal to Toronto) with the
@@ -346,7 +346,7 @@ export default function TruxwebPage() {
                 A process based on the Agile method and far from being a
                 smooth journey.
               </p>
-              <p className="font-body text-sm leading-relaxed text-white lg:max-w-[700px] lg:text-[16px] lg:leading-[20px]">
+              <p className="font-body text-base leading-relaxed text-white lg:max-w-[700px] lg:text-[16px] lg:leading-[20px]">
                 The process at Truxweb was based on the Agile method and
                 improved as the start-up grew. I collaborated with my senior
                 designer and a team of developers, not to mention the
@@ -373,7 +373,7 @@ export default function TruxwebPage() {
                 A search engine-like platform simplifying the booking of a
                 carrier.
               </p>
-              <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:max-w-[700px] lg:text-[16px] lg:leading-[20px]">
+              <p className="font-body text-base leading-relaxed text-[#1e1e1e] lg:max-w-[700px] lg:text-[16px] lg:leading-[20px]">
                 After considering the founders&apos; ideas and reworking the
                 existing lo-fi designs, my senior designer and I aimed to
                 recreate a booking process similar to Google Flights /
@@ -402,12 +402,12 @@ export default function TruxwebPage() {
                 bookings.
               </p>
               <div className="flex flex-col gap-4 lg:max-w-[700px]">
-                <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+                <p className="font-body text-base leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
                   After testing the platform with initial users, we found
                   that the booking process was relatively smooth, but the
                   experience regarding the dashboard was unsatisfactory.
                 </p>
-                <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
+                <p className="font-body text-base leading-relaxed text-[#1e1e1e] lg:text-[16px] lg:leading-[20px]">
                   Indeed, it was challenging to navigate quickly through the
                   various bookings as each item took up considerable space
                   on the screen, leading to significant scrolling and
@@ -431,7 +431,7 @@ export default function TruxwebPage() {
                 A web app providing an overview of bookings and easier
                 navigation on the platform.
               </p>
-              <p className="font-body text-sm leading-relaxed text-[#1e1e1e] lg:max-w-[700px] lg:text-[16px] lg:leading-[20px]">
+              <p className="font-body text-base leading-relaxed text-[#1e1e1e] lg:max-w-[700px] lg:text-[16px] lg:leading-[20px]">
                 After extensive discussions between the DEV and Design
                 teams, the platform took a completely different turn by
                 becoming a true web app. This format addressed many
@@ -458,12 +458,12 @@ export default function TruxwebPage() {
           <p className="font-body mb-8 text-[32px] font-semibold leading-[36px] tracking-[-0.32px] text-white">
             PROTOTYPE
           </p>
-          <div className="relative aspect-[3075/1905] w-full min-w-[1025px]">
+          <div className="relative aspect-[3075/1905] w-full">
             <Image
               src="/images/truxweb/prototype-imac.png"
               alt="Truxweb dashboard shown on an iMac"
               fill
-              sizes="1025px"
+              sizes="(min-width: 1024px) 896px, 100vw"
               className="object-contain"
             />
             <div
