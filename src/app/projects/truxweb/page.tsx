@@ -454,7 +454,7 @@ export default function TruxwebPage() {
         className="flex min-h-screen items-center py-16"
         style={{ backgroundColor: TEAL }}
       >
-        <AnimatedSection className="mx-auto flex max-w-4xl flex-col items-center px-6">
+        <AnimatedSection className="mx-auto flex w-full max-w-[calc((100svh-13rem)*1.614)] flex-col items-center px-6">
           <p className="font-body mb-8 text-[32px] font-semibold leading-[36px] tracking-[-0.32px] text-white">
             PROTOTYPE
           </p>
@@ -463,7 +463,7 @@ export default function TruxwebPage() {
               src="/images/truxweb/prototype-imac.png"
               alt="Truxweb dashboard shown on an iMac"
               fill
-              sizes="(min-width: 1024px) 896px, 100vw"
+              sizes="100vw"
               className="object-contain"
             />
             <div
